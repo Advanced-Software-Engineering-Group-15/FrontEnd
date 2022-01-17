@@ -2,41 +2,15 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, ActivityIndicator, TextInput, TouchableOpacity, Button } from 'react-native';
 
-//what is returned on screen
-//export default function App() {
-export default class App extends React.Component {
-  // const ip = '10.36.5.112'
-  // const localHost = 'http://'+ip+':5000/'
+const Login = (props: any) => {
+ 
+  const [input, setInput] = useState({username: ""});
 
-  // const [isLoading, setLoading] = useState(true);
-  // const [data, setData] = useState([]);
-
-  // const getData = async () => {
-  //   try {
-  //     const response = await fetch(localHost);
-  //     const json = await response.json();
-  //     console.log(JSON.stringify(json.msg))
-  //     setData(json.msg);
-  //   } catch (error) { 
-  //     console.log(error);
-  //   } finally {
-  //     setLoading(false)
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   getData();
-  // }, []);
-  state={
-    username:"",
-    // password:""
+  const logValue = () => {
+    console.log(input);
+    props.navigation.navigate("Home", { username: input })
   };
 
-  logValue = () => {
-    console.log(this.state.username);
-  };
-
-  render(){
   return (
     <View style={styles.container}>
         <Text style={styles.logo}>Carma</Text>
@@ -45,7 +19,7 @@ export default class App extends React.Component {
             style={styles.inputText}
             placeholder="Username..." 
             placeholderTextColor="#003f5c"
-            onChangeText={text => this.setState({username:text})}/>
+            onChangeText={text => setInput({username: text})}/>
         </View>
         {/* <View style={styles.inputView} >
           <TextInput  
@@ -61,7 +35,7 @@ export default class App extends React.Component {
         <TouchableOpacity style={styles.loginBtn}>
           <Text 
           style={styles.loginText}
-          onPress={this.logValue}
+          onPress={logValue}
           >LOGIN</Text>
         </TouchableOpacity>
         <TouchableOpacity>
@@ -71,7 +45,7 @@ export default class App extends React.Component {
       </View>
   );
   }
-};
+
 
 //styling
 const styles = StyleSheet.create({
@@ -119,3 +93,5 @@ const styles = StyleSheet.create({
     color:"white"
   }
 });
+
+export default Login
