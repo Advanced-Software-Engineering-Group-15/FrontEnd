@@ -7,7 +7,7 @@ const Login = (props: any) => {
   const [input, setInput] = useState({username: ""});
 
   const logValue = () => {
-    console.log(input);
+    //console.log(input);
     props.navigation.navigate("Home", { username: input })
   };
 
@@ -45,7 +45,6 @@ const Login = (props: any) => {
       </View>
   );
   }
-
 
 //styling
 const styles = StyleSheet.create({
