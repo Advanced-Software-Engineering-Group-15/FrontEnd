@@ -1,8 +1,9 @@
 // import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
+import MapView, {Callout, Marker, Circle} from 'react-native-maps';
+import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 
-const ip = 'your ip here'
+const ip = 'your ip'
 const localHost = 'http://'+ip+':5000/journeys'
 console.log(localHost)
 const Home = (props: any) => {
@@ -10,6 +11,11 @@ const Home = (props: any) => {
 
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
+
+  const [pin, setPin] = React.useState ({
+    latitude: 53.34403, 
+    longitude: -6.25454
+  }) // Initial location
   
   const getData = async () => {
     try {
@@ -35,7 +41,42 @@ const Home = (props: any) => {
         <TouchableOpacity>
           <Text onPress={logValue}>Get Data</Text>
         </TouchableOpacity>
-      </View>
+
+      <MapView 
+        style={styles.map} 
+        initialRegion={{ 
+          latitude: 53.34403, 
+          longitude: -6.25454,
+          latitudeDelta: 0.000281,
+          longitudeDelta: 0.002661
+        }}
+        showsUserLocation
+      >
+        <Marker 
+          coordinate={pin}
+          pinColor="red"
+          draggable={true}
+          onDragStart={(e) => {
+            console.log("Drag starts", e.nativeEvent.coordinate)
+          }}
+          onDragEnd={(e) => {
+            setPin({
+              latitude: e.nativeEvent.coordinate.latitude,
+              longitude: e.nativeEvent.coordinate.longitude
+            })
+          }}
+        >
+
+          <Callout>
+            <Text>Current location</Text>
+          </Callout>
+
+        </Marker>
+        <Circle center={pin} radius={100}/>
+
+      </MapView>
+      </View> 
+
   );
 }
 
@@ -52,6 +93,10 @@ const styles = StyleSheet.create({
     height:50,
     color:"white",
     fontSize:25
+  },
+  map: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
   },
 });
 
