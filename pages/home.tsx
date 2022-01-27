@@ -1,21 +1,30 @@
 // import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import MapView, {Callout, Marker, Circle} from 'react-native-maps';
+import MapViewDirections from 'react-native-maps-directions';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
+import env from 'process'
 
-const ip = 'your ip'
+
+//These will be useful resources for adding waypoints etc+
+//https://stackoverflow.com/questions/64002670/how-to-update-google-maps-react-direction-route
+//https://stackblitz.com/edit/adding-direction-waypoint-1xyogt?file=src/MapComponent.js
+
+//env.GOOGLE_MAPS_APIKEY = "AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8"
+const GOOGLE_MAPS_APIKEY='AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8'
+const ip = '192.168.68.122'
 const localHost = 'http://'+ip+':5000/journeys'
 console.log(localHost)
 const Home = (props: any) => {
   const username = props.navigation.state.params.username.username 
-
+  
+  const origin = {latitude: 53.5237268, longitude: -6.4142645};
+  const destination = {latitude: 53.5395496, longitude: -6.4466271};
+  
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
 
-  const [pin, setPin] = React.useState ({
-    latitude: 53.34403, 
-    longitude: -6.25454
-  }) // Initial location
+  const [pin, setPin] = React.useState ({latitude: 53.5237268, longitude: -6.4142645}) // Initial location
   
   const getData = async () => {
     try {
@@ -45,8 +54,8 @@ const Home = (props: any) => {
       <MapView 
         style={styles.map} 
         initialRegion={{ 
-          latitude: 53.34403, 
-          longitude: -6.25454,
+          latitude: 53.5237268, 
+          longitude: -6.4142645,
           latitudeDelta: 0.000281,
           longitudeDelta: 0.002661
         }}
@@ -72,7 +81,16 @@ const Home = (props: any) => {
           </Callout>
 
         </Marker>
-        <Circle center={pin} radius={100}/>
+
+        <MapViewDirections
+          lineCap="square"
+          lineDashPattern={[1]}
+          strokeWidth={5} 
+          strokeColor="blue"
+          origin={origin}
+          destination={destination}
+          apikey={GOOGLE_MAPS_APIKEY}
+        />
 
       </MapView>
       </View> 
