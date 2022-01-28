@@ -1,8 +1,9 @@
 // import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import MapView, {Callout, Marker, Circle} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import env from 'process'
 
 
@@ -26,6 +27,8 @@ const Home = (props: any) => {
 
   const [pin, setPin] = React.useState ({latitude: 53.5237268, longitude: -6.4142645}) // Initial location
   
+  const ref = useRef();
+
   const getData = async () => {
     try {
       const response = await fetch(localHost);
@@ -46,11 +49,45 @@ const Home = (props: any) => {
   
   return (
     <View style={styles.container}>
-        <Text style={styles.welcomeText}>Welcome back {username}!</Text>
-        <TouchableOpacity>
+       {/* <Text style={styles.welcomeText}>Welcome back {username}!</Text> */}
+        {/* <TouchableOpacity>
           <Text onPress={logValue}>Get Data</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
+      {/* <GooglePlacesAutocomplete
+      style={styles.textInput}
+      placeholder='Search'
+      onPress={(data, details = null) => {
+        // 'details' is provided when fetchDetails = true
+        console.log(data, details);
+      }}
+      query={{
+        key: GOOGLE_MAPS_APIKEY,
+        language: 'en',
+      }}
+    /> */}
+      <View style={styles.searchBox}>
+        <GooglePlacesAutocomplete
+            placeholder='Search'
+            minLength={2} // minimum length of text to search
+            //autoFocus={false}
+            //returnKeyType={'search'}
+            onPress={(data, details = null) => {
+              // 'details' is provided when fetchDetails = true
+              console.log(data, details);
+            }} 
+            query={{
+              key: GOOGLE_MAPS_APIKEY,
+              language: 'en',
+            }}
+            renderDescription={(row) => row.description} // custom description render
+
+            styles={searchInputStyle}
+
+        />
+
+      </View>
+      
       <MapView 
         style={styles.map} 
         initialRegion={{ 
@@ -99,6 +136,38 @@ const Home = (props: any) => {
 }
 
 //styling
+
+const searchInputStyle={
+  container: {
+      backgroundColor: '#fff',
+      width: Dimensions.get('window').width,
+      marginLeft: 20,
+      marginRight: 20,
+      marginTop: 20,
+      marginBottom: 0,
+      opacity: 0.9,
+      borderRadius: 8
+  },
+  description: {
+      fontWeight: 'bold',
+      color: "#007",
+      borderTopWidth: 0,
+      borderBottomWidth: 0,
+      opacity: 0.9,
+  },
+  predefinedPlacesDescription: {
+      color: '#355',
+  },
+  textInputContainer: {
+      height: 50,
+
+  },
+      textInput: {
+      height: 33,
+      fontSize: 16
+  }
+}
+
 const styles = StyleSheet.create({
 
   container: {
@@ -113,8 +182,52 @@ const styles = StyleSheet.create({
     fontSize:25
   },
   map: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
+    width: (Dimensions.get('window').width),
+    height: (Dimensions.get('window').height-200),
+  },
+  searchBox: {
+    top: 0,
+    position: "absolute",
+    flex: 1,
+    justifyContent: 'center',
+  },
+  textInputContainer: {
+    flexDirection: 'row',
+  },
+  textInput: {
+    backgroundColor: '#FFFFFF',
+    height: 44,
+    borderRadius: 5,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    fontSize: 15,
+    flex: 1,
+  },
+  poweredContainer: {
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    borderBottomRightRadius: 5,
+    borderBottomLeftRadius: 5,
+    borderColor: '#c8c7cc',
+    borderTopWidth: 0.5,
+  },
+  powered: {},
+  listView: {},
+  row: {
+    backgroundColor: '#FFFFFF',
+    padding: 13,
+    height: 44,
+    flexDirection: 'row',
+  },
+  separator: {
+    height: 0.5,
+    backgroundColor: '#c8c7cc',
+  },
+  description: {},
+  loader: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    height: 20,
   },
 });
 
