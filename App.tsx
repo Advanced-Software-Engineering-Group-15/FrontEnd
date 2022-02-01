@@ -9,11 +9,16 @@ import "react-native-screens"
 
 import Login from './pages/login';
 import Home from './pages/home';
+import Maps from './pages/maps';
+import Ratings from './pages/ratings';
+
 
 const AppNavigator = createStackNavigator(
   {
     Login: Login,
     Home: Home,
+    Maps: Maps,
+    Ratings: Ratings,
   },
   {
     defaultNavigationOptions: {
