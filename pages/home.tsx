@@ -1,9 +1,6 @@
 // import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState, useRef } from 'react';
-import MapView, {Callout, Marker, Circle} from 'react-native-maps';
-import MapViewDirections from 'react-native-maps-directions';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import env from 'process'
 
 
@@ -45,91 +42,22 @@ const Home = (props: any) => {
 
   const logValue = () => {
     getData();
+    props.navigation.navigate("Maps",  { username: username })
+  }
+
+  const RatingPage = () => {
+    props.navigation.navigate("Ratings")
   }
   
   return (
     <View style={styles.container}>
-       {/* <Text style={styles.welcomeText}>Welcome back {username}!</Text> */}
-        {/* <TouchableOpacity>
-          <Text onPress={logValue}>Get Data</Text>
-        </TouchableOpacity> */}
-
-      {/* <GooglePlacesAutocomplete
-      style={styles.textInput}
-      placeholder='Search'
-      onPress={(data, details = null) => {
-        // 'details' is provided when fetchDetails = true
-        console.log(data, details);
-      }}
-      query={{
-        key: GOOGLE_MAPS_APIKEY,
-        language: 'en',
-      }}
-    /> */}
-      <View style={styles.searchBox}>
-        <GooglePlacesAutocomplete
-            placeholder='Search'
-            minLength={2} // minimum length of text to search
-            //autoFocus={false}
-            //returnKeyType={'search'}
-            onPress={(data, details = null) => {
-              // 'details' is provided when fetchDetails = true
-              console.log(data, details);
-            }} 
-            query={{
-              key: GOOGLE_MAPS_APIKEY,
-              language: 'en',
-            }}
-            renderDescription={(row) => row.description} // custom description render
-
-            styles={searchInputStyle}
-
-        />
-
-      </View>
-      
-      <MapView 
-        style={styles.map} 
-        initialRegion={{ 
-          latitude: 53.5237268, 
-          longitude: -6.4142645,
-          latitudeDelta: 0.000281,
-          longitudeDelta: 0.002661
-        }}
-        showsUserLocation
-      >
-        <Marker 
-          coordinate={pin}
-          pinColor="red"
-          draggable={true}
-          onDragStart={(e) => {
-            console.log("Drag starts", e.nativeEvent.coordinate)
-          }}
-          onDragEnd={(e) => {
-            setPin({
-              latitude: e.nativeEvent.coordinate.latitude,
-              longitude: e.nativeEvent.coordinate.longitude
-            })
-          }}
-        >
-
-          <Callout>
-            <Text>Current location</Text>
-          </Callout>
-
-        </Marker>
-
-        <MapViewDirections
-          lineCap="square"
-          lineDashPattern={[1]}
-          strokeWidth={5} 
-          strokeColor="blue"
-          origin={origin}
-          destination={destination}
-          apikey={GOOGLE_MAPS_APIKEY}
-        />
-
-      </MapView>
+       <Text style={styles.welcomeText}>Welcome back {username}!</Text>
+        <TouchableOpacity>
+          <Text onPress={logValue}>Maps Page</Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Text onPress={RatingPage}>Rating Page</Text>
+        </TouchableOpacity>
       </View> 
 
   );
@@ -137,36 +65,7 @@ const Home = (props: any) => {
 
 //styling
 
-const searchInputStyle={
-  container: {
-      backgroundColor: '#fff',
-      width: Dimensions.get('window').width,
-      marginLeft: 20,
-      marginRight: 20,
-      marginTop: 20,
-      marginBottom: 0,
-      opacity: 0.9,
-      borderRadius: 8
-  },
-  description: {
-      fontWeight: 'bold',
-      color: "#007",
-      borderTopWidth: 0,
-      borderBottomWidth: 0,
-      opacity: 0.9,
-  },
-  predefinedPlacesDescription: {
-      color: '#355',
-  },
-  textInputContainer: {
-      height: 50,
 
-  },
-      textInput: {
-      height: 33,
-      fontSize: 16
-  }
-}
 
 const styles = StyleSheet.create({
 
