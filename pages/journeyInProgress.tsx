@@ -9,7 +9,7 @@ const JourneyInProgress = (props: any) => {
   
   const endJourney = () => {
     console.log(input);
-    props.navigation.navigate("journeyInProgress", { username: input })
+    props.navigation.navigate("endJourney", { username: input })
   }
   
   const goBack = () => {
@@ -21,10 +21,10 @@ const JourneyInProgress = (props: any) => {
 	<View style={styles.container}>
 	   <Text style={styles.welcomeText}>Welcome to Journey in Progress Page {username}!</Text>
 	   <Text style={styles.welcomeText}>This page is displayed when journey is ongoing 🚗!</Text>
-		<TouchableOpacity>
+		<TouchableOpacity style={styles.MapsPageBtn}>
 		  <Text onPress={endJourney}>END JOURNEY</Text>
 		</TouchableOpacity>
-		<TouchableOpacity>
+		<TouchableOpacity style={styles.MapsPageBtn}>
 		  <Text onPress={goBack}>Back to Homepage</Text>
 		</TouchableOpacity>
 	  </View> 
