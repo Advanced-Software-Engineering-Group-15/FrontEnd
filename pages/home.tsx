@@ -49,6 +49,14 @@ const Home = (props: any) => {
     props.navigation.navigate("Ratings")
   }
   
+  const DummyJourney = () => {
+    props.navigation.navigate("Dummy",  { username: username })
+  }
+
+  const startJourneyPage = () => {
+    props.navigation.navigate("startJourney",  { username: username })
+  }
+  
   return (
     <View style={styles.container}>
        <Text style={styles.welcomeText}>Welcome back {username}!</Text>
@@ -57,6 +65,12 @@ const Home = (props: any) => {
         </TouchableOpacity>
         <TouchableOpacity>
           <Text onPress={RatingPage}>Rating Page</Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Text onPress={DummyJourney}>Dummy Page</Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Text onPress={startJourneyPage}>Start Journey Page</Text>
         </TouchableOpacity>
       </View> 
 
