@@ -49,6 +49,10 @@ const Home = (props: any) => {
     props.navigation.navigate("Ratings")
   }
   
+    const startJourneyPage = () => {
+    props.navigation.navigate("startJourney",  { username: username })
+  }
+  
   return (
     <View style={styles.container}>
        <Text style={styles.welcomeText}>Welcome back {username}!</Text>
