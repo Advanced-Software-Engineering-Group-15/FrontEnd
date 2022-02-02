@@ -78,6 +78,16 @@ const styles = StyleSheet.create({
     borderColor: '#c8c7cc',
     borderTopWidth: 0.5,
   },
+  MapsPageBtn:{
+    width: "40%",
+    backgroundColor: "#fb5b5a",
+    borderRadius: 25,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20,
+    marginBottom: 10
+  },
   powered: {},
   listView: {},
   row: {
