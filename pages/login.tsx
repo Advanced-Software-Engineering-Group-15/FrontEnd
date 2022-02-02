@@ -10,6 +10,10 @@ const Login = (props: any) => {
     //console.log(input);
     props.navigation.navigate("Home", { username: input })
   };
+  const SignUp = () => {
+    //console.log(input);
+    props.navigation.navigate("CreateNewUserPage")
+  };
 
   return (
     <View style={styles.container}>
@@ -21,25 +25,20 @@ const Login = (props: any) => {
             placeholderTextColor="#003f5c"
             onChangeText={text => setInput({username: text})}/>
         </View>
-        {/* <View style={styles.inputView} >
-          <TextInput  
-            secureTextEntry
-            style={styles.inputText}
-            placeholder="Password..." 
-            placeholderTextColor="#003f5c"
-            onChangeText={text => this.setState({password:text})}/>
-        </View> */}
         <TouchableOpacity>
           <Text style={styles.forgot}>Forgot Password?</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.loginBtn}>
           <Text 
-          style={styles.loginText}
-          onPress={logValue}
-          >LOGIN</Text>
+            style={styles.loginText}
+            onPress={logValue}
+            >LOGIN
+          </Text>
         </TouchableOpacity>
-        <TouchableOpacity>
-          <Text style={styles.loginText}>Signup</Text>
+        <TouchableOpacity style={styles.loginBtn}>
+          <Text style={styles.loginText} onPress={SignUp}>
+            SIGN UP
+          </Text>
         </TouchableOpacity>
 
       </View>
@@ -62,7 +61,7 @@ const styles = StyleSheet.create({
     marginBottom:40
   },
   inputView:{
-    width:"80%",
+    width:"70%",
     backgroundColor:"#465881",
     borderRadius:25,
     height:50,
@@ -79,7 +78,7 @@ const styles = StyleSheet.create({
     fontSize:11
   },
   loginBtn:{
-    width:"80%",
+    width:"35%",
     backgroundColor:"#fb5b5a",
     borderRadius:25,
     height:50,

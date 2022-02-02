@@ -48,13 +48,16 @@ const Home = (props: any) => {
     props.navigation.navigate("Ratings")
   }
   
-    const startJourneyPage = () => {
+  const StartJourneyPage = () => {
     props.navigation.navigate("startJourney",  { username: username })
   }
   
   return (
     <View style={styles.container}>
        <Text style={styles.welcomeText}>Welcome back {username}!</Text>
+       <TouchableOpacity style={styles.MapsPageBtn}>
+          <Text style={styles.StartJourneyBtnText} onPress={StartJourneyPage}>Start a new Journey</Text>
+        </TouchableOpacity>
         <TouchableOpacity style={styles.MapsPageBtn}>
           <Text style={styles.homePageBtnText} onPress={logValue}>Maps Page</Text>
         </TouchableOpacity>
@@ -84,6 +87,16 @@ const styles = StyleSheet.create({
     color: '#000000',
     fontSize: 18,
     height: 30,
+  },
+  StartJourneyBtnText:{
+    width: "40%",
+    backgroundColor: "#FF8000",
+    borderRadius: 25,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20,
+    marginBottom: 10
   },
   MapsPageBtn:{
     width: "40%",
