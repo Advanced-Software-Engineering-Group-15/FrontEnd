@@ -10,8 +10,9 @@ import env from 'process'
 
 //env.GOOGLE_MAPS_APIKEY = "AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8"
 const GOOGLE_MAPS_APIKEY='AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8'
-const ip = '192.168.68.122'
-const localHost = 'http://'+ip+':5000/journeys'
+const ip = '37.228.210.111'
+//const localHost = 'http://'+ip+':5000/journeys'
+const localHost = 'http://localhost:5000/journeys'
 console.log(localHost)
 const Home = (props: any) => {
   const username = props.navigation.state.params.username.username 
@@ -30,7 +31,7 @@ const Home = (props: any) => {
     try {
       const response = await fetch(localHost);
       const json = await response.json();
-      //console.log(JSON.stringify(json.exJourneys))
+      console.log(JSON.stringify(json.exJourneys))
       setData(json.exJourneys);
       console.log(data[0].journeyStart)
     } catch (error) { 
@@ -42,35 +43,12 @@ const Home = (props: any) => {
 
   const logValue = () => {
     getData();
-    props.navigation.navigate("Maps",  { username: username })
   }
-
-  const RatingPage = () => {
-    props.navigation.navigate("Ratings")
-  }
-  
-  // const DummyJourney = () => {
-  //   props.navigation.navigate("Dummy",  { username: username })
-  // }
-
-  // const startJourneyPage = () => {
-  //   props.navigation.navigate("startJourney",  { username: username })
-  // }
-  
   return (
     <View style={styles.container}>
        <Text style={styles.welcomeText}>Welcome back {username}!</Text>
         <TouchableOpacity>
-          <Text onPress={logValue}>Maps Page</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text onPress={RatingPage}>Rating Page</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text onPress={DummyJourney}>Dummy Page</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text onPress={startJourneyPage}>Start Journey Page</Text>
+          <Text onPress={logValue}>Data</Text>
         </TouchableOpacity>
       </View> 
 
