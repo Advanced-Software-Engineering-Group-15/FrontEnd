@@ -3,25 +3,27 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, ActivityIndicator, TextInput, TouchableOpacity, Button } from 'react-native';
   
 
-const StartJourney = (props: any) => {
-  const username = props.navigation.state.params.username.username 
+const JourneyInProgress = (props: any) => {
   
-  const journeyInProgress = () => {
-    props.navigation.navigate("JourneyInProgress")
+  
+  const endJourney = () => {
+    props.navigation.navigate("EndJourney")
   }
   
   const goBack = () => {
     props.navigation.navigate("Home")
+	
   }
   
   return (
 	<View style={styles.container}>
-	   <Text style={styles.welcomeText}>Welcome to Start Journey Page {username}!</Text>
+	   <Text style={styles.welcomeText}>Welcome to Journey in Progress Page!</Text>
+	   <Text style={styles.welcomeText}>This page is displayed when journey is ongoing 🚗!</Text>
 		<TouchableOpacity style={styles.MapsPageBtn}>
-		  <Text onPress={journeyInProgress}>LETS GET THIS SHABANGABANG ON THE ROAD</Text>
+		  <Text onPress={endJourney}>END JOURNEY</Text>
 		</TouchableOpacity>
 		<TouchableOpacity style={styles.MapsPageBtn}>
-		  <Text onPress={goBack}>BACK TO HOME</Text>
+		  <Text onPress={goBack}>Back to Homepage</Text>
 		</TouchableOpacity>
 	  </View> 
   );
@@ -43,7 +45,7 @@ welcomeText:{
     height: 200,
     color: "white",
     fontSize: 25
-    },
+  },
   container: {
     flex: 1,
     backgroundColor: '#003f5c',
@@ -67,4 +69,4 @@ welcomeText:{
   },
 });
 
-export default StartJourney
+export default JourneyInProgress

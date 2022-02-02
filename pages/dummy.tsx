@@ -10,7 +10,7 @@ import env from 'process'
 
 //env.GOOGLE_MAPS_APIKEY = "AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8"
 const GOOGLE_MAPS_APIKEY='AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8'
-const ip = '37.228.210.111'
+const ip = '192.168.68.143'
 //const localHost = 'http://'+ip+':5000/journeys'
 const localHost = 'http://localhost:5000/journeys'
 console.log(localHost)

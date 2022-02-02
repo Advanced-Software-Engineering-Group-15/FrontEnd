@@ -3,25 +3,25 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, ActivityIndicator, TextInput, TouchableOpacity, Button } from 'react-native';
   
 
-const StartJourney = (props: any) => {
-  const username = props.navigation.state.params.username.username 
+const EndJourney = (props: any) => {
   
-  const journeyInProgress = () => {
-    props.navigation.navigate("JourneyInProgress")
+  const goToRating = () => {
+    props.navigation.navigate("Ratings")
   }
   
-  const goBack = () => {
+  const goBackToHome = () => {
     props.navigation.navigate("Home")
+	
   }
   
   return (
 	<View style={styles.container}>
-	   <Text style={styles.welcomeText}>Welcome to Start Journey Page {username}!</Text>
+	   <Text style={styles.welcomeText}>Welcome to End Journey Page!</Text>
 		<TouchableOpacity style={styles.MapsPageBtn}>
-		  <Text onPress={journeyInProgress}>LETS GET THIS SHABANGABANG ON THE ROAD</Text>
+		  <Text onPress={goToRating}>RATE JOURNEY</Text>
 		</TouchableOpacity>
-		<TouchableOpacity style={styles.MapsPageBtn}>
-		  <Text onPress={goBack}>BACK TO HOME</Text>
+		  <TouchableOpacity style={styles.MapsPageBtn}>
+		  <Text onPress={goBackToHome}>Back to Homepage</Text>
 		</TouchableOpacity>
 	  </View> 
   );
@@ -39,11 +39,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 10
   },
-welcomeText:{
+  welcomeText:{
     height: 200,
     color: "white",
     fontSize: 25
-    },
+  },
   container: {
     flex: 1,
     backgroundColor: '#003f5c',
@@ -67,4 +67,4 @@ welcomeText:{
   },
 });
 
-export default StartJourney
+export default EndJourney
