@@ -67,6 +67,16 @@ const styles = StyleSheet.create({
     fontSize: 15,
     flex: 1,
   },
+  MapsPageBtn:{
+    width: "40%",
+    backgroundColor: "#fb5b5a",
+    borderRadius: 25,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20,
+    marginBottom: 10
+  },
   poweredContainer: {
     justifyContent: 'flex-end',
     alignItems: 'center',
