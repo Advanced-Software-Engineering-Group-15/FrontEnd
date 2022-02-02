@@ -23,10 +23,11 @@ const EndJourney = (props: any) => {
   return (
 	<View style={styles.container}>
 	   <Text style={styles.welcomeText}>Welcome to End Journey Page {username}!</Text>
-		<TouchableOpacity>
+	   <Text style={styles.welcomeText}>This page is displayed when the Journey has ended {username}!</Text>
+		<TouchableOpacity style={styles.MapsPageBtn}>
 		  <Text onPress={goToRating}>RATE JOURNEY</Text>
 		</TouchableOpacity>
-		  <TouchableOpacity>
+		<TouchableOpacity style={styles.MapsPageBtn}>
 		  <Text onPress={goBack}>Back to Homepage</Text>
 		</TouchableOpacity>
 	  </View> 
