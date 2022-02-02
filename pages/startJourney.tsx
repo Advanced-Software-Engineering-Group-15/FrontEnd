@@ -8,7 +8,7 @@ const StartJourney = (props: any) => {
   
   const startJourney = () => {
     console.log(input);
-    //props.navigation.navigate("JourneyCommenced", { username: input })
+    props.navigation.navigate("journeyInProgress", { username: input })
   }
   
   const goBack = () => {
@@ -18,10 +18,10 @@ const StartJourney = (props: any) => {
   return (
 	<View style={styles.container}>
 	   <Text style={styles.welcomeText}>Welcome to Start Journey Page {username}!</Text>
-		<TouchableOpacity>
-		  <Text onPress={startJourney}>LETS GET THIS SHABANGABANG ON THE ROAD</Text>
+		<TouchableOpacity style={styles.MapsPageBtn}>
+		  <Text onPress={startJourney}>START JOURNEY</Text>
 		</TouchableOpacity>
-		<TouchableOpacity>
+		<TouchableOpacity style={styles.MapsPageBtn}>
 		  <Text onPress={goBack}>BACK TO HOME</Text>
 		</TouchableOpacity>
 	  </View> 
@@ -71,6 +71,16 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 5,
     borderColor: '#c8c7cc',
     borderTopWidth: 0.5,
+  },
+  MapsPageBtn:{
+    width: "40%",
+    backgroundColor: "#fb5b5a",
+    borderRadius: 25,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20,
+    marginBottom: 10
   },
   powered: {},
   listView: {},
