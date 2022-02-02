@@ -8,10 +8,9 @@ import env from 'process'
 //https://stackoverflow.com/questions/64002670/how-to-update-google-maps-react-direction-route
 //https://stackblitz.com/edit/adding-direction-waypoint-1xyogt?file=src/MapComponent.js
 
-//env.GOOGLE_MAPS_APIKEY = "AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8"
 const GOOGLE_MAPS_APIKEY='AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8'
 const ip = '192.168.68.122'
-const localHost = 'http://'+ip+':5000/journeys'
+const localHost = 'http://'+ ip +':5000/journeys'
 console.log(localHost)
 const Home = (props: any) => {
   const username = props.navigation.state.params.username.username 
@@ -56,11 +55,11 @@ const Home = (props: any) => {
   return (
     <View style={styles.container}>
        <Text style={styles.welcomeText}>Welcome back {username}!</Text>
-        <TouchableOpacity>
-          <Text onPress={logValue}>Maps Page</Text>
+        <TouchableOpacity style={styles.MapsPageBtn}>
+          <Text style={styles.homePageBtnText} onPress={logValue}>Maps Page</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
-          <Text onPress={RatingPage}>Rating Page</Text>
+        <TouchableOpacity style={styles.ViewJourneyBtn}>
+          <Text style={styles.homePageBtnText} onPress={RatingPage}>Rating Page</Text>
         </TouchableOpacity>
       </View> 
 
@@ -68,9 +67,6 @@ const Home = (props: any) => {
 }
 
 //styling
-
-
-
 const styles = StyleSheet.create({
 
   container: {
@@ -80,57 +76,40 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   welcomeText:{
-    height:50,
-    color:"white",
-    fontSize:25
+    height: 200,
+    color: "white",
+    fontSize: 25
   },
-  map: {
-    width: (Dimensions.get('window').width),
-    height: (Dimensions.get('window').height-200),
+  homePageBtnText: {
+    color: '#000000',
+    fontSize: 18,
+    height: 30,
   },
-  searchBox: {
-    top: 0,
-    position: "absolute",
-    flex: 1,
-    justifyContent: 'center',
+  MapsPageBtn:{
+    width: "40%",
+    backgroundColor: "#fb5b5a",
+    borderRadius: 25,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20,
+    marginBottom: 10
   },
-  textInputContainer: {
-    flexDirection: 'row',
+  ViewJourneyBtn:{
+    width: "40%",
+    backgroundColor: "#33FF99",
+    borderRadius: 25,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20,
+    marginBottom: 10
   },
-  textInput: {
-    backgroundColor: '#FFFFFF',
-    height: 44,
-    borderRadius: 5,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    fontSize: 15,
-    flex: 1,
-  },
-  poweredContainer: {
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    borderBottomRightRadius: 5,
-    borderBottomLeftRadius: 5,
-    borderColor: '#c8c7cc',
-    borderTopWidth: 0.5,
-  },
-  powered: {},
-  listView: {},
   row: {
     backgroundColor: '#FFFFFF',
     padding: 13,
     height: 44,
     flexDirection: 'row',
-  },
-  separator: {
-    height: 0.5,
-    backgroundColor: '#c8c7cc',
-  },
-  description: {},
-  loader: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    height: 20,
   },
 });
 
