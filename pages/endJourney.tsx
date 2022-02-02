@@ -10,6 +10,10 @@ const EndJourney = (props: any) => {
     console.log(input);
     props.navigation.navigate("journeyInProgress", { username: input })
   }
+  const goToRating = () => {
+    console.log(input);
+    props.navigation.navigate("ratings", { username: input })
+  }
   
   const goBackToHome = () => {
     props.navigation.navigate("Home")
@@ -20,6 +24,9 @@ const EndJourney = (props: any) => {
 	<View style={styles.container}>
 	   <Text style={styles.welcomeText}>Welcome to End Journey Page {username}!</Text>
 		<TouchableOpacity>
+		  <Text onPress={goToRating}>RATE JOURNEY</Text>
+		</TouchableOpacity>
+		  <TouchableOpacity>
 		  <Text onPress={goBack}>Back to Homepage</Text>
 		</TouchableOpacity>
 	  </View> 
