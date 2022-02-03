@@ -79,18 +79,6 @@ const Home = (props: any) => {
         <TouchableOpacity style={styles.ViewJourneyBtn}>
           <Text style={styles.homePageBtnText} onPress={RatingPage}>Rating Page</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
-          <Text onPress={dummyJourney}>Dummy Page</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text onPress={startJourneyPage}>Start Journey Page</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text onPress={journeyInProgress}>Journey Progress Page</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text onPress={endJourney}>End Page</Text>
-        </TouchableOpacity>
         <TouchableOpacity style={styles.ViewJourneyBtn}>
           <Text style={styles.homePageBtnText} onPress={payment}>Payment Page</Text>
         </TouchableOpacity>
