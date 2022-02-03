@@ -1,5 +1,6 @@
 // Payment.
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 //Styling in future 
 //import './App.css';
 
@@ -10,18 +11,27 @@ const Payment = (props: any) => {
   const totalPrice = 58;
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Make Stripe Payment @ Freaky Jolly</h1>
-        <p>
-          Pay Total of $ {totalPrice}
-        </p>
-        <p>
-          <StripeCheckoutButton price={totalPrice} />
-        </p>
-      </header>
-    </div>
+    <View style= {styles.container}>
+      <Text style= {styles.container}>Make Stripe Payment @ Freaky Jolly</Text>
+      <Text style= {styles.container}>Pay Total of $ {totalPrice}</Text>
+      <StripeCheckoutButton price={totalPrice} />
+    </View>
+    
   );
 }
 
+const styles = StyleSheet.create({
+
+  container: {
+    flex: 1,
+    backgroundColor: '#003f5c',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  welcomeText:{
+    height: 200,
+    color: "white",
+    fontSize: 25
+  },
+});
 export default Payment;

@@ -1,15 +1,34 @@
 // import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, ActivityIndicator, TextInput, TouchableOpacity, Button } from 'react-native';
+const ip = '192.168.68.122'
+const localHost = 'http://'+ ip +':5000/userLogin'
 
 const Login = (props: any) => {
  
   const [input, setInput] = useState({username: ""});
+  const [isLoading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
 
   const logValue = () => {
     //console.log(input);
     props.navigation.navigate("Home", { username: input })
+
   };
+
+  const getData = async () => {
+    try {
+      const response = await fetch(localHost);
+      const json = await response.json();
+      //console.log(JSON.stringify(json.exJourneys))
+      setData(json.RowDataPacket);
+      console.log(data[0].username)
+    } catch (error) { 
+      console.log(error);
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
     <View style={styles.container}>

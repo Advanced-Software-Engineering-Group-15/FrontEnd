@@ -16,6 +16,7 @@ import StartJourney from './pages/startJourney';
 import JourneyInProgress from './pages/journeyInProgress';
 import EndJourney from './pages/endJourney';
 import Journeys from './pages/journeys';
+import Payment from './pages/payment';
 
 
 const AppNavigator = createStackNavigator(
@@ -29,6 +30,7 @@ const AppNavigator = createStackNavigator(
     JourneyInProgress: JourneyInProgress,
     EndJourney: EndJourney,
     Journeys: Journeys,
+    Payment: Payment,
   },
   {
     defaultNavigationOptions: {
