@@ -8,12 +8,18 @@ const journeyType = ["Drive", "Cycle", "Walk"]
 // }
 
 const App = (props: any) => {
-  const [input, setInput] = useState({startJourney: ""});
+
+  let journey = {
+    type: '',
+    start: '',
+    end: '',
+    cost: '0.0',
+  };
 
   const logValue = () => {
-    console.log(input);
+    console.log(journey);
     //props.navigation.navigate("Home", { username: input })
-    props.navigation.navigate("Create_Journey", { username: input })
+   //props.navigation.navigate("Create_Journey", { username: input })
   };
 
   return (
@@ -28,7 +34,8 @@ const App = (props: any) => {
         <SelectDropdown
           data={journeyType}
           onSelect={(selectedItem, index) => {
-            console.log(selectedItem, index)
+            console.log(selectedItem, index);
+            journey.type = selectedItem;
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
             return selectedItem
@@ -37,31 +44,27 @@ const App = (props: any) => {
             return item
           }}
         />
+
+
         <Text>Start of Journey:</Text>
         <TextInput
           style={styles.input}
-          onChangeText={text => setInput({startJourney: text})}/>
-        <TouchableOpacity style={styles.loginBtn}>
-          <Text 
-          style={styles.loginText}
-          onPress={logValue}
-          >LOGIN</Text>
-        </TouchableOpacity>
+          onChangeText={text => journey.start = text}/>
+        <Text>End of Journey:</Text>
+        <TextInput
+        style={styles.input}
+        onChangeText={text => journey.end = text}/>
+        <Text>Cost of Journey:</Text>
+        <TextInput
+        style={styles.input}
+        onChangeText={text => journey.cost = text}/>
+
+
         <Button
           onPress={logValue}
           title="Learn More"
           color="#841584"
           accessibilityLabel="Learn more about this purple button"
-        />
-        <Text>End of Journey:</Text>
-        <TextInput
-        style={styles.input}
-        defaultValue=" "
-        />
-        <Text>Cost of Journey:</Text>
-        <TextInput
-        style={styles.input}
-        defaultValue=" "
         />
       </View>
       
