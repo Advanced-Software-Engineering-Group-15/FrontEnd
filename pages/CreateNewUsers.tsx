@@ -8,6 +8,11 @@ console.log(localHost)
 const CreateNewUserPage = (props: any) => {
 
   const [input, setInput] = useState({username: ""});
+  const [input_1stname, firstname] = useState({firstname: ""});
+  const [input_2ndname, familyname] = useState({familyname: ""});
+  const [input_phontnum, phonenumber] = useState({phonenumber: ""});
+  const [input_email, emailaddress] = useState({emailaddress: ""});
+  const [input_address, homeaddress] = useState({homeaddress: ""});
 
   const logValue = () => {
     //console.log(input);
@@ -22,8 +27,45 @@ const CreateNewUserPage = (props: any) => {
         <Text style={styles.title3}>Welcome to Carma! </Text>
         <Text style={styles.note}>Please fill in the following blanks: </Text>
         <Text style={styles.questions}>1. First Name: </Text>
-        <Text style={styles.questions}>1. First Name: </Text>
-        <Text style={styles.questions}>1. First Name: </Text>
+        <View style={styles.inputView} >
+          <TextInput  
+            style={styles.inputText}
+            placeholder="First Name..." 
+            placeholderTextColor="#C0C0C0"
+            onChangeText={text => firstname({firstname: text})}/>
+        </View>
+        <Text style={styles.questions}>2. Family Name: </Text>
+        <View style={styles.inputView} >
+          <TextInput  
+            style={styles.inputText}
+            placeholder="Family Name..." 
+            placeholderTextColor="#C0C0C0"
+            onChangeText={text => familyname({familyname: text})}/>
+        </View>
+        <Text style={styles.questions}>3. Phone Number: </Text>
+        <View style={styles.inputView} >
+          <TextInput  
+            style={styles.inputText}
+            placeholder="Phone Number..." 
+            placeholderTextColor="#C0C0C0"
+            onChangeText={text => phonenumber({phonenumber: text})}/>
+        </View>
+        <Text style={styles.questions}>4. Email Address: </Text>
+        <View style={styles.inputView} >
+          <TextInput  
+            style={styles.inputText}
+            placeholder="Email Address..." 
+            placeholderTextColor="#C0C0C0"
+            onChangeText={text => emailaddress({emailaddress: text})}/>
+        </View>
+        <Text style={styles.questions}>5. Home Address (Optional): </Text>
+        <View style={styles.inputView} >
+          <TextInput  
+            style={styles.inputText}
+            placeholder="Home Address (Optional)..." 
+            placeholderTextColor="#C0C0C0"
+            onChangeText={text => homeaddress({homeaddress: text})}/>
+        </View>
 
 
     </View>
@@ -80,6 +122,19 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     marginTop:10,
     justifyContent: 'center',
+  },
+  inputView:{
+    width:"70%",
+    backgroundColor:"#FFFFFF",
+    borderRadius:25,
+    height:50,
+    marginBottom:20,
+    justifyContent:"center",
+    padding:20
+  },
+  inputText:{
+    height:50,
+    color:"white"
   },
 
 
