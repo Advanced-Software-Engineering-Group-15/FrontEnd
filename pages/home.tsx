@@ -31,7 +31,7 @@ const Home = (props: any) => {
       const json = await response.json();
       //console.log(JSON.stringify(json.exJourneys))
       setData(json.exJourneys);
-      console.log(data[0].journeyStart)
+      console.log('Received journey data from server!')
     } catch (error) { 
       console.log(error);
     } finally {
@@ -64,6 +64,12 @@ const Home = (props: any) => {
     console.log(username);
     props.navigation.navigate("EndJourney", { username: username })
   }
+
+  const journeyPage = () => {
+    getData();
+    console.log(data);
+    props.navigation.navigate("Journeys",  { journeyData: data })
+  }
   
   return (
     <View style={styles.container}>
@@ -85,6 +91,9 @@ const Home = (props: any) => {
         </TouchableOpacity>
         <TouchableOpacity>
           <Text onPress={endJourney}>End Page</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.ViewJourneyBtn}>
+          <Text style={styles.homePageBtnText} onPress={journeyPage}>Journeys Page</Text>
         </TouchableOpacity>
       </View> 
 
