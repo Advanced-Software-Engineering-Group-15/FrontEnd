@@ -40,7 +40,8 @@
     "react-native-web": "0.17.1",
     "react-navigation": "^4.4.4",
     "react-navigation-stack": "^2.10.4",
-    "react-router-native": "^6.2.1"
+    "react-router-native": "^6.2.1",
+    "tcomb-form-native": "^0.6.20"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
