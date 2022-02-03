@@ -4,7 +4,7 @@ import MapView, {Callout, Marker, Circle} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import env from 'process'
+
 
 
 //These will be useful resources for adding waypoints etc+
@@ -17,35 +17,12 @@ const ip = '192.168.68.122'
 const localHost = 'http://'+ip+':5000/journeys'
 console.log(localHost)
 const Maps = (props: any) => {
-  const username = props.navigation.state.params.username.username 
   
   const origin = {latitude: 53.5237268, longitude: -6.4142645};
   const destination = {latitude: 53.5395496, longitude: -6.4466271};
   
-  const [isLoading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
-
   const [pin, setPin] = React.useState ({latitude: 53.5237268, longitude: -6.4142645}) // Initial location
-  
-  const ref = useRef();
 
-  const getData = async () => {
-    try {
-      const response = await fetch(localHost);
-      const json = await response.json();
-      //console.log(JSON.stringify(json.exJourneys))
-      setData(json.exJourneys);
-      console.log(data[0].journeyStart)
-    } catch (error) { 
-      console.log(error);
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const logValue = () => {
-    getData();
-  }
   
   return (
     <View style={styles.container}>

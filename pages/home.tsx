@@ -1,7 +1,6 @@
 // import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState, useRef } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
-import env from 'process'
 
 
 //These will be useful resources for adding waypoints etc+
@@ -22,8 +21,6 @@ const Home = (props: any) => {
   const [data, setData] = useState([]);
 
   const [pin, setPin] = React.useState ({latitude: 53.5237268, longitude: -6.4142645}) // Initial location
-  
-  const ref = useRef();
 
   const getData = async () => {
     try {
@@ -40,7 +37,6 @@ const Home = (props: any) => {
   }
 
   const logValue = () => {
-    getData();
     props.navigation.navigate("Maps",  { username: username })
   }
 
@@ -69,6 +65,11 @@ const Home = (props: any) => {
     console.log(username);
     props.navigation.navigate("Payment", { username: username })
   }
+
+  const journeys= () => {
+    getData();
+    props.navigation.navigate("Journeys", { journeyData: data })
+  }
   
   return (
     <View style={styles.container}>
@@ -78,6 +79,9 @@ const Home = (props: any) => {
         </TouchableOpacity>
         <TouchableOpacity style={styles.ViewJourneyBtn}>
           <Text style={styles.homePageBtnText} onPress={RatingPage}>Rating Page</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.ViewJourneyBtn}>
+          <Text style={styles.homePageBtnText} onPress={journeys}>JourneysPage</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.ViewJourneyBtn}>
           <Text style={styles.homePageBtnText} onPress={payment}>Payment Page</Text>

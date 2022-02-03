@@ -24,6 +24,8 @@ const App = () => {
   );
 };
 
+export default App;
+
 function CheckoutForm() {
   const [isPaymentLoading, setPaymentLoading] = useState(false);
   const stripe = useStripe();

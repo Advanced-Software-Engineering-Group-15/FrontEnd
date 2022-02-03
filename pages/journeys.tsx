@@ -7,16 +7,15 @@ const localHost = 'http://'+ip+':5000/journeys'
 
 const Journeys = (props: any) => {
   const data = props.navigation.state.params //journeys received from server
-  
+  console.log(JSON.stringify(data));
   //create array of journeys as react components, these will be rendered to screen
   //Key is there to keep react happy, lets it identify an item by the key
   var journeys = [];
   for (let i = 0; i < data.journeyData.length; i++) {
     journeys.push(
       <View key={data.journeyData[i]["journeyID"]}> 
-        <AvailableJourneyCard data={data.journeyData[i]}/>
+        <AvailableJourneyCard data={data.journeyData[i]} navigation={props.navigation}/>
       </View>
-
     );
   }
 
@@ -29,8 +28,6 @@ const Journeys = (props: any) => {
     </View>
   );
 };
-
-
 
 const styles = StyleSheet.create({
   container: {
