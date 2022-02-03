@@ -1,5 +1,5 @@
 // import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useStripe, useElements } from 'react';
 import { StyleSheet, Text, View, ActivityIndicator, TextInput, TouchableOpacity, Button } from 'react-native';
 import { Elements, CardElement } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -26,6 +26,34 @@ const App = () => {
 
 function CheckoutForm() {
   const [isPaymentLoading, setPaymentLoading] = useState(false);
+  const stripe = useStripe();
+  const elements = useElements();
+  
+  const payMoney = async (e) => {
+    e.preventDefault();
+    if (!stripe || !elements) {
+      return;
+    }
+    setPaymentLoading(true);
+    const clientSecret = getClientSecret();
+    const paymentResult = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: elements.getElement(CardElement),
+        billing_details: {
+          name: "Faruq Yusuff",
+        },
+      },
+    });
+    setPaymentLoading(false);
+    if (paymentResult.error) {
+      alert(paymentResult.error.message);
+    } else {
+      if (paymentResult.paymentIntent.status === "succeeded") {
+        alert("Success!");
+      }
+    }
+  };
+
   return (
     <div
       style={{
@@ -43,6 +71,7 @@ function CheckoutForm() {
             display: "block",
             width: "100%",
           }}
+          onSubmit = {payMoney}
         >
           <div
             style={{
