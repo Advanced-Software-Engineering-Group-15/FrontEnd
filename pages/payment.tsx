@@ -1,16 +1,13 @@
-// import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useState, useStripe, useElements } from 'react';
-import { StyleSheet, Text, View, ActivityIndicator, TextInput, TouchableOpacity, Button } from 'react-native';
-import { Elements, CardElement } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
-import "./App.css";
+// Payment.
+import React from 'react';
+//Styling in future 
+//import './App.css';
 
-// Make sure to call `loadStripe` outside of a component’s render to avoid
-// recreating the `Stripe` object on every render.
+import StripeCheckoutButton from '../components/stripe-button/stripe.button.component';
 
-//    STRIPE PUBLISHABLE KEY available on Stripe Dashboard
-//    pk_test_51KP6MgG8vk1CJkKgWm5D962cWUXuxyFWpSJDDpFpDLjKmcAObx9kWrxrhX8DVc36ZwEBJdndG3EGX6bLHTsDd8vc00CvpXY7pQ 
+const Payment = (props: any) => {
 
+<<<<<<< HEAD
 const stripePromise = loadStripe('pk_test_51KP6MgG8vk1CJkKgWm5D962cWUXuxyFWpSJDDpFpDLjKmcAObx9kWrxrhX8DVc36ZwEBJdndG3EGX6bLHTsDd8vc00CvpXY7pQ');
 
 const App = () => {
@@ -55,52 +52,23 @@ function CheckoutForm() {
       }
     }
   };
+=======
+  const totalPrice = 58;
+>>>>>>> 7ca5035 (Adding Payment button)
 
   return (
-    <div
-      style={{
-        padding: "3rem",
-      }}
-    >
-      <div
-        style={{
-          maxWidth: "500px",
-          margin: "0 auto",
-        }}
-      >
-        <form
-          style={{
-            display: "block",
-            width: "100%",
-          }}
-          onSubmit = {payMoney}
-        >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <CardElement
-              className="card"
-              options={{
-                style: {
-                  base: {
-                    backgroundColor: "white"
-                  } 
-                },
-              }}
-            />
-            <button
-              className="pay-button"
-              disabled={isPaymentLoading}
-            >
-              {isPaymentLoading ? "Loading..." : "Pay"}
-            </button>
-          </div>
-        </form>
-      </div>
+    <div className="App">
+      <header className="App-header">
+        <h1>Make Stripe Payment @ Freaky Jolly</h1>
+        <p>
+          Pay Total of $ {totalPrice}
+        </p>
+        <p>
+          <StripeCheckoutButton price={totalPrice} />
+        </p>
+      </header>
     </div>
   );
 }
+
+export default Payment;
