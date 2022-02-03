@@ -5,8 +5,6 @@ import MapViewDirections from 'react-native-maps-directions';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
-
-
 //These will be useful resources for adding waypoints etc+
 //https://stackoverflow.com/questions/64002670/how-to-update-google-maps-react-direction-route
 //https://stackblitz.com/edit/adding-direction-waypoint-1xyogt?file=src/MapComponent.js
@@ -17,11 +15,23 @@ const ip = '192.168.68.122'
 const localHost = 'http://'+ip+':5000/journeys'
 console.log(localHost)
 const Maps = (props: any) => {
-  console.log(JSON.stringify(props.navigation.state.params))
-  const origin = {latitude: 53.5237268, longitude: -6.4142645};
-  const destination = {latitude: 53.5395496, longitude: -6.4466271};
   
-  const [pin, setPin] = React.useState ({latitude: 53.5237268, longitude: -6.4142645}) // Initial location
+  const originData = props.navigation.state.params.start;
+  const destData = props.navigation.state.params.end;
+  
+  const origin = {latitude: Number(originData[0]["latitude"]), longitude: Number(originData[0]["longitude"])};
+  const destination = {latitude: Number(destData[0]["latitude"]), longitude: Number(destData[0]["longitude"])};
+  
+  const initialRegion =  {
+    latitude: Number(originData[0]["latitude"]), 
+    longitude: Number(originData[0]["longitude"]),
+    latitudeDelta: 0.000281,
+    longitudeDelta: 0.002661
+  }         
+
+  console.log("ORIGIN: ",origin)
+  console.log("DESTINATION: ",destination)
+  const [pin, setPin] = React.useState (origin) // Initial location
 
   
   return (
@@ -67,12 +77,7 @@ const Maps = (props: any) => {
       
       <MapView 
         style={styles.map} 
-        initialRegion={{ 
-          latitude: 53.5237268, 
-          longitude: -6.4142645,
-          latitudeDelta: 0.000281,
-          longitudeDelta: 0.002661
-        }}
+        initialRegion={initialRegion}
         showsUserLocation
       >
         <Marker 

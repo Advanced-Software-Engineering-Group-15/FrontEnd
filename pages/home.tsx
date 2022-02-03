@@ -28,16 +28,12 @@ const Home = (props: any) => {
       const json = await response.json();
       //console.log(JSON.stringify(json.exJourneys))
       setData(json.exJourneys);
-      console.log(data[0].journeyStart)
+      //console.log(data[0].journeyStart)
     } catch (error) { 
       console.log(error);
     } finally {
       setLoading(false)
     }
-  }
-
-  const logValue = () => {
-    props.navigation.navigate("Maps",  { username: username })
   }
 
   const RatingPage = () => {
@@ -74,9 +70,6 @@ const Home = (props: any) => {
   return (
     <View style={styles.container}>
        <Text style={styles.welcomeText}>Welcome back {username}!</Text>
-        <TouchableOpacity style={styles.MapsPageBtn}>
-          <Text style={styles.homePageBtnText} onPress={logValue}>Maps Page</Text>
-        </TouchableOpacity>
         <TouchableOpacity style={styles.ViewJourneyBtn}>
           <Text style={styles.homePageBtnText} onPress={RatingPage}>Rating Page</Text>
         </TouchableOpacity>

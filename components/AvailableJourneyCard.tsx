@@ -6,16 +6,16 @@ const AvailableJourneyCard = (props: any) => {
 
     const openInMap = () => {
         props.navigation.navigate("Maps",  { 
-            start: JSON.stringify(props.data["journeyStart"]), 
-            end: JSON.stringify(props.data["journeyEnd"]) })
+            start: props.data["journeyStart"], 
+            end: props.data["journeyEnd"] })
       }
       
     return (
         <TouchableOpacity onPress={openInMap}>
             <View style={styles.items}>
                 <Text>Journey ID: {JSON.stringify(props.data["journeyID"])}</Text>
-                <Text>Departure: {JSON.stringify(props.data["journeyStart"])}</Text>
-                <Text>Destination: {JSON.stringify(props.data["journeyEnd"])}</Text>
+                <Text>Departure: {JSON.stringify(props.data["journeyStart"][0]["name"])}</Text>
+                <Text>Destination: {JSON.stringify(props.data["journeyEnd"][0]["name"])}</Text>
                 <Text>Journey type: {JSON.stringify(props.data["journeyType"])}</Text>
                 <Text>Pricing ({JSON.stringify(props.data["pricing"][0]['currency'])}): {JSON.stringify(props.data["pricing"][0]['quantity'])}</Text>
                 <Text>Creator ID: {JSON.stringify(props.data["creatorID"])}</Text>
