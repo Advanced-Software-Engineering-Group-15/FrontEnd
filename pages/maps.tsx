@@ -17,7 +17,7 @@ const ip = '192.168.68.122'
 const localHost = 'http://'+ip+':5000/journeys'
 console.log(localHost)
 const Maps = (props: any) => {
-  
+  console.log(JSON.stringify(props.navigation.state.params))
   const origin = {latitude: 53.5237268, longitude: -6.4142645};
   const destination = {latitude: 53.5395496, longitude: -6.4466271};
   
