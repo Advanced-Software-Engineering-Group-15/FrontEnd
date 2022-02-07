@@ -1,6 +1,7 @@
 // import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState, useRef } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
+import env from 'process'
 
 
 //These will be useful resources for adding waypoints etc+
@@ -21,14 +22,15 @@ const Home = (props: any) => {
   const [data, setData] = useState([]);
 
   const [pin, setPin] = React.useState ({latitude: 53.5237268, longitude: -6.4142645}) // Initial location
-
+  
   const getData = async () => {
     try {
       const response = await fetch(localHost);
       const json = await response.json();
       //console.log(JSON.stringify(json.exJourneys))
       setData(json.exJourneys);
-      //console.log(data[0].journeyStart)
+
+      console.log(data[0].journeyStart)
     } catch (error) { 
       console.log(error);
     } finally {
@@ -36,10 +38,12 @@ const Home = (props: any) => {
     }
   }
 
+
+  
   const RatingPage = () => {
     props.navigation.navigate("Ratings")
   }
-  
+
   const dummyJourney = () => {
     props.navigation.navigate("Dummy",  { username: username })
   }
@@ -65,6 +69,7 @@ const Home = (props: any) => {
   const journeys= () => {
     getData();
     props.navigation.navigate("Journeys", { journeyData: data })
+
   }
   
   return (
