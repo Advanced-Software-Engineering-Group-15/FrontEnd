@@ -44,10 +44,6 @@ const styles = StyleSheet.create({
     color:"white",
     fontSize:25
   },
-  map: {
-    width: (Dimensions.get('window').width),
-    height: (Dimensions.get('window').height-200),
-  },
   searchBox: {
     top: 0,
     position: "absolute",

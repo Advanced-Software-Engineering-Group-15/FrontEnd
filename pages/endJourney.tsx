@@ -47,10 +47,6 @@ const styles = StyleSheet.create({
     color:"white",
     fontSize:25
   },
-  map: {
-    width: (Dimensions.get('window').width),
-    height: (Dimensions.get('window').height-200),
-  },
   searchBox: {
     top: 0,
     position: "absolute",
@@ -87,11 +83,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 10
   },
-  welcomeText:{
-    height: 200,
-    color: "white",
-    fontSize: 25
-  },
   startText:{
     height:50,
     color:"white",
@@ -106,6 +97,7 @@ const styles = StyleSheet.create({
     justifyContent:"center",
     marginTop:40,
     marginBottom:10
+  },
   powered: {},
   listView: {},
   row: {
