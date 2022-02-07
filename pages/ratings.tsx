@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Dimensions, ScrollView, Button, Alert } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { Rating, RatingProps } from 'react-native-elements';
 import env from 'process'
@@ -8,10 +8,86 @@ import env from 'process'
 
 type RatingsComponentProps = {};
 
-const Ratings: React.FunctionComponent<RatingsComponentProps> = () => {
-  const ratingCompleted = (rating: number) => {
-    console.log('Rating is: ' + rating);
+const Ratings: React.FunctionComponent<RatingsComponentProps> = (props: any) => {
+  const [showBox, setShowBox] = useState(true);
+  const [rate, setRating] = useState({rate: 0});
+  // const ratingConfirm = (rating: number) => {
+  //   console.log('Rating is: ' + rating);
+  //   return Alert.alert(
+  //     "Are your sure?",
+  //     "Confirm Journey Rating",
+  //     [
+  //       // The "Yes" button
+  //       {
+  //         text: "Yes",
+  //         onPress: () => {
+  //           setShowBox(false);
+  //           console.log('Rating is:' + (rating-1) );
+  //         },
+  //       },
+  //       // The "No" button
+  //       // Does nothing but dismiss the dialog when tapped
+  //       {
+  //         text: "No",
+  //       },
+  //     ]
+  //   );
+  //   console.log('hello');
+  // };
+
+  const ratingConfirm = (rating: number) => {
+    setRating({rate: rating})
+    return Alert.alert(
+      "Are your sure?",
+      "Confirm Journey Rating of: " + rating + " stars",
+      [
+        // The "Yes" button
+        {
+          text: "Yes",
+          onPress: () => {
+            setShowBox(false);
+            console.log('Rating is: ' + (rating));
+            props.navigation.navigate("Home")
+          },
+        },
+        // The "No" button
+        // Does nothing but dismiss the dialog when tapped
+        {
+          text: "No",
+          onPress: () => {
+            console.log('Rating was: ' + (rating));
+          }
+        },
+      ]
+    );
+    console.log('hello');
   };
+
+  const alertTest = (rate) => {
+    console.log('Testing Alert');
+    return Alert.alert(
+      "Are your sure?",
+      "Confirm Journey Rating of :"+ rate + "stars",
+      [
+        // The "Yes" button
+        {
+          text: "Yes",
+          onPress: () => {
+            setShowBox(false);
+            console.log('Rating is: '+ (rate-1));
+          },
+        },
+        // The "No" button
+        // Does nothing but dismiss the dialog when tapped
+        {
+          text: "No",
+        },
+      ]
+    );
+    console.log('hello');
+  };
+
+ 
 
   const ratingProps = {};
   return (
@@ -27,10 +103,17 @@ const Ratings: React.FunctionComponent<RatingsComponentProps> = () => {
           <Rating
             showRating
             imageSize={40}
-            onFinishRating={ratingCompleted}
+            onFinishRating={ratingConfirm}
+            startingValue="{0}"
             style={{ paddingVertical: 10 }}
           />
-          <Rating
+          <TouchableOpacity style={styles.confirmBtn}>
+          <Text 
+          style={styles.confirmText}
+          onPress={alertTest}
+          >Confirm</Text>
+        </TouchableOpacity>
+          {/* <Rating
             showRating
             type="star"
             fractions={1}
@@ -58,7 +141,7 @@ const Ratings: React.FunctionComponent<RatingsComponentProps> = () => {
             onFinishRating={ratingCompleted}
             showRating
             style={styles.rating}
-          />
+          /> */}
         </View>
       </ScrollView>
     </View>
@@ -91,6 +174,19 @@ const styles = StyleSheet.create({
   rating: {
     paddingVertical: 10,
   },
+  confirmBtn:{
+    width:"60%",
+    backgroundColor:"#fb5b5a",
+    borderRadius:25,
+    height:50,
+    alignItems:"center",
+    justifyContent:"center",
+    marginTop:40,
+    marginBottom:10
+  },
+  confirmText:{
+    color:"white"
+  }
 });
 
 export default Ratings;

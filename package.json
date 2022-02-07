@@ -12,6 +12,8 @@
   "dependencies": {
     "@react-native-community/cli": "^6.3.1",
     "@react-native-community/masked-view": "^0.1.11",
+    "@stripe/react-stripe-js": "^1.7.0",
+    "@stripe/stripe-js": "^1.22.0",
     "dotenv": "^14.3.2",
     "expo": "~43.0.2",
     "expo-status-bar": "~1.1.0",

@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, ActivityIndicator, TextInput, TouchableOpacity,
   
 
 const EndJourney = (props: any) => {
+
   const username = props.navigation.state.params.username.username 
   
   const startJourney = () => {
@@ -22,13 +23,12 @@ const EndJourney = (props: any) => {
   
   return (
 	<View style={styles.container}>
-	   <Text style={styles.welcomeText}>Welcome to End Journey Page {username}!</Text>
-	   <Text style={styles.welcomeText}>This page is displayed when the Journey has ended {username}!</Text>
+	   <Text style={styles.welcomeText}>Welcome to End Journey Page!</Text>
 		<TouchableOpacity style={styles.MapsPageBtn}>
 		  <Text onPress={goToRating}>RATE JOURNEY</Text>
 		</TouchableOpacity>
 		<TouchableOpacity style={styles.MapsPageBtn}>
-		  <Text onPress={goBack}>Back to Homepage</Text>
+		  <Text onPress={goBackToHome}>Back to Homepage</Text>
 		</TouchableOpacity>
 	  </View> 
   );
@@ -36,7 +36,6 @@ const EndJourney = (props: any) => {
 
 //styling
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
     backgroundColor: '#003f5c',
@@ -88,6 +87,25 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 10
   },
+  welcomeText:{
+    height: 200,
+    color: "white",
+    fontSize: 25
+  },
+  startText:{
+    height:50,
+    color:"white",
+    fontSize:25
+  },
+  startBtn:{
+    width:"80%",
+    backgroundColor:"#fb5b5a",
+    borderRadius:25,
+    height:50,
+    alignItems:"center",
+    justifyContent:"center",
+    marginTop:40,
+    marginBottom:10
   powered: {},
   listView: {},
   row: {

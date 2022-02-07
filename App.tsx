@@ -11,7 +11,13 @@ import Login from './pages/login';
 import Home from './pages/home';
 import Maps from './pages/maps';
 import Ratings from './pages/ratings';
+import Dummy from './pages/dummy';
+import StartJourney from './pages/startJourney';
+import JourneyInProgress from './pages/journeyInProgress';
+import EndJourney from './pages/endJourney';
+import Journeys from './pages/journeys';
 import CreateNewUserPage from './pages/CreateNewUsers';
+
 
 
 const AppNavigator = createStackNavigator(
@@ -20,6 +26,11 @@ const AppNavigator = createStackNavigator(
     Home: Home,
     Maps: Maps,
     Ratings: Ratings,
+    Dummy: Dummy,
+    StartJourney: StartJourney,
+    JourneyInProgress: JourneyInProgress,
+    EndJourney: EndJourney,
+    Journeys: Journeys,
     CreateNewUserPage: CreateNewUserPage,
   },
   {

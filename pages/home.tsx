@@ -23,14 +23,13 @@ const Home = (props: any) => {
 
   const [pin, setPin] = React.useState ({latitude: 53.5237268, longitude: -6.4142645}) // Initial location
   
-  const ref = useRef();
-
   const getData = async () => {
     try {
       const response = await fetch(localHost);
       const json = await response.json();
       //console.log(JSON.stringify(json.exJourneys))
       setData(json.exJourneys);
+
       console.log(data[0].journeyStart)
     } catch (error) { 
       console.log(error);
@@ -39,30 +38,51 @@ const Home = (props: any) => {
     }
   }
 
-  const logValue = () => {
-    getData();
-    props.navigation.navigate("Maps",  { username: username })
-  }
 
+  
   const RatingPage = () => {
     props.navigation.navigate("Ratings")
   }
-  
-  const StartJourneyPage = () => {
-    props.navigation.navigate("startJourney",  { username: username })
+
+  const dummyJourney = () => {
+    props.navigation.navigate("Dummy",  { username: username })
+  }
+
+  const startJourneyPage = () => {
+    props.navigation.navigate("StartJourney",  { username: username })
+  }
+
+  const journeyInProgress = () => {
+    console.log(username);
+    props.navigation.navigate("JourneyInProgress", { username: username })
+  }
+  const endJourney = () => {
+    console.log(username);
+    props.navigation.navigate("EndJourney", { username: username })
+  }
+
+  const payment = () => {
+    console.log(username);
+    props.navigation.navigate("Payment", { username: username })
+  }
+
+  const journeys= () => {
+    getData();
+    props.navigation.navigate("Journeys", { journeyData: data })
+
   }
   
   return (
     <View style={styles.container}>
        <Text style={styles.welcomeText}>Welcome back {username}!</Text>
-       <TouchableOpacity style={styles.MapsPageBtn}>
-          <Text style={styles.StartJourneyBtnText} onPress={StartJourneyPage}>Start a new Journey</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.MapsPageBtn}>
-          <Text style={styles.homePageBtnText} onPress={logValue}>Maps Page</Text>
-        </TouchableOpacity>
         <TouchableOpacity style={styles.ViewJourneyBtn}>
           <Text style={styles.homePageBtnText} onPress={RatingPage}>Rating Page</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.ViewJourneyBtn}>
+          <Text style={styles.homePageBtnText} onPress={journeys}>JourneysPage</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.ViewJourneyBtn}>
+          <Text style={styles.homePageBtnText} onPress={payment}>Payment Page</Text>
         </TouchableOpacity>
       </View> 
 
@@ -87,16 +107,6 @@ const styles = StyleSheet.create({
     color: '#000000',
     fontSize: 18,
     height: 30,
-  },
-  StartJourneyBtnText:{
-    width: "40%",
-    backgroundColor: "#FF8000",
-    borderRadius: 25,
-    height: 50,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 20,
-    marginBottom: 10
   },
   MapsPageBtn:{
     width: "40%",
