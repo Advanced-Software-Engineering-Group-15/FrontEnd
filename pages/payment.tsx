@@ -6,7 +6,6 @@ import StripeCheckout from 'react-stripe-checkout';
 //import './App.css';
 
 //npm install react-stripe-checkout
-//
 
 import StripeCheckoutButton from '../components/stripe-button/stripe.button.component';
 
