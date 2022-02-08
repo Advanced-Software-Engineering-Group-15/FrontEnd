@@ -1,3 +1,4 @@
+// stripe.button.component.tsx
 //    STRIPE PUBLISHABLE KEY available on Stripe Dashboard
 //    pk_test_51KP6MgG8vk1CJkKgWm5D962cWUXuxyFWpSJDDpFpDLjKmcAObx9kWrxrhX8DVc36ZwEBJdndG3EGX6bLHTsDd8vc00CvpXY7pQ 
 

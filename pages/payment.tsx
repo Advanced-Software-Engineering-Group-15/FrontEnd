@@ -4,10 +4,12 @@ import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-nati
 //Styling in future 
 //import './App.css';
 
+//import AvailableJourneyCard from '../components/AvailableJourneyCard';
 import StripeCheckoutButton from '../components/stripe-button/stripe.button.component';
 
-const Payment = (props: any) => {
+function Payment() {
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 const stripePromise = loadStripe('pk_test_51KP6MgG8vk1CJkKgWm5D962cWUXuxyFWpSJDDpFpDLjKmcAObx9kWrxrhX8DVc36ZwEBJdndG3EGX6bLHTsDd8vc00CvpXY7pQ');
 
@@ -56,29 +58,23 @@ function CheckoutForm() {
 =======
   const totalPrice = 58;
 >>>>>>> 7ca5035 (Adding Payment button)
+=======
+  const totalPrice = 100;
+>>>>>>> 594cb30 (Payment branch, updating button)
 
   return (
-    <View style= {styles.container}>
-      <Text style= {styles.container}>Make Stripe Payment @ Freaky Jolly</Text>
-      <Text style= {styles.container}>Pay Total of $ {totalPrice}</Text>
-      <StripeCheckoutButton price={totalPrice} />
-    </View>
-    
+    <div className="App">
+      <header className="App-header">
+        <h1>Make Stripe Payment @ Freaky Jolly</h1>
+        <p>
+          Pay Total of $ {totalPrice}
+        </p>
+        <p>
+          <StripeCheckoutButton price={totalPrice} />
+        </p>
+      </header>
+    </div>
   );
 }
 
-const styles = StyleSheet.create({
-
-  container: {
-    flex: 1,
-    backgroundColor: '#003f5c',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  welcomeText:{
-    height: 200,
-    color: "white",
-    fontSize: 25
-  },
-});
 export default Payment;
