@@ -1,106 +1,31 @@
-// import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useState, useStripe, useElements } from 'react';
-import { StyleSheet, Text, View, ActivityIndicator, TextInput, TouchableOpacity, Button } from 'react-native';
-import { Elements, CardElement } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
-import "./App.css";
+// Payment.
+import React, { useEffect, useState, useRef } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
+import StripeCheckout from 'react-stripe-checkout';
+//Styling in future 
+//import './App.css';
 
-// Make sure to call `loadStripe` outside of a component’s render to avoid
-// recreating the `Stripe` object on every render.
+//npm install react-stripe-checkout
 
-//    STRIPE PUBLISHABLE KEY available on Stripe Dashboard
-//    pk_test_51KP6MgG8vk1CJkKgWm5D962cWUXuxyFWpSJDDpFpDLjKmcAObx9kWrxrhX8DVc36ZwEBJdndG3EGX6bLHTsDd8vc00CvpXY7pQ 
+import StripeCheckoutButton from '../components/stripe-button/stripe.button.component';
 
-const stripePromise = loadStripe('pk_test_51KP6MgG8vk1CJkKgWm5D962cWUXuxyFWpSJDDpFpDLjKmcAObx9kWrxrhX8DVc36ZwEBJdndG3EGX6bLHTsDd8vc00CvpXY7pQ');
+function Payment() {
 
-const App = () => {
-  const stripe = loadStripe(
-    "pk_test_51KP6MgG8vk1CJkKgWm5D962cWUXuxyFWpSJDDpFpDLjKmcAObx9kWrxrhX8DVc36ZwEBJdndG3EGX6bLHTsDd8vc00CvpXY7pQ"
-  );
-  return (
-    <Elements stripe={stripe}>
-      <CheckoutForm />
-    </Elements>
-  );
-};
-
-export default App;
-
-function CheckoutForm() {
-  const [isPaymentLoading, setPaymentLoading] = useState(false);
-  const stripe = useStripe();
-  const elements = useElements();
-  
-  const payMoney = async (e) => {
-    e.preventDefault();
-    if (!stripe || !elements) {
-      return;
-    }
-    setPaymentLoading(true);
-    const clientSecret = getClientSecret();
-    const paymentResult = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: {
-        card: elements.getElement(CardElement),
-        billing_details: {
-          name: "Faruq Yusuff",
-        },
-      },
-    });
-    setPaymentLoading(false);
-    if (paymentResult.error) {
-      alert(paymentResult.error.message);
-    } else {
-      if (paymentResult.paymentIntent.status === "succeeded") {
-        alert("Success!");
-      }
-    }
-  };
+  const totalPrice = 100;
 
   return (
-    <div
-      style={{
-        padding: "3rem",
-      }}
-    >
-      <div
-        style={{
-          maxWidth: "500px",
-          margin: "0 auto",
-        }}
-      >
-        <form
-          style={{
-            display: "block",
-            width: "100%",
-          }}
-          onSubmit = {payMoney}
-        >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <CardElement
-              className="card"
-              options={{
-                style: {
-                  base: {
-                    backgroundColor: "white"
-                  } 
-                },
-              }}
-            />
-            <button
-              className="pay-button"
-              disabled={isPaymentLoading}
-            >
-              {isPaymentLoading ? "Loading..." : "Pay"}
-            </button>
-          </div>
-        </form>
-      </div>
+    <div className="App">
+      <header className="App-header">
+        <h1>Make Stripe Payment @ Carma</h1>
+        <p>
+          Pay Total of $ {totalPrice}
+        </p>
+        <p>
+          <StripeCheckoutButton price={totalPrice} />
+        </p>
+      </header>
     </div>
   );
 }
+
+export default Payment;

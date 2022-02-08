@@ -30,7 +30,7 @@ const Home = (props: any) => {
       //console.log(JSON.stringify(json.exJourneys))
       setData(json.exJourneys);
 
-      console.log(data[0].journeyStart)
+      //console.log(data[0].journeyStart)
     } catch (error) { 
       console.log(error);
     } finally {
@@ -91,6 +91,9 @@ const Home = (props: any) => {
         <TouchableOpacity style={styles.ViewJourneyBtn}>
           <Text style={styles.homePageBtnText} onPress={Create_Journey}>Create Journey</Text>
         </TouchableOpacity>
+        <TouchableOpacity style={styles.ViewJourneyBtn}>
+          <Text style={styles.homePageBtnText} onPress={payment}>Payment Page</Text>
+        </TouchableOpacity>
       </View> 
   );
 }
@@ -141,21 +144,6 @@ const styles = StyleSheet.create({
     padding: 13,
     height: 44,
     flexDirection: 'row',
-  },
-  homePageBtnText: {
-    color: '#000000',
-    fontSize: 18,
-    height: 30,
-  },
-  ViewJourneyBtn:{
-    width: "40%",
-    backgroundColor: "#33FF99",
-    borderRadius: 25,
-    height: 50,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 20,
-    marginBottom: 10
   },
 });
 
