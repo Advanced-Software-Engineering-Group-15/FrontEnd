@@ -1,10 +1,13 @@
 // Payment.
 import React, { useEffect, useState, useRef } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
+import StripeCheckout from 'react-stripe-checkout';
 //Styling in future 
 //import './App.css';
 
-//import AvailableJourneyCard from '../components/AvailableJourneyCard';
+//npm install react-stripe-checkout
+//npm install react-stripe
+
 import StripeCheckoutButton from '../components/stripe-button/stripe.button.component';
 
 function Payment() {
