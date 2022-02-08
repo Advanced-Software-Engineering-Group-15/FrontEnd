@@ -9,7 +9,7 @@ import env from 'process'
 //https://stackblitz.com/edit/adding-direction-waypoint-1xyogt?file=src/MapComponent.js
 
 const GOOGLE_MAPS_APIKEY='AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8'
-const ip = '192.168.68.122'
+const ip = '192.168.0.143'
 const localHost = 'http://'+ ip +':5000/journeys'
 console.log(localHost)
 const Home = (props: any) => {
@@ -39,7 +39,7 @@ const Home = (props: any) => {
   }
 
 
-  
+
   const RatingPage = () => {
     props.navigation.navigate("Ratings")
   }
@@ -72,6 +72,10 @@ const Home = (props: any) => {
 
   }
   
+  const Create_Journey = () => {
+    props.navigation.navigate("Create_Journey", { username: username })
+  }
+
   return (
     <View style={styles.container}>
        <Text style={styles.welcomeText}>Welcome back {username}!</Text>
@@ -84,10 +88,14 @@ const Home = (props: any) => {
         <TouchableOpacity style={styles.ViewJourneyBtn}>
           <Text style={styles.homePageBtnText} onPress={payment}>Payment Page</Text>
         </TouchableOpacity>
+        <TouchableOpacity style={styles.ViewJourneyBtn}>
+          <Text style={styles.homePageBtnText} onPress={Create_Journey}>Create Journey</Text>
+        </TouchableOpacity>
       </View> 
-
   );
 }
+
+
 
 //styling
 const styles = StyleSheet.create({
@@ -133,6 +141,21 @@ const styles = StyleSheet.create({
     padding: 13,
     height: 44,
     flexDirection: 'row',
+  },
+  homePageBtnText: {
+    color: '#000000',
+    fontSize: 18,
+    height: 30,
+  },
+  ViewJourneyBtn:{
+    width: "40%",
+    backgroundColor: "#33FF99",
+    borderRadius: 25,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20,
+    marginBottom: 10
   },
 });
 
