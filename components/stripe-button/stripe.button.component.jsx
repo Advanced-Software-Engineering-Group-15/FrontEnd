@@ -3,6 +3,7 @@
 //    pk_test_51KP6MgG8vk1CJkKgWm5D962cWUXuxyFWpSJDDpFpDLjKmcAObx9kWrxrhX8DVc36ZwEBJdndG3EGX6bLHTsDd8vc00CvpXY7pQ 
 
 import React from 'react';
+import StripeCheckout from 'react-stripe-checkout';
 
 const StripeCheckoutButton = ({ price }) => {
     const priceForStripe = price * 100;
@@ -29,4 +30,3 @@ const StripeCheckoutButton = ({ price }) => {
 }
 
 export default StripeCheckoutButton;
-

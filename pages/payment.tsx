@@ -65,7 +65,7 @@ function CheckoutForm() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Make Stripe Payment @ Freaky Jolly</h1>
+        <h1>Make Stripe Payment @ Carma</h1>
         <p>
           Pay Total of $ {totalPrice}
         </p>
