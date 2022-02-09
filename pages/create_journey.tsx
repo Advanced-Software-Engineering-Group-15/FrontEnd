@@ -62,9 +62,9 @@ const App = (props: any) => {
 
         <Button
           onPress={logValue}
-          title="Learn More"
+          title="Create Journey"
           color="#841584"
-          accessibilityLabel="Learn more about this purple button"
+          accessibilityLabel="Create Journey"
         />
       </View>
       
