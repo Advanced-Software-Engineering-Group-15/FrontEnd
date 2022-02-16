@@ -15,6 +15,7 @@
     "@stripe/react-stripe-js": "^1.7.0",
     "@stripe/stripe-js": "^1.22.0",
     "@stripe/stripe-react-native": "^0.2.3",
+    "axios": "^0.26.0",
     "dotenv": "^14.3.2",
     "expo": "~43.0.2",
     "expo-status-bar": "~1.1.0",

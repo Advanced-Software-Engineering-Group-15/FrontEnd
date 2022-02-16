@@ -1,15 +1,30 @@
 // import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, ActivityIndicator, TextInput, TouchableOpacity, Button } from 'react-native';
+import axios from 'axios';
+
+const ip = '192.168.68.122'
 
 const Login = (props: any) => {
- 
+  
   const [input, setInput] = useState({username: ""});
 
-  const logValue = () => {
-    //console.log(input);
-    props.navigation.navigate("Home", { username: input })
+  const SignIn = () => {
+    let url = 'http://'+ ip +':5000/sign-in'
+    axios.post(url, {
+      username: input
+    })
+    .then(function (response) {
+      if (response) {
+        console.log(response);
+        props.navigation.navigate("Home", { username: input })
+      }
+      else{
+        console.log("Sign in failed")
+      }
+    })
   };
+
   const SignUp = () => {
     //console.log(input);
     props.navigation.navigate("CreateNewUserPage")
@@ -31,7 +46,7 @@ const Login = (props: any) => {
         <TouchableOpacity style={styles.loginBtn}>
           <Text 
             style={styles.loginText}
-            onPress={logValue}
+            onPress={SignIn}
             >LOGIN
           </Text>
         </TouchableOpacity>
