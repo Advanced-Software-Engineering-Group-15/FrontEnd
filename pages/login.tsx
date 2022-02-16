@@ -3,26 +3,44 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, ActivityIndicator, TextInput, TouchableOpacity, Button } from 'react-native';
 import axios from 'axios';
 
-const ip = '192.168.68.122'
+const ip = '192.168.1.6'
 
 const Login = (props: any) => {
-  
-  const [input, setInput] = useState({username: ""});
 
+  let login_json = {
+    userName: '',
+    password: '',
+    useID: '',
+  };
+  
   const SignIn = () => {
-    let url = 'http://'+ ip +':5000/sign-in'
+    let url = 'http://' + ip + ':5000/sign-in'
+    var data = {
+      "userName": login_json.userName,
+      "password": login_json.password,
+      "useID": login_json.useID,
+    }
+    console.log(data)
     axios.post(url, {
-      username: input
+      body: JSON.stringify(data)
     })
     .then(function (response) {
       if (response) {
         console.log(response);
-        props.navigation.navigate("Home", { username: input })
+        // Check for login status
+        props.navigation.navigate("Home", {
+          username: login_json.userName,
+          password: login_json.password,
+          useID: login_json.useID,
+        })
       }
       else{
         console.log("Sign in failed")
       }
     })
+    .catch(function (error) {
+      console.log(error);
+    });
   };
 
   const SignUp = () => {
@@ -38,7 +56,16 @@ const Login = (props: any) => {
             style={styles.inputText}
             placeholder="Username..." 
             placeholderTextColor="#003f5c"
-            onChangeText={text => setInput({username: text})}/>
+            onChangeText={(text) => {login_json.userName = text}}
+          />
+        </View>
+        <View style={styles.inputView} >
+          <TextInput  
+            secureTextEntry={true}
+            style={styles.inputText}
+            placeholder="Password..." 
+            placeholderTextColor="#003f5c"
+            onChangeText={(text) => login_json.password = text}/>
         </View>
         <TouchableOpacity>
           <Text style={styles.forgot}>Forgot Password?</Text>
@@ -86,7 +113,8 @@ const styles = StyleSheet.create({
   },
   inputText:{
     height:50,
-    color:"white"
+    color: "white",
+    textAlign: 'center'
   },
   forgot:{
     color:"white",
