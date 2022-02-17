@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet,  TouchableOpacity} from 'react-native';
 
 const AvailableJourneyCard = (props: any) => {
-    console.log(JSON.stringify(props.data))
+    console.log(JSON.stringify(props.data, null, 2))
 
     const openInMap = () => {
         props.navigation.navigate("Maps",  { 
@@ -13,13 +13,13 @@ const AvailableJourneyCard = (props: any) => {
     return (
         <TouchableOpacity onPress={openInMap}>
             <View style={styles.items}>
-                <Text>Journey ID: {JSON.stringify(props.data["journeyID"])}</Text>
-                <Text>Departure: {JSON.stringify(props.data["journeyStart"][0]["name"])}</Text>
-                <Text>Destination: {JSON.stringify(props.data["journeyEnd"][0]["name"])}</Text>
-                <Text>Journey type: {JSON.stringify(props.data["journeyType"])}</Text>
-                <Text>Pricing ({JSON.stringify(props.data["pricing"][0]['currency'])}): {JSON.stringify(props.data["pricing"][0]['quantity'])}</Text>
-                <Text>Creator ID: {JSON.stringify(props.data["creatorID"])}</Text>
-                <Text>Creator Rating: {JSON.stringify(props.data["creatorRating"])}</Text> 
+                <Text>Journey ID: {JSON.stringify(props.data.journeyID)}</Text>
+                <Text>Departure: {JSON.stringify(props.data.journeyStart.name)}</Text>
+                <Text>Destination: {JSON.stringify(props.data.journeyEnd.name)}</Text>
+                <Text>Journey type: {JSON.stringify(props.data.journeyType)}</Text>
+                <Text>Pricing ({JSON.stringify(props.data.pricing.currency)}): {JSON.stringify(props.data.pricing.quantity)}</Text>
+                <Text>Creator ID: {JSON.stringify(props.data.creatorID)}</Text>
+                <Text>Creator Rating: {JSON.stringify(props.data.creatorRating)}</Text> 
             </View>
         </TouchableOpacity>
     )

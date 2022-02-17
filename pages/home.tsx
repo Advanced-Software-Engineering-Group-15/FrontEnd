@@ -23,14 +23,16 @@ const Home = (props: any) => {
 
   const [pin, setPin] = React.useState ({latitude: 53.5237268, longitude: -6.4142645}) // Initial location
   
+  useEffect(() => {
+    getData()
+  }, []);
+
   const getData = async () => {
     try {
       const response = await fetch(localHost);
       const json = await response.json();
       //console.log(JSON.stringify(json.exJourneys))
       setData(json.exJourneys);
-
-      console.log(data[0].journeyStart)
     } catch (error) { 
       console.log(error);
     } finally {
@@ -67,7 +69,6 @@ const Home = (props: any) => {
   }
 
   const journeys= () => {
-    getData();
     props.navigation.navigate("Journeys", { journeyData: data })
 
   }

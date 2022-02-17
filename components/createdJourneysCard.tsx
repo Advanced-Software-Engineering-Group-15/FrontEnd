@@ -1,17 +1,22 @@
 import React from 'react';
 import { View, Text, StyleSheet,  TouchableOpacity} from 'react-native';
 
-const AvailableJourneyCard = (props: any) => {
+const createdJourneysCard = (props: any) => {
     console.log(JSON.stringify(props.data))
 
-    const openInMap = () => {
-        props.navigation.navigate("Maps",  { 
-            start: props.data["journeyStart"], 
-            end: props.data["journeyEnd"] })
-      }
+    // const openInMap = () => {
+    //     props.navigation.navigate("Maps",  { 
+    //         start: props.data["journeyStart"], 
+    //         end: props.data["journeyEnd"] })
+    //   }
+
+    const goHome = () => {
+        //console.log(input);
+        props.navigation.navigate("Home", { username: "comingFromJourneys" })
+      };
       
     return (
-        <TouchableOpacity onPress={openInMap}>
+        <TouchableOpacity onPress={goHome}>
             <View style={styles.items}>
                 <Text>Journey ID: {JSON.stringify(props.data["journeyID"])}</Text>
                 <Text>Departure: {JSON.stringify(props.data["journeyStart"][0]["name"])}</Text>
@@ -34,4 +39,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default AvailableJourneyCard;
+export default createdJourneysCard;
