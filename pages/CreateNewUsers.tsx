@@ -53,8 +53,10 @@ const CreateNewUserPage = (props: any) => {
     else{
       if (newUser_json.password !== newUser_json.repeated_password){
         console.log("Passwords are different!!")
+        password_warning = 0
       }
       else{
+        password_warning = 1
         axios.post(url, {
           body: JSON.stringify(json_data)
         })
@@ -144,7 +146,7 @@ const CreateNewUserPage = (props: any) => {
             placeholderTextColor="#C0C0C0"
             onChangeText={(text) => {newUser_json.repeated_password = text}}/>
         </View>
-        <Text></Text>
+        {password_warning ? null : <Text style={styles.questions}>6  7Passwords are different!!</Text>}
         <TouchableOpacity style={styles.finishBtn}>
           <Text 
             style={styles.questions} 
