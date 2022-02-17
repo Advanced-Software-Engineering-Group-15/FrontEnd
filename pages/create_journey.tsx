@@ -18,8 +18,8 @@ const App = (props: any) => {
 
   const logValue = () => {
     console.log(journey);
-    //props.navigation.navigate("Home", { username: input })
-    //props.navigation.navigate("Create_Journey", { journey})
+    // props.navigation.navigate("Home", { username: input })
+    // props.navigation.navigate("Create_Journey", { journey})
   };
 
   return (
