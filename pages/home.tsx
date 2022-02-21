@@ -9,7 +9,7 @@ import env from 'process'
 //https://stackblitz.com/edit/adding-direction-waypoint-1xyogt?file=src/MapComponent.js
 
 const GOOGLE_MAPS_APIKEY='AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8'
-const ip = '192.168.68.118'
+const ip = '192.168.0.143'
 const localHost = 'http://'+ ip +':5000/journeys'
 console.log(localHost)
 const Home = (props: any) => {
@@ -29,8 +29,6 @@ const Home = (props: any) => {
       const json = await response.json();
       //console.log(JSON.stringify(json.exJourneys))
       setData(json.exJourneys);
-
-      console.log(data[0].journeyStart)
     } catch (error) { 
       console.log(error);
     } finally {
@@ -76,6 +74,10 @@ const Home = (props: any) => {
     props.navigation.navigate("Create_Journey", { username: username })
   }
 
+  const More_Options = () => {
+    props.navigation.navigate("MoreOptions", { username: username })
+  }
+
   return (
     <View style={styles.container}>
        <Text style={styles.welcomeText}>Welcome back {username}!</Text>
@@ -90,6 +92,9 @@ const Home = (props: any) => {
         </TouchableOpacity>
         <TouchableOpacity style={styles.ViewJourneyBtn}>
           <Text style={styles.homePageBtnText} onPress={Create_Journey}>Create Journey</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.ViewJourneyBtn}>
+          <Text style={styles.homePageBtnText} onPress={More_Options}>More Options</Text>
         </TouchableOpacity>
       </View> 
   );

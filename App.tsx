@@ -19,6 +19,8 @@ import Journeys from './pages/journeys';
 import CreateNewUserPage from './pages/CreateNewUsers';
 import Create_Journey from './pages/create_journey';
 import Payment from './pages/payment';
+import MoreOptions from './pages/moreOptions';
+import MyProfile from './pages/myProfile';
 
 const AppNavigator = createStackNavigator(
   {
@@ -33,7 +35,9 @@ const AppNavigator = createStackNavigator(
     Journeys: Journeys,
     CreateNewUserPage: CreateNewUserPage,
     Create_Journey: Create_Journey,
-    Payment: Payment
+    Payment: Payment,
+    MoreOptions: MoreOptions,
+    MyProfile: MyProfile,
   },
   {
     defaultNavigationOptions: {
