@@ -3,35 +3,33 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, ActivityIndicator, TextInput, TouchableOpacity, Button } from 'react-native';
 import axios from 'axios';
 
-const ip = '192.168.1.6'
+const ip = '192.168.68.122'
 
 const Login = (props: any) => {
 
   let login_json = {
     userName: '',
-    password: '',
-    useID: '',
+    password: ''
   };
   
   const SignIn = () => {
     let url = 'http://' + ip + ':5000/sign-in'
     var data = {
       "userName": login_json.userName,
-      "password": login_json.password,
-      "useID": login_json.useID,
+      "password": login_json.password
     }
     console.log(data)
     axios.post(url, {
       body: JSON.stringify(data)
     })
     .then(function (response) {
-      if (response) {
-        console.log(response);
+      const isLogin = response.data.isLoginSuccessful;
+      console.log(isLogin);
+      if (isLogin) {     
         // Check for login status
         props.navigation.navigate("Home", {
           username: login_json.userName,
           password: login_json.password,
-          useID: login_json.useID,
         })
       }
       else{
