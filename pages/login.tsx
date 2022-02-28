@@ -1,15 +1,46 @@
 // import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, ActivityIndicator, TextInput, TouchableOpacity, Button } from 'react-native';
+import axios from 'axios';
+
+const ip = '192.168.68.122'
 
 const Login = (props: any) => {
- 
-  const [input, setInput] = useState({username: ""});
 
-  const logValue = () => {
-    //console.log(input);
-    props.navigation.navigate("Home", { username: input })
+  let login_json = {
+    userName: '',
+    password: ''
   };
+  
+  const SignIn = () => {
+    let url = 'http://' + ip + ':5000/sign-in'
+    var data = {
+      "userName": login_json.userName,
+      "password": login_json.password
+    }
+    console.log(data)
+    axios.post(url, {
+      body: JSON.stringify(data)
+    })
+    .then(function (response) {
+      const isLogin = response.data.isLoginSuccessful;
+      console.log(isLogin);
+      if (isLogin) {     
+        // Check for login status
+        props.navigation.navigate("Home", {
+          username: login_json.userName,
+          password: login_json.password,
+        })
+      }
+      else{
+        console.log("Sign in failed")
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  };
+
   const SignUp = () => {
     //console.log(input);
     props.navigation.navigate("CreateNewUserPage")
@@ -23,7 +54,16 @@ const Login = (props: any) => {
             style={styles.inputText}
             placeholder="Username..." 
             placeholderTextColor="#003f5c"
-            onChangeText={text => setInput({username: text})}/>
+            onChangeText={(text) => {login_json.userName = text}}
+          />
+        </View>
+        <View style={styles.inputView} >
+          <TextInput  
+            secureTextEntry={true}
+            style={styles.inputText}
+            placeholder="Password..." 
+            placeholderTextColor="#003f5c"
+            onChangeText={(text) => login_json.password = text}/>
         </View>
         <TouchableOpacity>
           <Text style={styles.forgot}>Forgot Password?</Text>
@@ -31,7 +71,7 @@ const Login = (props: any) => {
         <TouchableOpacity style={styles.loginBtn}>
           <Text 
             style={styles.loginText}
-            onPress={logValue}
+            onPress={SignIn}
             >LOGIN
           </Text>
         </TouchableOpacity>
@@ -71,7 +111,8 @@ const styles = StyleSheet.create({
   },
   inputText:{
     height:50,
-    color:"white"
+    color: "white",
+    textAlign: 'center'
   },
   forgot:{
     color:"white",
