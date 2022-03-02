@@ -1,27 +1,91 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { StyleSheet, Text, View, ActivityIndicator, TextInput, TouchableOpacity, Button } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+import axios from 'axios';
 
-const ip = '192.168.68.122'
-const localHost = 'http://' + ip + ':5000/journeys'
+const ip = '192.168.1.6'
+const localHost = 'http://' + ip + ':5000/new-user'
 console.log(localHost)
 
 const CreateNewUserPage = (props: any) => {
 
-  const [input, setInput] = useState({username: ""});
-  const [input_1stname, firstname] = useState({firstname: ""});
-  const [input_2ndname, familyname] = useState({familyname: ""});
-  const [input_phontnum, phonenumber] = useState({phonenumber: ""});
-  const [input_email, emailaddress] = useState({emailaddress: ""});
-  const [input_address, homeaddress] = useState({homeaddress: ""});
+  let newUser_json = {
+    firstName: '',
+    familyName: '',
+    phoneNumber: '',
+    emailAddress: '',
+    homeAddress: '',
+    userName: '', 
+    password: '',
+    repeated_password: '',
+    userID: '2000',
+  };
+  let password_warning = 0
 
-  const logValue = () => {
-    //console.log(input);
-    props.navigation.navigate("Home", { username: input })
+  const SendNewUser = () => {
+    let url = 'http://' + ip + ':5000/new-user'
+    var json_data = {
+      "firstName": newUser_json.firstName,
+      "familyName": newUser_json.familyName,
+      "phoneNumber": newUser_json.phoneNumber,
+      "emailAddress": newUser_json.emailAddress,
+      "homeAddress": newUser_json.homeAddress,
+      "userName": newUser_json.firstName.concat('-', newUser_json.familyName),
+      "password": newUser_json.password,
+      "userID": newUser_json.userID,
+    }
+    if (newUser_json.password !== newUser_json.repeated_password){
+      <Text style={styles.questions}>Passwords are different!! 
+      </Text>
+    }
+
+    let check_blank = newUser_json.firstName.concat(
+      newUser_json.firstName,
+      newUser_json.familyName,
+      newUser_json.phoneNumber,
+      newUser_json.emailAddress,
+      newUser_json.password,
+      newUser_json.repeated_password,
+    );
+
+    if (check_blank === ""){
+      console.log("There are blanks to be filled.")
+    }
+    else{
+      if (newUser_json.password !== newUser_json.repeated_password){
+        console.log("Passwords are different!!")
+        password_warning = 0
+      }
+      else{
+        password_warning = 1
+        axios.post(url, {
+          body: JSON.stringify(json_data)
+        })
+        .then(function (response) {
+          if (response) {
+            console.log(response);
+            // Check for login status
+            
+            props.navigation.navigate("Login", {
+              username: newUser_json.userName,
+              password: newUser_json.password,
+              useID: newUser_json.userID,
+            })
+          }
+          else{
+            console.log("Sign in failed")
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      }
+    }
   };
 
-
   return (
-    <View style={styles.container}>
+    
+    <SafeAreaView  style={styles.container}>
+      <ScrollView>
         <Text style={styles.title1}>Welcome to Carma! </Text>
         <Text style={styles.title2}>Welcome to Carma! </Text>
         <Text style={styles.title3}>Welcome to Carma! </Text>
@@ -32,7 +96,7 @@ const CreateNewUserPage = (props: any) => {
             style={styles.inputText}
             placeholder="First Name..." 
             placeholderTextColor="#C0C0C0"
-            onChangeText={text => firstname({firstname: text})}/>
+            onChangeText={(text) => {newUser_json.firstName = text}}/>
         </View>
         <Text style={styles.questions}>2. Family Name: </Text>
         <View style={styles.inputView} >
@@ -40,7 +104,7 @@ const CreateNewUserPage = (props: any) => {
             style={styles.inputText}
             placeholder="Family Name..." 
             placeholderTextColor="#C0C0C0"
-            onChangeText={text => familyname({familyname: text})}/>
+            onChangeText={(text) => {newUser_json.familyName = text}}/>
         </View>
         <Text style={styles.questions}>3. Phone Number: </Text>
         <View style={styles.inputView} >
@@ -48,7 +112,7 @@ const CreateNewUserPage = (props: any) => {
             style={styles.inputText}
             placeholder="Phone Number..." 
             placeholderTextColor="#C0C0C0"
-            onChangeText={text => phonenumber({phonenumber: text})}/>
+            onChangeText={(text) => {newUser_json.phoneNumber = text}}/>
         </View>
         <Text style={styles.questions}>4. Email Address: </Text>
         <View style={styles.inputView} >
@@ -56,7 +120,7 @@ const CreateNewUserPage = (props: any) => {
             style={styles.inputText}
             placeholder="Email Address..." 
             placeholderTextColor="#C0C0C0"
-            onChangeText={text => emailaddress({emailaddress: text})}/>
+            onChangeText={(text) => {newUser_json.emailAddress = text}}/>
         </View>
         <Text style={styles.questions}>5. Home Address (Optional): </Text>
         <View style={styles.inputView} >
@@ -64,11 +128,35 @@ const CreateNewUserPage = (props: any) => {
             style={styles.inputText}
             placeholder="Home Address (Optional)..." 
             placeholderTextColor="#C0C0C0"
-            onChangeText={text => homeaddress({homeaddress: text})}/>
+            onChangeText={(text) => {newUser_json.homeAddress = text}}/>
         </View>
+        <Text style={styles.questions}>6. Password: </Text>
+        <View style={styles.inputView} >
+          <TextInput  
+            style={styles.inputText}
+            placeholder="Password..." 
+            placeholderTextColor="#C0C0C0"
+            onChangeText={(text) => {newUser_json.password = text}}/>
+        </View>
+        <Text style={styles.questions}>7. Repeat password: </Text>
+        <View style={styles.inputView} >
+          <TextInput  
+            style={styles.inputText}
+            placeholder="Repeat password..." 
+            placeholderTextColor="#C0C0C0"
+            onChangeText={(text) => {newUser_json.repeated_password = text}}/>
+        </View>
+        {password_warning ? null : <Text style={styles.questions}>6  7Passwords are different!!</Text>}
+        <TouchableOpacity style={styles.finishBtn}>
+          <Text 
+            style={styles.questions} 
+            onPress={SendNewUser}
+            >SIGN UP
+          </Text>
+        </TouchableOpacity>
 
-
-    </View>
+      </ScrollView>
+    </SafeAreaView>
   ); 
 
 }
@@ -113,7 +201,6 @@ const styles = StyleSheet.create({
     fontWeight:"bold",
     fontSize: 22,
     color: "black",
-    
   },
   questions: {
     fontWeight: "bold", 
@@ -135,6 +222,16 @@ const styles = StyleSheet.create({
   inputText:{
     height:50,
     color:"black"
+  },
+  finishBtn:{
+    width:"35%",
+    backgroundColor:"#fb5b5a",
+    borderRadius:25,
+    height:50,
+    alignItems:"center",
+    justifyContent:"center",
+    marginTop:50,
+    marginBottom:10
   },
 
 
