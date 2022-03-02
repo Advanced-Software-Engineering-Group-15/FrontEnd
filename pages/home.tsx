@@ -8,7 +8,7 @@ import env from 'process'
 //https://stackblitz.com/edit/adding-direction-waypoint-1xyogt?file=src/MapComponent.js
 
 const GOOGLE_MAPS_APIKEY='AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8'
-const ip = '192.168.1.6'
+const ip = '192.168.68.122'
 // const ip = '192.168.68.118'
 //const ip = '192.168.68.122'
 

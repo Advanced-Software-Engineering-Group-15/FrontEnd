@@ -1,7 +1,6 @@
 // import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState, useRef } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
-import env from 'process'
 
 
 //These will be useful resources for adding waypoints etc+
