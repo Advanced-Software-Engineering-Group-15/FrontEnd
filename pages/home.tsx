@@ -3,13 +3,15 @@ import React, { useEffect, useState, useRef } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 import env from 'process'
 
-
 //These will be useful resources for adding waypoints etc+
 //https://stackoverflow.com/questions/64002670/how-to-update-google-maps-react-direction-route
 //https://stackblitz.com/edit/adding-direction-waypoint-1xyogt?file=src/MapComponent.js
 
 const GOOGLE_MAPS_APIKEY='AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8'
-const ip = '192.168.68.122'
+const ip = '192.168.1.6'
+// const ip = '192.168.68.118'
+//const ip = '192.168.68.122'
+
 
 const localHost = 'http://'+ ip +':5000/journeys'
 console.log(localHost)
@@ -24,6 +26,10 @@ const Home = (props: any) => {
 
   const [pin, setPin] = React.useState ({latitude: 53.5237268, longitude: -6.4142645}) // Initial location
   
+  useEffect(() => {
+    getData()
+  }, []);
+
   const getData = async () => {
     try {
       const response = await fetch(localHost);
@@ -36,8 +42,6 @@ const Home = (props: any) => {
       setLoading(false)
     }
   }
-
-
 
   const RatingPage = () => {
     props.navigation.navigate("Ratings")
@@ -66,9 +70,7 @@ const Home = (props: any) => {
   }
 
   const journeys= () => {
-    getData();
     props.navigation.navigate("Journeys", { journeyData: data })
-
   }
   
   const Create_Journey = () => {

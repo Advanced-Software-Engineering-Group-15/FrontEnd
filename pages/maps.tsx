@@ -20,12 +20,12 @@ const Maps = (props: any) => {
   const originData = props.navigation.state.params.start;
   const destData = props.navigation.state.params.end;
   
-  const origin = {latitude: Number(originData[0]["latitude"]), longitude: Number(originData[0]["longitude"])};
-  const destination = {latitude: Number(destData[0]["latitude"]), longitude: Number(destData[0]["longitude"])};
+  const origin = {latitude: Number(originData.latitude), longitude: Number(originData.longitude)};
+  const destination = {latitude: Number(destData.latitude), longitude: Number(destData.longitude)};
   
   const initialRegion =  {
-    latitude: Number(originData[0]["latitude"]), 
-    longitude: Number(originData[0]["longitude"]),
+    latitude: Number(originData.latitude), 
+    longitude: Number(originData.longitude),
     latitudeDelta: 0.000281,
     longitudeDelta: 0.002661
   }         
