@@ -11,7 +11,6 @@ import Login from './pages/login';
 import Home from './pages/home';
 import Maps from './pages/maps';
 import Ratings from './pages/ratings';
-import Dummy from './pages/dummy';
 import StartJourney from './pages/startJourney';
 import JourneyInProgress from './pages/journeyInProgress';
 import EndJourney from './pages/endJourney';
@@ -28,7 +27,6 @@ const AppNavigator = createStackNavigator(
     Home: Home,
     Maps: Maps,
     Ratings: Ratings,
-    Dummy: Dummy,
     StartJourney: StartJourney,
     JourneyInProgress: JourneyInProgress,
     EndJourney: EndJourney,

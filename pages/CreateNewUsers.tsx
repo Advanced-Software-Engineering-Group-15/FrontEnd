@@ -3,8 +3,8 @@ import { StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity, Scro
 import axios from 'axios';
 import { IP } from '../constants';
 
-const localHost = 'http://' + IP + ':5000/new-user'
-console.log(localHost)
+const url = 'http://' + IP + ':5000/new-user'
+console.log(url)
 
 const CreateNewUserPage = (props: any) => {
 
@@ -22,7 +22,7 @@ const CreateNewUserPage = (props: any) => {
   let password_warning = 0
 
   const SendNewUser = () => {
-    let url = 'http://' + ip + ':5000/new-user'
+
     var json_data = {
       "firstName": newUser_json.firstName,
       "familyName": newUser_json.familyName,
