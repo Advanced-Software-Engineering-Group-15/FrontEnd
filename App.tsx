@@ -4,8 +4,8 @@ import { NativeRouter, Route, Routes } from 'react-router-native';
 import { createMemoryHistory } from 'history';
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
-import "react-native-gesture-handler"
-import "react-native-screens"
+import "react-native-gesture-handler";
+import "react-native-screens";
 
 import Login from './pages/login';
 import Home from './pages/home';
@@ -19,7 +19,7 @@ import Journeys from './pages/journeys';
 import CreateNewUserPage from './pages/CreateNewUsers';
 import Create_Journey from './pages/create_journey';
 import Payment from './pages/payment';
-import MoreOptions from './pages/moreOptions';
+import MoreOptions from './pages/MoreOptions';
 import MyProfile from './pages/myProfile';
 
 const AppNavigator = createStackNavigator(
