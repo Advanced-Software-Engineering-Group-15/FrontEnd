@@ -3,39 +3,51 @@ import { View, Text, ScrollView, StyleSheet, TextInput, TouchableOpacity, Button
 import SelectDropdown from 'react-native-select-dropdown';
 import NumericInput from "react-native-numeric-input";
 import axios from 'axios';
-const journeyType = ["Drive", "Cycle", "Walk"]
-const currencyType = ["€", "$", "£"]
-//const ip = '192.168.68.118'
-const ip = '192.168.147.1'
-const localHost = 'http://'+ ip +':5000/newJourneys'
+import uuid from "react-native-uuid";
+import { IP } from '../constants';
+const journeyTypes = ["Drive", "Cycle", "Walk"]
+const currencyTypes = ["€", "$", "£"]
+
+const localHost = 'http://'+ IP +':5000/newJourneys'
 // const User = (props) => {
 // }
 
 const App = (props: any) => {
-
+  const username = props.navigation.state.params.username
   let journey = {
-    type: '',
-    start: '',
-    end: '',
-    currency: '$',
-    cost: 0,
+    journeyID: uuid.v1(),
+    journeyType: '',
+    journeyStart: {
+        name: '',
+        latitude: "53.5399601",
+        longitude: "6.4446056"
+    },
+    journeyEnd: {
+      name: '',
+      latitude: "53.5260758",
+      longitude: "-6.4160728"
+    },
+    pricing:{
+      currency: '$',
+      quantity: 0
+    },
+    creatorID: username,
+    creatorRating: '2.5',
   };
 
-  const logValue = () => {
+  const createJourney = () => {
     console.log(journey);
-<<<<<<< HEAD
-    // props.navigation.navigate("Home", { username: input })
-    // props.navigation.navigate("Create_Journey", { journey})
-=======
     
     //props.navigation.navigate("Home", { username: input })
     //props.navigation.navigate("Create_Journey", { journey})
     var data = {
-      "type": journey.type, 
-      "start": journey.start, 
-      "end": journey.end, 
-      "currency": journey.currency, 
-      "cost": journey.cost, 
+      "journeyID": journey.journeyID,
+      "journeyType": journey.journeyType,
+      "journeyStart": journey.journeyStart,
+      "journeyEnd": journey.journeyEnd,
+      "pricing": journey.pricing,
+      "creatorID": journey.creatorID,
+      "creatorRating": journey.creatorRating
     }
     axios.post(localHost, {
       body: JSON.stringify(data)
@@ -61,7 +73,6 @@ const App = (props: any) => {
   //  .then(function(data){ 
   //  console.log(data)
   //  });
->>>>>>> origin/master
   };
 
   return (
@@ -75,10 +86,10 @@ const App = (props: any) => {
       }}>
         {/* https://reactnativeexample.com/a-highly-customized-dropdown-select-picker-menu-for-react-native/ */}
         <SelectDropdown
-          data={journeyType}
+          data={journeyTypes}
           onSelect={(selectedItem, index) => {
             console.log(selectedItem, index);
-            journey.type = selectedItem;
+            journey.journeyType = selectedItem;
           }}
           defaultButtonText={"Select Journey Type"}
           buttonTextAfterSelection={(selectedItem, index) => {
@@ -93,11 +104,11 @@ const App = (props: any) => {
         <Text>Start of Journey:</Text>
         <TextInput
           style={styles.input}
-          onChangeText={text => journey.start = text}/>
+          onChangeText={text => journey.journeyStart.name = text}/>
         <Text>End of Journey:</Text>
         <TextInput
         style={styles.input}
-        onChangeText={text => journey.end = text}/>
+        onChangeText={text => journey.journeyEnd.name = text}/>
         {/* https://reactnativeexample.com/a-highly-customized-dropdown-select-picker-menu-for-react-native/ */}
         <Text>Cost of Journey:</Text>
         <View style={{
@@ -114,10 +125,10 @@ const App = (props: any) => {
             width:50,
           }}
 
-          data={currencyType}
+          data={currencyTypes}
           onSelect={(selectedItem, index) => {
             console.log(selectedItem, index);
-            journey.currency = selectedItem;
+            journey.pricing.currency = selectedItem;
           }}
           defaultButtonText={"$"}
           buttonTextAfterSelection={(selectedItem, index) => {
@@ -128,11 +139,11 @@ const App = (props: any) => {
           }}
         />
         <NumericInput      
-        onChange={value => journey.cost = value}
+        onChange={value => journey.pricing.quantity = value}
         />
         </View>
         <Button
-          onPress={logValue}
+          onPress={createJourney}
           title="Submit Journey"
           color="#841584"
           accessibilityLabel="Submit your journey to be created"
