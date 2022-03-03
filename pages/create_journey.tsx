@@ -4,11 +4,11 @@ import SelectDropdown from 'react-native-select-dropdown';
 import NumericInput from "react-native-numeric-input";
 import axios from 'axios';
 import uuid from "react-native-uuid";
+import { IP } from '../constants';
 const journeyTypes = ["Drive", "Cycle", "Walk"]
 const currencyTypes = ["€", "$", "£"]
-//const ip = '192.168.68.118'
-const ip = '192.168.68.122'
-const localHost = 'http://'+ ip +':5000/newJourneys'
+
+const localHost = 'http://'+ IP +':5000/newJourneys'
 // const User = (props) => {
 // }
 

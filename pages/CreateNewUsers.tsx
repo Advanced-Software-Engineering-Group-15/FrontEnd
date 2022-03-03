@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import axios from 'axios';
+import { IP } from '../constants';
 
-const ip = '192.168.1.6'
-const localHost = 'http://' + ip + ':5000/new-user'
+const localHost = 'http://' + IP + ':5000/new-user'
 console.log(localHost)
 
 const CreateNewUserPage = (props: any) => {

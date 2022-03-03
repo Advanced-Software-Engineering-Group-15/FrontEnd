@@ -2,8 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, ActivityIndicator, TextInput, TouchableOpacity, Button } from 'react-native';
 import axios from 'axios';
-
-const ip = '192.168.68.122'
+import { IP } from '../constants';
 
 const Login = (props: any) => {
 
@@ -13,7 +12,7 @@ const Login = (props: any) => {
   };
   
   const SignIn = () => {
-    let url = 'http://' + ip + ':5000/sign-in'
+    let url = 'http://' + IP + ':5000/sign-in'
     var data = {
       "userName": login_json.userName,
       "password": login_json.password

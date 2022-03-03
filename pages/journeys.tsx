@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
 import AvailableJourneyCard from '../components/AvailableJourneyCard';
-const ip = '192.168.68.122'
-// const ip = '192.168.68.122'
-const localHost = 'http://'+ip+':5000/journeys'
+import { IP } from '../constants';
+
+const localHost = 'http://'+IP+':5000/journeys'
 
 const Journeys = (props: any) => {
 

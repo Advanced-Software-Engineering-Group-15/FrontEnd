@@ -4,16 +4,14 @@ import MapView, {Callout, Marker, Circle} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import env from 'process'
-
+import { IP } from '../constants';
 //These will be useful resources for adding waypoints etc+
 //https://stackoverflow.com/questions/64002670/how-to-update-google-maps-react-direction-route
 //https://stackblitz.com/edit/adding-direction-waypoint-1xyogt?file=src/MapComponent.js
 
 //env.GOOGLE_MAPS_APIKEY = "AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8"
 const GOOGLE_MAPS_APIKEY='AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8'
-const ip = '192.168.68.122'
-const localHost = 'http://'+ip+':5000/journeys'
+const localHost = 'http://'+IP+':5000/journeys'
 console.log(localHost)
 const Maps = (props: any) => {
   

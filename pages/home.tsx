@@ -1,19 +1,16 @@
 // import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState, useRef } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
-import env from 'process'
+import { IP } from '../constants';
 
 //These will be useful resources for adding waypoints etc+
 //https://stackoverflow.com/questions/64002670/how-to-update-google-maps-react-direction-route
 //https://stackblitz.com/edit/adding-direction-waypoint-1xyogt?file=src/MapComponent.js
 
 const GOOGLE_MAPS_APIKEY='AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8'
-const ip = '192.168.68.122'
-// const ip = '192.168.68.118'
-//const ip = '192.168.68.122'
 
 
-const localHost = 'http://'+ ip +':5000/journeys'
+const localHost = 'http://'+ IP +':5000/journeys'
 console.log(localHost)
 const Home = (props: any) => {
   const username = props.navigation.state.params.username.username 
