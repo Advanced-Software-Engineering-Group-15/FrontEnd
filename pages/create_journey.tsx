@@ -5,13 +5,12 @@ import NumericInput from "react-native-numeric-input";
 import axios from 'axios';
 import uuid from "react-native-uuid";
 import { IP } from '../constants';
-//var KafkaRest = require('kafka-rest');
-
 const journeyTypes = ["Drive", "Cycle", "Walk"]
 const currencyTypes = ["€", "$", "£"]
 
 const localHost = 'http://'+ IP +':5000/newJourneys'
-
+// const User = (props) => {
+// }
 
 const App = (props: any) => {
   const username = props.navigation.state.params.username
