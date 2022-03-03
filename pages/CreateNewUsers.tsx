@@ -3,11 +3,12 @@ import { StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity, Scro
 import axios from 'axios';
 import { IP } from '../constants';
 
-const localHost = 'http://' + IP + ':5000/new-user'
+const localHost = 'http://' + IP + ':5000/newuser'
 console.log(localHost)
 
 const CreateNewUserPage = (props: any) => {
-
+  const [warning, setWarning] = useState(0);
+  const [warning_msg, setWarning_msg] = useState('');
   let newUser_json = {
     firstName: '',
     familyName: '',
@@ -19,10 +20,9 @@ const CreateNewUserPage = (props: any) => {
     repeated_password: '',
     userID: '2000',
   };
-  let password_warning = 0
 
   const SendNewUser = () => {
-    let url = 'http://' + ip + ':5000/new-user'
+    let url = 'http://' + IP + ':5000/new-user'
     var json_data = {
       "firstName": newUser_json.firstName,
       "familyName": newUser_json.familyName,
@@ -31,13 +31,9 @@ const CreateNewUserPage = (props: any) => {
       "homeAddress": newUser_json.homeAddress,
       "userName": newUser_json.firstName.concat('-', newUser_json.familyName),
       "password": newUser_json.password,
+      "repeated_password": newUser_json.repeated_password,
       "userID": newUser_json.userID,
     }
-    if (newUser_json.password !== newUser_json.repeated_password){
-      <Text style={styles.questions}>Passwords are different!! 
-      </Text>
-    }
-
     let check_blank = newUser_json.firstName.concat(
       newUser_json.firstName,
       newUser_json.familyName,
@@ -47,17 +43,21 @@ const CreateNewUserPage = (props: any) => {
       newUser_json.repeated_password,
     );
 
-    if (check_blank === ""){
+    if (json_data["firstName"] === "" || json_data["familyName"] === "" || json_data["phoneNumber"] === "" 
+        || json_data["emailAddress"] === "" || json_data["password"] === "" ||  json_data["repeated_password"] === ""){
       console.log("There are blanks to be filled.")
+      setWarning(1)
+      setWarning_msg("Please fill the mandatory field.")
     }
     else{
       if (newUser_json.password !== newUser_json.repeated_password){
         console.log("Passwords are different!!")
-        password_warning = 0
+        setWarning(1)
+        setWarning_msg("The input passwords are different.")
       }
       else{
-        password_warning = 1
-        axios.post(url, {
+        setWarning(0)  
+        axios.post(localHost, {
           body: JSON.stringify(json_data)
         })
         .then(function (response) {
@@ -90,7 +90,7 @@ const CreateNewUserPage = (props: any) => {
         <Text style={styles.title2}>Welcome to Carma! </Text>
         <Text style={styles.title3}>Welcome to Carma! </Text>
         <Text style={styles.note}>Please fill in the following blanks: </Text>
-        <Text style={styles.questions}>1. First Name: </Text>
+        <Text style={styles.questions}>1.* First Name: </Text>
         <View style={styles.inputView} >
           <TextInput  
             style={styles.inputText}
@@ -98,7 +98,7 @@ const CreateNewUserPage = (props: any) => {
             placeholderTextColor="#C0C0C0"
             onChangeText={(text) => {newUser_json.firstName = text}}/>
         </View>
-        <Text style={styles.questions}>2. Family Name: </Text>
+        <Text style={styles.questions}>2.* Family Name: </Text>
         <View style={styles.inputView} >
           <TextInput  
             style={styles.inputText}
@@ -106,7 +106,7 @@ const CreateNewUserPage = (props: any) => {
             placeholderTextColor="#C0C0C0"
             onChangeText={(text) => {newUser_json.familyName = text}}/>
         </View>
-        <Text style={styles.questions}>3. Phone Number: </Text>
+        <Text style={styles.questions}>3.* Phone Number: </Text>
         <View style={styles.inputView} >
           <TextInput  
             style={styles.inputText}
@@ -114,7 +114,7 @@ const CreateNewUserPage = (props: any) => {
             placeholderTextColor="#C0C0C0"
             onChangeText={(text) => {newUser_json.phoneNumber = text}}/>
         </View>
-        <Text style={styles.questions}>4. Email Address: </Text>
+        <Text style={styles.questions}>4.* Email Address: </Text>
         <View style={styles.inputView} >
           <TextInput  
             style={styles.inputText}
@@ -130,23 +130,28 @@ const CreateNewUserPage = (props: any) => {
             placeholderTextColor="#C0C0C0"
             onChangeText={(text) => {newUser_json.homeAddress = text}}/>
         </View>
-        <Text style={styles.questions}>6. Password: </Text>
+        <Text style={styles.questions}>6.* Password: </Text>
         <View style={styles.inputView} >
           <TextInput  
+            secureTextEntry={true}
             style={styles.inputText}
             placeholder="Password..." 
             placeholderTextColor="#C0C0C0"
             onChangeText={(text) => {newUser_json.password = text}}/>
         </View>
-        <Text style={styles.questions}>7. Repeat password: </Text>
+        <Text style={styles.questions}>7.* Repeat password: </Text>
         <View style={styles.inputView} >
           <TextInput  
+            secureTextEntry={true}
             style={styles.inputText}
             placeholder="Repeat password..." 
             placeholderTextColor="#C0C0C0"
             onChangeText={(text) => {newUser_json.repeated_password = text}}/>
         </View>
-        {password_warning ? null : <Text style={styles.questions}>6  7Passwords are different!!</Text>}
+        {warning ? 
+          <Text style={styles.warning}>{warning_msg}</Text> : 
+          null
+        }
         <TouchableOpacity style={styles.finishBtn}>
           <Text 
             style={styles.questions} 
@@ -206,6 +211,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold", 
     fontSize: 17,
     color: "black",
+    alignItems: 'flex-start',
+    marginTop:10,
+    justifyContent: 'center',
+  },
+  warning: {
+    fontWeight: "bold", 
+    fontSize: 17,
+    color: "red",
     alignItems: 'flex-start',
     marginTop:10,
     justifyContent: 'center',
