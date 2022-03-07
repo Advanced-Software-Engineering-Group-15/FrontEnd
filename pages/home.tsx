@@ -10,7 +10,7 @@ import { IP } from '../constants';
 const GOOGLE_MAPS_APIKEY='AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8'
 
 
-const localHost = 'http://'+ IP +':5000/journeys'
+const localHost = 'http://'+ IP +'/journeys'
 console.log(localHost)
 const Home = (props: any) => {
   const username = props.navigation.state.params.username.username 

@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity, Scro
 import axios from 'axios';
 import { IP } from '../constants';
 
-const localHost = 'http://' + IP + ':5000/new-user'
+const localHost = 'http://' + IP + '/new-user'
 console.log(localHost)
 
 const CreateNewUserPage = (props: any) => {

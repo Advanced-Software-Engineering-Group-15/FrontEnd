@@ -12,7 +12,7 @@ const Login = (props: any) => {
   };
   
   const SignIn = () => {
-    let url = 'http://' + IP + ':5000/sign-in'
+    let url = 'http://' + IP + '/sign-in'
     var data = {
       "userName": login_json.userName,
       "password": login_json.password

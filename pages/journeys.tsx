@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Dimensions, ScrollView } from
 import AvailableJourneyCard from '../components/AvailableJourneyCard';
 import { IP } from '../constants';
 
-const localHost = 'http://'+IP+':5000/journeys'
+const localHost = 'http://'+IP+'/journeys'
 
 const Journeys = (props: any) => {
 
