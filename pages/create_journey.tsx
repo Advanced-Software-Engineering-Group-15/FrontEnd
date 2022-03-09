@@ -8,9 +8,7 @@ import { IP } from '../constants';
 const journeyTypes = ["Drive", "Cycle", "Walk"]
 const currencyTypes = ["€", "$", "£"]
 
-const localHost = 'http://'+ IP +':5000/newJourneys'
-// const User = (props) => {
-// }
+const localHost = 'http://'+ IP +'/newJourneys'
 
 const App = (props: any) => {
   const username = props.navigation.state.params.username

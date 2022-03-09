@@ -2,16 +2,19 @@
 import React, { useEffect, useState, useRef } from 'react';
 import MapView, {Callout, Marker, Circle} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { StyleSheet, Text, View, TouchableOpacity, Dimensions, KeyboardAvoidingView } from 'react-native';
 import { IP } from '../constants';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import DestinationCard from "../components/DestinationCard";
+import GooglePlacesInput from '../components/googleAutocompleteCard'
+import GoogleMapView from '../components/googleMapView';
+const GOOGLE_MAPS_APIKEY='AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8'
 //These will be useful resources for adding waypoints etc+
 //https://stackoverflow.com/questions/64002670/how-to-update-google-maps-react-direction-route
 //https://stackblitz.com/edit/adding-direction-waypoint-1xyogt?file=src/MapComponent.js
 
-//env.GOOGLE_MAPS_APIKEY = "AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8"
-const GOOGLE_MAPS_APIKEY='AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8'
-const localHost = 'http://'+IP+':5000/journeys'
+
+const localHost = 'http://'+IP+'/journeys'
 console.log(localHost)
 const Maps = (props: any) => {
   
@@ -33,85 +36,9 @@ const Maps = (props: any) => {
   const [pin, setPin] = React.useState (origin) // Initial location
 
   
-  return (
-    <View style={styles.container}>
-       {/* <Text style={styles.welcomeText}>Welcome back {username}!</Text> */}
-        {/* <TouchableOpacity>
-          <Text onPress={logValue}>Get Data</Text>
-        </TouchableOpacity> */}
-
-      {/* <GooglePlacesAutocomplete
-      style={styles.textInput}
-      placeholder='Search'
-      onPress={(data, details = null) => {
-        // 'details' is provided when fetchDetails = true
-        console.log(data, details);
-      }}
-      query={{
-        key: GOOGLE_MAPS_APIKEY,
-        language: 'en',
-      }}
-    /> */}
-      <View style={styles.searchBox}>
-        <GooglePlacesAutocomplete
-            placeholder='Search'
-            minLength={2} // minimum length of text to search
-            //autoFocus={false}
-            //returnKeyType={'search'}
-            onPress={(data, details = null) => {
-              // 'details' is provided when fetchDetails = true
-              console.log(data, details);
-            }} 
-            query={{
-              key: GOOGLE_MAPS_APIKEY,
-              language: 'en',
-            }}
-            renderDescription={(row) => row.description} // custom description render
-
-            styles={searchInputStyle}
-
-        />
-
-      </View>
-      
-      <MapView 
-        style={styles.map} 
-        initialRegion={initialRegion}
-        showsUserLocation
-      >
-        <Marker 
-          coordinate={pin}
-          pinColor="red"
-          draggable={true}
-          onDragStart={(e) => {
-            console.log("Drag starts", e.nativeEvent.coordinate)
-          }}
-          onDragEnd={(e) => {
-            setPin({
-              latitude: e.nativeEvent.coordinate.latitude,
-              longitude: e.nativeEvent.coordinate.longitude
-            })
-          }}
-        >
-
-          <Callout>
-            <Text>Current location</Text>
-          </Callout>
-
-        </Marker>
-
-        <MapViewDirections
-          lineCap="square"
-          lineDashPattern={[1]}
-          strokeWidth={5} 
-          strokeColor="blue"
-          origin={origin}
-          destination={destination}
-          apikey={GOOGLE_MAPS_APIKEY}
-        />
-
-      </MapView>
-      </View> 
+  return ( 
+    
+    <GooglePlacesInput />
 
   );
 }

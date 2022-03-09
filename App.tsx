@@ -10,6 +10,7 @@ import "react-native-screens"
 import Login from './pages/login';
 import Home from './pages/home';
 import Maps from './pages/maps';
+import Map from './pages/map';
 import Ratings from './pages/ratings';
 import Dummy from './pages/dummy';
 import StartJourney from './pages/startJourney';
@@ -27,6 +28,7 @@ const AppNavigator = createStackNavigator(
     Login: Login,
     Home: Home,
     Maps: Maps,
+    Map: Map,
     Ratings: Ratings,
     Dummy: Dummy,
     StartJourney: StartJourney,
