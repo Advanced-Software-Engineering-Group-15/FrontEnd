@@ -22,6 +22,8 @@ import Create_Journey from './pages/create_journey';
 import Payment from './pages/payment';
 import MoreOptions from './pages/moreOptions';
 import MyProfile from './pages/myProfile';
+import OriginIn from './pages/input_origin'
+import DestinationIn from './pages/input_destination'
 
 const AppNavigator = createStackNavigator(
   {
@@ -29,6 +31,8 @@ const AppNavigator = createStackNavigator(
     Home: Home,
     Maps: Maps,
     Map: Map,
+    OriginIn: OriginIn,
+    DestinationIn: DestinationIn,
     Ratings: Ratings,
     Dummy: Dummy,
     StartJourney: StartJourney,

@@ -11,7 +11,8 @@ const currencyTypes = ["€", "$", "£"]
 const localHost = 'http://'+ IP +'/newJourneys'
 
 const App = (props: any) => {
-  const username = props.navigation.state.params.username
+  //const username = props.navigation.state.params.username
+  console.log("ORIGIN AND DESTINATION DATA\n", props.navigation.state.params)
   let journey = {
     journeyID: uuid.v1(),
     journeyType: '',
@@ -29,7 +30,7 @@ const App = (props: any) => {
       currency: '$',
       quantity: 0
     },
-    creatorID: username,
+    creatorID: 'username',
     creatorRating: '2.5',
   };
 
@@ -56,21 +57,6 @@ const App = (props: any) => {
     .catch(function (error) {
       console.log(error);
     });
-   
-  //  fetch(localHost, {
-  //     method: "POST",
-  //     headers: {
-  //       'Accept': 'application/json',
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body:  JSON.stringify(data)
-  //  })
-  //  .then(function(response){ 
-  //   return response.json();   
-  //  })
-  //  .then(function(data){ 
-  //  console.log(data)
-  //  });
   };
 
   return (
@@ -79,7 +65,6 @@ const App = (props: any) => {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        //display: 'inline-flex',
         
       }}>
         {/* https://reactnativeexample.com/a-highly-customized-dropdown-select-picker-menu-for-react-native/ */}

@@ -71,7 +71,7 @@ const Home = (props: any) => {
   }
   
   const Create_Journey = () => {
-    props.navigation.navigate("Create_Journey", { username: username })
+    props.navigation.navigate("OriginIn", { username: username })
   }
 
   const More_Options = () => {
