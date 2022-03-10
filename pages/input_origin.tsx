@@ -25,7 +25,7 @@ const OriginIn = (props: any) => {
   var region = initialRegion;
   
   const [sendinfo, originInfo] = React.useState ({})
-  
+
   const [pin, setPin] = React.useState ({
     latitude: Number(53.338165314), 
     longitude: Number(-6.256165642),
@@ -57,7 +57,7 @@ const OriginIn = (props: any) => {
           region.longitude = Number(JSON.stringify(details?.geometry?.location.lng))
           setPin(region);
           console.log('region is: ', region)
-          originInfo({details});
+          originInfo({data});
         }}
         query={{
           key: GOOGLE_MAPS_APIKEY,

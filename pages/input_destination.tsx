@@ -25,9 +25,12 @@ const DestinationIn = (props: any) => {
   var region = initialRegion;
 
   const routePage = () => {
+
     props.navigation.navigate("Create_Journey", {
-      origin: origin,
-      destination: pin 
+      origin_info: props.navigation.state.params.origin,
+      origin_location: origin,
+      destination_info: sendinfo,
+      destination_location: pin 
     })
   }
 
@@ -44,7 +47,7 @@ const DestinationIn = (props: any) => {
           region.latitude = Number(JSON.stringify(details?.geometry?.location.lat))
           region.longitude = Number(JSON.stringify(details?.geometry?.location.lng))
           setPin(region);
-          destInfo({details});
+          destInfo({data});
         }}
         query={{
           key: GOOGLE_MAPS_APIKEY,
