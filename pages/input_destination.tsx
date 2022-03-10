@@ -1,8 +1,9 @@
 // import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState, useRef } from 'react';
 import MapView, {Callout, Marker, Circle} from 'react-native-maps';
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions, KeyboardAvoidingView } from 'react-native';
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import MapViewDirections from 'react-native-maps-directions';
+import { StyleSheet, Text, View, TouchableOpacity, Dimensions, ScrollView  } from 'react-native';
+import { GooglePlaceDetail, GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 const GOOGLE_MAPS_APIKEY='AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8'
 //These will be useful resources for adding waypoints etc+
 //https://stackoverflow.com/questions/64002670/how-to-update-google-maps-react-direction-route
@@ -10,28 +11,81 @@ const GOOGLE_MAPS_APIKEY='AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8'
 
 
 const DestinationIn = (props: any) => {
+  const origin = props.navigation.state.params.location;
+  const [pin, setPin] = React.useState (props.navigation.state.params.location)
+  
+  const initialRegion =  {
+    latitude: Number(props.navigation.state.params.location.latitude), 
+    longitude: Number(props.navigation.state.params.location.longitude),
+    latitudeDelta: 0.000281,
+    longitudeDelta: 0.002661
+  } 
+ 
+  const [sendinfo, destInfo] = React.useState ({})
+  var region = initialRegion;
+
+  const routePage = () => {
+    props.navigation.navigate("Create_Journey", {
+      origin: origin,
+      destination: pin 
+    })
+  }
+
   return (    
-    <GooglePlacesAutocomplete
-    placeholder='Enter your destination'
-    onPress={(data, details = null) => {
-      // 'details' is provided when fetchDetails = true
-      console.log(data, details);
-      props.navigation.navigate("Create_Journey", {
-        origin: props.navigation.state.params,
-        destination: details 
-      })
-    }}
-    query={{
-      key: GOOGLE_MAPS_APIKEY,
-      language: 'en',
-      components: "country:ie",
-    }}
-    currentLocation={true}
-    currentLocationLabel='Current location'
-  />  
+
+    <View>
+    <ScrollView keyboardShouldPersistTaps="handled">
+
+      <GooglePlacesAutocomplete
+        placeholder='Enter your destination'
+        GooglePlacesDetailsQuery={{ fields: "geometry" }}
+        fetchDetails={true} // you need this to fetch the details object onPress
+        onPress={(data, details = null) => {
+          region.latitude = Number(JSON.stringify(details?.geometry?.location.lat))
+          region.longitude = Number(JSON.stringify(details?.geometry?.location.lng))
+          setPin(region);
+          destInfo({details});
+        }}
+        query={{
+          key: GOOGLE_MAPS_APIKEY,
+          language: 'en',
+          components: "country:ie",
+        }}
+        currentLocation={true}
+        currentLocationLabel='Current location'
+      />
+
+      <MapView 
+      style={styles.map} 
+      initialRegion={pin}
+      region={pin}
+      showsUserLocation>
+        <Marker
+        coordinate={pin}
+        pinColor="green"
+        />
+        <Marker
+        coordinate={origin}
+        pinColor="red"
+        />
+        <MapViewDirections
+        lineCap="square"
+        lineDashPattern={[1]}
+        strokeWidth={5} 
+        strokeColor="blue"
+        origin={origin}
+        destination={pin}
+        apikey={GOOGLE_MAPS_APIKEY}/>
+
+    </MapView>
+    </ScrollView>
+    <TouchableOpacity style={styles.ViewJourneyBtn}>
+          <Text style={styles.homePageBtnText} onPress={routePage}>Confirm origin</Text>
+    </TouchableOpacity>
+    </View> 
+
   );
 }
-
 //styling
 
 const searchInputStyle={
@@ -126,6 +180,32 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     height: 20,
   },
+  homePageBtnText: {
+    color: '#000000',
+    fontSize: 18,
+    height: 30,
+  },
+  MapsPageBtn:{
+    width: "40%",
+    backgroundColor: "#fb5b5a",
+    borderRadius: 25,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20,
+    marginBottom: 10
+  },
+  ViewJourneyBtn:{
+    width: "40%",
+    backgroundColor: "#33FF99",
+    borderRadius: 25,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20,
+    marginBottom: 10
+  }
 });
+
 
 export default DestinationIn;

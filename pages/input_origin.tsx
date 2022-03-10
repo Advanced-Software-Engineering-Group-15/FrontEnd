@@ -3,9 +3,10 @@ import React, { useEffect, useState, useRef } from 'react';
 import MapView, {Callout, Marker, Circle} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import { FlatList } from 'react-native-gesture-handler';
+import { GooglePlaceDetail, GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 const GOOGLE_MAPS_APIKEY='AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8'
+
+
 //These will be useful resources for adding waypoints etc+
 //https://stackoverflow.com/questions/64002670/how-to-update-google-maps-react-direction-route
 //https://stackblitz.com/edit/adding-direction-waypoint-1xyogt?file=src/MapComponent.js
@@ -13,12 +14,31 @@ const GOOGLE_MAPS_APIKEY='AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8'
 
 const OriginIn = (props: any) => {
 
+  
+
   const initialRegion =  {
     latitude: Number(53.338165314), 
     longitude: Number(-6.256165642),
     latitudeDelta: 0.000281,
     longitudeDelta: 0.002661
   }    
+  var region = initialRegion;
+  
+  const [sendinfo, originInfo] = React.useState ({})
+  
+  const [pin, setPin] = React.useState ({
+    latitude: Number(53.338165314), 
+    longitude: Number(-6.256165642),
+    latitudeDelta: 0.000281,
+    longitudeDelta: 0.002661
+  })
+
+  const destinationPage = () => {
+    props.navigation.navigate("DestinationIn", {
+      origin: sendinfo,
+      location: pin
+    })
+  }
 
   return (    
 
@@ -27,11 +47,17 @@ const OriginIn = (props: any) => {
 
       <GooglePlacesAutocomplete
         placeholder='Enter your origin'
+        GooglePlacesDetailsQuery={{ fields: "geometry" }}
+        fetchDetails={true} // you need this to fetch the details object onPress
         onPress={(data, details = null) => {
-          console.log(data, details);
-          props.navigation.navigate("DestinationIn", {
-            origin: details,
-          })
+          console.log(details);
+          //console.log(data, details)
+          //console.log(JSON.stringify(details?.geometry?.location));
+          region.latitude = Number(JSON.stringify(details?.geometry?.location.lat))
+          region.longitude = Number(JSON.stringify(details?.geometry?.location.lng))
+          setPin(region);
+          console.log('region is: ', region)
+          originInfo({details});
         }}
         query={{
           key: GOOGLE_MAPS_APIKEY,
@@ -44,13 +70,17 @@ const OriginIn = (props: any) => {
 
       <MapView 
       style={styles.map} 
-      initialRegion={initialRegion}
+      initialRegion={pin}
+      region={pin}
       showsUserLocation>
-
+        <Marker
+        coordinate={pin}
+        pinColor="green"
+      />
     </MapView>
     </ScrollView>
     <TouchableOpacity style={styles.ViewJourneyBtn}>
-          <Text style={styles.homePageBtnText} >Maps Page</Text>
+          <Text style={styles.homePageBtnText} onPress={destinationPage}>Confirm origin</Text>
     </TouchableOpacity>
     </View> 
 
