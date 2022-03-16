@@ -23,6 +23,7 @@ import MoreOptions from './pages/moreOptions';
 import MyProfile from './pages/myProfile';
 import OriginIn from './pages/input_origin'
 import DestinationIn from './pages/input_destination'
+import JourneyType from './pages/journeyType';
 
 const AppNavigator = createStackNavigator(
   {
@@ -42,6 +43,7 @@ const AppNavigator = createStackNavigator(
     Payment: Payment,
     MoreOptions: MoreOptions,
     MyProfile: MyProfile,
+    JourneyType: JourneyType
   },
   {
     defaultNavigationOptions: {

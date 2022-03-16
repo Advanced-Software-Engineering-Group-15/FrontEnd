@@ -13,7 +13,7 @@ const GOOGLE_MAPS_APIKEY='AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8'
 const localHost = 'http://'+ IP +'/journeys'
 console.log(localHost)
 const Home = (props: any) => {
-  const username = props.navigation.state.params.username.username 
+  const username = props.navigation.state.params.username
   
   const origin = {latitude: 53.5237268, longitude: -6.4142645};
   const destination = {latitude: 53.5395496, longitude: -6.4466271};
@@ -71,7 +71,10 @@ const Home = (props: any) => {
   }
   
   const Create_Journey = () => {
-    props.navigation.navigate("OriginIn", { username: username })
+    //props.navigation.navigate("OriginIn", { username: username })
+    props.navigation.navigate("JourneyType", { username: username })
+    //console.log('Home Props', props)
+    //console.log('Username',props.navigation.state.params.username)
   }
 
   const More_Options = () => {

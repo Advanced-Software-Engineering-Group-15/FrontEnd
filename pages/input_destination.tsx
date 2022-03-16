@@ -11,6 +11,7 @@ const GOOGLE_MAPS_APIKEY='AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8'
 
 
 const DestinationIn = (props: any) => {
+  const journeyType = props.navigation.state.params.journeyType
   const origin = props.navigation.state.params.location;
   const [pin, setPin] = React.useState (props.navigation.state.params.location)
   
@@ -78,7 +79,8 @@ const DestinationIn = (props: any) => {
         strokeColor="blue"
         origin={origin}
         destination={pin}
-        apikey={GOOGLE_MAPS_APIKEY}/>
+        apikey={GOOGLE_MAPS_APIKEY}
+        mode={journeyType}/>
 
     </MapView>
     </ScrollView>
