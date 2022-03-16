@@ -26,7 +26,7 @@ const DestinationIn = (props: any) => {
 
   const routePage = () => {
 
-    props.navigation.navigate("Create_Journey", {
+    props.navigation.navigate("Confirm_Journey", {
       origin_info: props.navigation.state.params.origin,
       origin_location: origin,
       destination_info: sendinfo,
