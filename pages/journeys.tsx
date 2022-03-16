@@ -1,10 +1,22 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Dimensions, ScrollView, Image} from 'react-native';
+import SelectDropdown from 'react-native-select-dropdown';
+import NumericInput from "react-native-numeric-input";
 import AvailableJourneyCard from '../components/AvailableJourneyCard';
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import { IP } from '../constants';
 
 const localHost = 'http://'+IP+'/journeys'
-
+const journeyTypes = ["None", "Drive", "Cycle", "Walk", "Taxi"]
+const maxPrice = ["None", 5, 10, 15, 20, 25, 30, "30+"]
+const journeyType_withImage = [
+  { title:"None"},
+  { title: "Drive", image: require("../images/driving.png") },
+  { title: "Walk", image: require("../images/walking.jpg") },
+  { title: "Cycle", image: require("../images/cycling.jpg") },
+  { title: "Taxi", image: require("../images/taxi.jpg") },
+];
 const Journeys = (props: any) => {
 
   const [data, setData] = useState([]);
@@ -31,21 +43,91 @@ const Journeys = (props: any) => {
   //create array of journeys as react components, these will be rendered to screen
   //Key is there to keep react happy, lets it identify an item by the key
   var journeys = [];
-  for (let i = 0; i < data.length; i++) {
-    journeys.push(
-      <View key={data[i]["journeyID"]}> 
-        <AvailableJourneyCard data={data[i]} navigation={props.navigation}/>
-      </View>
-    );
+  if(data.length != 0){
+    for (let i = 0; i < data.length; i++) {
+      journeys.push(
+        <View key={data[i]["journeyID"]}> 
+          <AvailableJourneyCard data={data[i]} navigation={props.navigation}/>
+        </View>
+      );
+    }
   }
-
+  else {
+    <View style={styles.container}> 
+      <Text  style={styles.titleText}>No Journeys</Text> 
+    </View>
+  }
   return (
-    <View style={styles.container}>
-        <Text  style={styles.titleText}>Available Journeys</Text> 
+    <SafeAreaView style={styles.container}>
+      <Text  style={styles.titleText}>Available Journeys</Text> 
+      <View style={styles.dropdownsRow}>
+
+        <SelectDropdown
+          data={journeyType_withImage}
+          defaultButtonText={"Select method"}
+          buttonTextStyle={styles.dropdownBtnTxtStyle_1}
+          onSelect={(selectedItem, index) => {
+            console.log(selectedItem, index);
+          }}
+          buttonStyle={styles.dropdownBtnStyle_1}
+          renderDropdownIcon={(isOpened) => {
+            return (
+              <FontAwesome
+                name={isOpened ? "chevron-up" : "chevron-down"}
+                color={"#444"}
+                size={11}
+              />
+            );
+          }}
+          dropdownStyle={styles.dropdownDropdownStyle_1}
+          rowStyle={styles.dropdownRowStyle_1}
+          renderCustomizedRowChild={(item, index) => {
+            return (
+              <View style={styles.dropdown3RowChildStyle}>
+                <Image source={item.image} style={styles.dropdownImageStyle_1} />
+                <Text style={styles.dropdownRowTxtStyle_1}>{item.title}</Text>
+              </View>
+            );
+          }}
+        />
+
+        <SelectDropdown     // Maximum price
+          data={maxPrice}
+          // defaultValueByIndex={1}
+          onSelect={(selectedItem, index) => {
+            console.log(selectedItem, index);
+          }}
+          defaultButtonText={"Select method"}
+          buttonTextAfterSelection={(selectedItem, index) => {
+            return selectedItem;
+          }}
+          rowTextForSelection={(item, index) => {
+            return item;
+          }}
+          buttonStyle={styles.dropdownBtnStyle_2}
+          buttonTextStyle={styles.dropdownBtnTxtStyle_1}
+          renderDropdownIcon={(isOpened) => {
+            return (
+              <FontAwesome
+                name={isOpened ? "chevron-up" : "chevron-down"}
+                color={"#444"}
+                size={18}
+              />
+            );
+          }}
+          dropdownIconPosition={"right"}
+          dropdownStyle={styles.dropdownDropdownStyle_1}
+          rowStyle={styles.dropdownRowStyle_1}
+          rowTextStyle={styles.dropdownRowTxtStyle_1}
+        />
+        
+      </View>
+      <View style={styles.dropdownsRow}>
         <ScrollView> 
           <View style={styles.items}>{journeys}</View> 
         </ScrollView>  
-    </View>
+      </View>
+    </SafeAreaView>
   );
 };
 
@@ -75,7 +157,68 @@ const styles = StyleSheet.create({
   items: {
     flex: 1,
     padding: 20,
-  }
+  },
+
+  dropdownsRow: {
+    flexDirection: "row",
+    width: "100%",
+    paddingHorizontal: "5%",
+  },
+  dropdownBtnStyle_1: {
+    width: "32%",
+    height: 40,
+    backgroundColor: "#bfb",
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: "#444",
+  },
+  dropdownBtnTxtStyle_1: { fontSize: 13, color: "#555555", textAlign: "left" },
+  dropdownDropdownStyle_1: { backgroundColor: "#EFEFEF" },
+  dropdownRowStyle_1: {
+    backgroundColor: "#ffffff",
+    borderBottomColor: "#444",
+    height: 50,
+  },
+  dropdownRowTxtStyle_1: {
+    color: "#111111",
+    textAlign: "right",
+    fontWeight: "bold",
+    fontSize: 20,
+    position: 'absolute', 
+    left: 50,
+  },
+  dropdownImageStyle_1: { width: 45, height: 45, resizeMode: "cover", position: 'absolute', left: 0},
+
+  dropdownBtnStyle_2: {
+    width: "30%",
+    height: 40,
+    backgroundColor: "#FFF",
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#444",
+  },
+  // try
+
+  dropdown3DropdownStyle: { backgroundColor: "slategray" },
+  dropdown3RowStyle: {
+    
+  },
+  dropdown3RowChildStyle: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    paddingHorizontal: 18,
+  },
+  dropdownRowImage: { width: 45, height: 45, resizeMode: "cover", position: 'absolute', left: 0,},
+  dropdown3RowTxt: {
+    color: "#111111",
+    textAlign: "right",
+    fontWeight: "bold",
+    fontSize: 20,
+    position: 'absolute', 
+    left: 50,
+  },
 });
 
 export default Journeys;
