@@ -35,29 +35,10 @@ const JourneyType = (props: any) => {
   };
 
   const createJourney = () => {
-    // console.log(journey);
-    
-    // //props.navigation.navigate("Home", { username: input })
-    // //props.navigation.navigate("Create_Journey", { journey})
-    // var data = {
-    //   "journeyID": journey.journeyID,
-    //   "journeyType": journey.journeyType,
-    //   "journeyStart": journey.journeyStart,
-    //   "journeyEnd": journey.journeyEnd,
-    //   "pricing": journey.pricing,
-    //   "creatorID": journey.creatorID,
-    //   "creatorRating": journey.creatorRating
-    // }
-    // axios.post(localHost, {
-    //   body: JSON.stringify(data)
-    // })
-    // .then(function (response) {
-    //   console.log(response);
-    // })
-    // .catch(function (error) {
-    //   console.log(error);
-    // });
-    props.navigation.navigate("OriginIn", { username: username, journeyType: journey.journeyType })
+      if(journey.journeyType) {
+        props.navigation.navigate("OriginIn", { username: username, journeyType: journey.journeyType })
+      }
+        
   };
 
   return (
