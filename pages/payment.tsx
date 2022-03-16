@@ -7,6 +7,11 @@ import { StripeProvider, CardField } from '@stripe/stripe-react-native';
 
 //import StripeCheckoutButton from '../components/stripe-button/stripe.button.component';
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Public Key: pk_test_51KP6MgG8vk1CJkKgWm5D962cWUXuxyFWpSJDDpFpDLjKmcAObx9kWrxrhX8DVc36ZwEBJdndG3EGX6bLHTsDd8vc00CvpXY7pQ
+// Secret Key: sk_test_51KP6MgG8vk1CJkKgK8RZOVXfxwg7ZqOhfogwPkndU02dnHlP4YzsBuKFxDciteoYREE9mPBUQ41AlYE3zFe7Nodx00RVp2lLlK
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 const Payment = (props: any) => {
 
   const totalPrice = 58;
