@@ -103,7 +103,7 @@ const App = (props: any) => {
         onChangeText={text => journey.journeyEnd.name = text}/> */}
         {/* https://reactnativeexample.com/a-highly-customized-dropdown-select-picker-menu-for-react-native/ */}
         { globalType == "Drive" &&
-          <View>
+          <ScrollView>
           <Text>Cost of Journey:</Text>
           <View style={{
             flexDirection: 'row',
@@ -136,7 +136,7 @@ const App = (props: any) => {
           onChange={value => journey.pricing.quantity = value}
           />
           </View> 
-          </View>
+          </ScrollView>
         }
         {/* {this.renderCostInput(journey.journeyType)} */}
         
