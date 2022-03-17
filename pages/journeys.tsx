@@ -8,10 +8,9 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { IP } from '../constants';
 
 const localHost = 'http://'+IP+'/journeys'
-const journeyTypes = ["None", "Drive", "Cycle", "Walk", "Taxi"]
 const maxPrice = ["None", 5, 10, 15, 20, 25, 30, "30+"]
 const journeyType_withImage = [
-  { title:"None"},
+  { title:"None",},
   { title: "Drive", image: require("../images/driving.png") },
   { title: "Walk", image: require("../images/walking.jpg") },
   { title: "Cycle", image: require("../images/cycling.jpg") },
@@ -65,25 +64,35 @@ const Journeys = (props: any) => {
         <SelectDropdown
           data={journeyType_withImage}
           defaultButtonText={"Select method"}
+          buttonStyle={styles.dropdownBtnStyle_1}
           buttonTextStyle={styles.dropdownBtnTxtStyle_1}
           onSelect={(selectedItem, index) => {
             console.log(selectedItem, index);
           }}
-          buttonStyle={styles.dropdownBtnStyle_1}
-          renderDropdownIcon={(isOpened) => {
+          rowStyle={styles.dropdownRowStyle_1}
+          renderCustomizedButtonChild={(selectedItem, index) => {
             return (
-              <FontAwesome
-                name={isOpened ? "chevron-up" : "chevron-down"}
-                color={"#444"}
-                size={11}
-              />
+              <View style={styles.dropdownBtnChildStyle_1}>
+                {/* {selectedItem ? (
+                  <Image
+                    source={selectedItem.image}
+                    style={styles.dropdownImageStyle_1}
+                  />
+                ) : (
+                  <Ionicons name="leaf" color={"#444"} size={16} />
+                )} */}
+                <Text style={styles.dropdownBtnTxtStyle_1}>
+                  {selectedItem ? selectedItem.title : "Select method"}
+                </Text>
+                <FontAwesome name="chevron-down" color={"#444"} size={11} />
+              </View>
             );
           }}
           dropdownStyle={styles.dropdownDropdownStyle_1}
-          rowStyle={styles.dropdownRowStyle_1}
+          
           renderCustomizedRowChild={(item, index) => {
             return (
-              <View style={styles.dropdown3RowChildStyle}>
+              <View style={styles.dropdownRowChildStyle_1}>
                 <Image source={item.image} style={styles.dropdownImageStyle_1} />
                 <Text style={styles.dropdownRowTxtStyle_1}>{item.title}</Text>
               </View>
@@ -93,11 +102,10 @@ const Journeys = (props: any) => {
 
         <SelectDropdown     // Maximum price
           data={maxPrice}
-          // defaultValueByIndex={1}
+          defaultButtonText={"Set price"}
           onSelect={(selectedItem, index) => {
             console.log(selectedItem, index);
           }}
-          defaultButtonText={"Select method"}
           buttonTextAfterSelection={(selectedItem, index) => {
             return selectedItem;
           }}
@@ -188,6 +196,20 @@ const styles = StyleSheet.create({
     left: 50,
   },
   dropdownImageStyle_1: { width: 45, height: 45, resizeMode: "cover", position: 'absolute', left: 0},
+  dropdownBtnChildStyle_1:{
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    paddingHorizontal: 18,
+  },
+  dropdownRowChildStyle_1: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    paddingHorizontal: 18,
+  },
 
   dropdownBtnStyle_2: {
     width: "30%",
