@@ -17,6 +17,7 @@ const App = (props: any) => {
   const destLoc = inputProps.destination_location;
   const startInfo = inputProps.origin_info;
   const destInfo = inputProps.destination_info;
+  const [globalType, setGlobalType] = React.useState ("")
 
   console.log('Journey info obtained', props.navigation.state.params)
   let journey = {
@@ -78,6 +79,7 @@ const App = (props: any) => {
           onSelect={(selectedItem, index) => {
             console.log(selectedItem, index);
             journey.journeyType = selectedItem;
+            setGlobalType(journey.journeyType);
           }}
           defaultButtonText={"Select Journey Type"}
           buttonTextAfterSelection={(selectedItem, index) => {
@@ -100,38 +102,42 @@ const App = (props: any) => {
         style={styles.input}
         onChangeText={text => journey.journeyEnd.name = text}/> */}
         {/* https://reactnativeexample.com/a-highly-customized-dropdown-select-picker-menu-for-react-native/ */}
-        <Text>Cost of Journey:</Text>
-        <View style={{
-          flexDirection: 'row',
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <SelectDropdown
-          dropdownStyle = {{
-            width:50,
-          }}
-          buttonStyle = {{
-            width:50,
-          }}
+        { globalType == "Drive" &&
+          <View>
+          <Text>Cost of Journey:</Text>
+          <View style={{
+            flexDirection: 'row',
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <SelectDropdown
+            dropdownStyle = {{
+              width:50,
+            }}
+            buttonStyle = {{
+              width:50,
+            }}
 
-          data={currencyTypes}
-          onSelect={(selectedItem, index) => {
-            console.log(selectedItem, index);
-            journey.pricing.currency = selectedItem;
-          }}
-          defaultButtonText={"$"}
-          buttonTextAfterSelection={(selectedItem, index) => {
-            return selectedItem
-          }}
-          rowTextForSelection={(item, index) => {
-            return item
-          }}
-        />
-        <NumericInput      
-        onChange={value => journey.pricing.quantity = value}
-        />
-        </View> 
+            data={currencyTypes}
+            onSelect={(selectedItem, index) => {
+              console.log(selectedItem, index);
+              journey.pricing.currency = selectedItem;
+            }}
+            defaultButtonText={"$"}
+            buttonTextAfterSelection={(selectedItem, index) => {
+              return selectedItem
+            }}
+            rowTextForSelection={(item, index) => {
+              return item
+            }}
+          />
+          <NumericInput      
+          onChange={value => journey.pricing.quantity = value}
+          />
+          </View> 
+          </View>
+        }
         {/* {this.renderCostInput(journey.journeyType)} */}
         
         
