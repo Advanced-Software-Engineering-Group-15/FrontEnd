@@ -35,10 +35,8 @@ const App = (props: any) => {
   };
 
   const createJourney = () => {
-    console.log(journey);
-    
-    //props.navigation.navigate("Home", { username: input })
-    //props.navigation.navigate("Create_Journey", { journey})
+    console.log('JOURNEY:\n', journey);
+  
     var data = {
       "journeyID": journey.journeyID,
       "journeyType": journey.journeyType,
@@ -52,10 +50,14 @@ const App = (props: any) => {
       body: JSON.stringify(data)
     })
     .then(function (response) {
-      console.log(response);
+      console.log('RESPONSE:\n',response);
+      console.log("\n\n\n\nHERE\n\n\n")
+      props.navigation.navigate("Home", {msg: 'success'})
     })
     .catch(function (error) {
       console.log(error);
+      console.log("\n\n\n\nHERE\n\n\n")
+      props.navigation.navigate("Home", {msg: 'failure'})
     });
   };
 

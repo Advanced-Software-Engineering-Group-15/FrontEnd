@@ -62,7 +62,7 @@ const Map = (props: any) => {
         origin={origin}
         destination={destination}
         apikey={GOOGLE_MAPS_APIKEY}/>
-
+        
     </MapView>
   )
 }

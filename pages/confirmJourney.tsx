@@ -17,8 +17,8 @@ const App = (props: any) => {
   const destLoc = inputProps.destination_location;
   const startInfo = inputProps.origin_info;
   const destInfo = inputProps.destination_info;
-  const [globalType, setGlobalType] = React.useState ("")
 
+  const [globalType, setGlobalType] = React.useState ("")
   console.log('Journey info obtained', props.navigation.state.params)
   let journey = {
     journeyID: uuid.v1(),
@@ -43,26 +43,27 @@ const App = (props: any) => {
 
   const createJourney = () => {
     console.log(journey);
-    
-    //props.navigation.navigate("Home", { username: input })
-    //props.navigation.navigate("Create_Journey", { journey})
+   
     var data = {
       "journeyID": journey.journeyID,
-      "journeyType": journey.journeyType,
+      "journeyType": globalType,
       "journeyStart": journey.journeyStart,
       "journeyEnd": journey.journeyEnd,
       "pricing": journey.pricing,
       "creatorID": journey.creatorID,
       "creatorRating": journey.creatorRating
     }
+
     axios.post(localHost, {
       body: JSON.stringify(data)
     })
     .then(function (response) {
       console.log(response);
+      props.navigation.navigate("Home", { status: 'True'})
     })
     .catch(function (error) {
       console.log(error);
+      props.navigation.navigate("Home", { status: 'False' })
     });
   };
   return (
@@ -79,7 +80,7 @@ const App = (props: any) => {
           onSelect={(selectedItem, index) => {
             console.log(selectedItem, index);
             journey.journeyType = selectedItem;
-            setGlobalType(journey.journeyType);
+            setGlobalType(journey.journeyType);          
           }}
           defaultButtonText={"Select Journey Type"}
           buttonTextAfterSelection={(selectedItem, index) => {
