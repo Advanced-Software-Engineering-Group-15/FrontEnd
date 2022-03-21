@@ -18,7 +18,7 @@ const AvailableJourneyCard = (props: any) => {
                 <Text>Destination: {JSON.stringify(props.data.journeyEnd.name)}</Text>
                 <Text>Journey type: {JSON.stringify(props.data.journeyType)}</Text>
                 <Text>Pricing ({JSON.stringify(props.data.pricing.currency)}): {JSON.stringify(props.data.pricing.quantity)}</Text>
-                <Text>Creator ID: {JSON.stringify(props.data.creatorID)}</Text>
+                <Text>Creator Username: {JSON.stringify(props.data.creatorID)}</Text>
                 <Text>Creator Rating: {JSON.stringify(props.data.creatorRating)}</Text> 
             </View>
         </TouchableOpacity>

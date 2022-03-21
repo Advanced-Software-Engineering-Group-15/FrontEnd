@@ -17,12 +17,14 @@ const App = (props: any) => {
   const destLoc = inputProps.destination_location;
   const startInfo = inputProps.origin_info;
   const destInfo = inputProps.destination_info;
-
-  const [globalType, setGlobalType] = React.useState ("")
+  const journeyType = inputProps.journeyType;
+  const userName = inputProps.username;
+  console.log(userName)
+  //const [globalType, setGlobalType] = React.useState ("")
   console.log('Journey info obtained', props.navigation.state.params)
   let journey = {
     journeyID: uuid.v1(),
-    journeyType: '',
+    journeyType: journeyType,
     journeyStart: {
         name: startInfo.data.description,
         latitude: startLoc.latitude,
@@ -37,16 +39,17 @@ const App = (props: any) => {
       currency: '$',
       quantity: 0
     },
-    creatorID: 'username',
+    creatorID: userName,
     creatorRating: '2.5',
   };
 
   const createJourney = () => {
+    console.log("HERE\n\n\n\n")
     console.log(journey);
    
     var data = {
       "journeyID": journey.journeyID,
-      "journeyType": globalType,
+      "journeyType": journey.journeyType,
       "journeyStart": journey.journeyStart,
       "journeyEnd": journey.journeyEnd,
       "pricing": journey.pricing,
@@ -75,7 +78,7 @@ const App = (props: any) => {
         
       }}>
         {/* https://reactnativeexample.com/a-highly-customized-dropdown-select-picker-menu-for-react-native/ */}
-        <SelectDropdown
+        {/* <SelectDropdown
           data={journeyTypes}
           onSelect={(selectedItem, index) => {
             console.log(selectedItem, index);
@@ -89,7 +92,7 @@ const App = (props: any) => {
           rowTextForSelection={(item, index) => {
             return item
           }}
-        />
+        /> */}
 
 
         <Text>Start of Journey:</Text>
@@ -103,7 +106,7 @@ const App = (props: any) => {
         style={styles.input}
         onChangeText={text => journey.journeyEnd.name = text}/> */}
         {/* https://reactnativeexample.com/a-highly-customized-dropdown-select-picker-menu-for-react-native/ */}
-        { globalType == "Drive" &&
+        { journeyType == "DRIVING" &&
           <ScrollView>
           <Text>Cost of Journey:</Text>
           <View style={{

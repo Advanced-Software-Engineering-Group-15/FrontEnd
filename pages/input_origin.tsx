@@ -14,8 +14,9 @@ const GOOGLE_MAPS_APIKEY='AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8'
 
 const OriginIn = (props: any) => {
 
-  
-
+  const journeyType = props.navigation.state.params.journeyType
+  const userName = props.navigation.state.params.username
+  console.log('origin username', userName)
   const initialRegion =  {
     latitude: Number(53.338165314), 
     longitude: Number(-6.256165642),
@@ -34,9 +35,12 @@ const OriginIn = (props: any) => {
   })
 
   const destinationPage = () => {
+    console.log('sending journey type: ',journeyType)
     props.navigation.navigate("DestinationIn", {
       origin: sendinfo,
-      location: pin
+      location: pin,
+      journeyType: journeyType,
+      username: userName
     })
   }
 
