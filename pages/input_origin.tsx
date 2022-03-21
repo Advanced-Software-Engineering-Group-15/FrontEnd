@@ -14,7 +14,7 @@ const GOOGLE_MAPS_APIKEY='AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8'
 
 const OriginIn = (props: any) => {
 
-  
+  const journeyType = props.navigation.state.params.journeyType
 
   const initialRegion =  {
     latitude: Number(53.338165314), 
@@ -35,6 +35,7 @@ const OriginIn = (props: any) => {
 
   const destinationPage = () => {
     props.navigation.navigate("DestinationIn", {
+      journeyType: journeyType,
       origin: sendinfo,
       location: pin
     })

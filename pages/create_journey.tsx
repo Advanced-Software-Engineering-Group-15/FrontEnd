@@ -13,11 +13,14 @@ const localHost = 'http://'+ IP +'/newJourneys'
 const App = (props: any) => {
   //const username = props.navigation.state.params.username
   console.log('Journey info obtained', props.navigation.state.params)
+  console.log('Origin', props.navigation.state.params.origin_info.data.description)
+  const journeyType = props.navigation.state.params.journeyType
+
   let journey = {
     journeyID: uuid.v1(),
-    journeyType: '',
+    journeyType: journeyType,
     journeyStart: {
-        name: '',
+        name: props.navigation.state.params.origin_info.data.description,
         latitude: "53.5399601",
         longitude: "6.4446056"
     },
