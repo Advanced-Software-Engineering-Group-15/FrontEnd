@@ -14,10 +14,10 @@ const AvailableJourneyCard = (props: any) => {
         <TouchableOpacity onPress={openInMap}>
             <View style={styles.items}>
                 <Text>Journey ID: {JSON.stringify(props.data.journeyID)}</Text>
-                <Text>Departure: {JSON.stringify(props.data.journeyStart.name)}</Text>
-                <Text>Destination: {JSON.stringify(props.data.journeyEnd.name)}</Text>
+                <Text>Departure: {JSON.stringify(props.data.startName)}</Text>
+                <Text>Destination: {JSON.stringify(props.data.endName)}</Text>
                 <Text>Journey type: {JSON.stringify(props.data.journeyType)}</Text>
-                <Text>Pricing ({JSON.stringify(props.data.pricing.currency)}): {JSON.stringify(props.data.pricing.quantity)}</Text>
+                <Text>Pricing ({JSON.stringify(props.data.currency)}): {JSON.stringify(props.data.cost)}</Text>
                 <Text>Creator Username: {JSON.stringify(props.data.creatorID)}</Text>
                 <Text>Creator Rating: {JSON.stringify(props.data.creatorRating)}</Text> 
             </View>
