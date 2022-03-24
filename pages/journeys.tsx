@@ -18,7 +18,7 @@ const Journeys = (props: any) => {
     try {
       const response = await fetch(localHost);
       const json = await response.json();
-      //console.log(JSON.stringify(json.exJourneys))
+      console.log(JSON.stringify(json.exJourneys,  null, 2))
       setData(json.exJourneys);
     } catch (error) { 
       console.log(error);
