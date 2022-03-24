@@ -50,9 +50,14 @@ const App = (props: any) => {
     var data = {
       "journeyID": journey.journeyID,
       "journeyType": journey.journeyType,
-      "journeyStart": journey.journeyStart,
-      "journeyEnd": journey.journeyEnd,
-      "pricing": journey.pricing,
+      "startName": journey.journeyStart.name,
+      "startLat": journey.journeyStart.latitude,
+      "startLong": journey.journeyStart.longitude,
+      "endName": journey.journeyEnd.name,
+      "endLat": journey.journeyEnd.latitude,
+      "endLong": journey.journeyEnd.longitude,
+      "currency": journey.pricing.currency,
+      "cost": journey.pricing.quantity,
       "creatorID": journey.creatorID,
       "creatorRating": journey.creatorRating
     }

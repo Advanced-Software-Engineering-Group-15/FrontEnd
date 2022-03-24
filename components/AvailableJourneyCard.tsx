@@ -6,9 +6,16 @@ const AvailableJourneyCard = (props: any) => {
 
     const openInMap = () => {
         props.navigation.navigate("Map",  { 
-            start: props.data["journeyStart"], 
-            end: props.data["journeyEnd"] })
+            start: {name: props.data.startName,
+                    latitude: props.data.startLat,
+                    longitude: props.data.startLong}
+                    , 
+            end: {name: props.data.endName,
+                latitude: props.data.endLat,
+                longitude: props.data.endLong,}}
+               )
       }
+    
       
     return (
         <TouchableOpacity onPress={openInMap}>
