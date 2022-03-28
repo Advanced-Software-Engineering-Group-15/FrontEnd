@@ -19,7 +19,7 @@ import Journeys from './pages/journeys';
 import CreateNewUserPage from './pages/CreateNewUsers';
 import Create_Journey from './pages/create_journey';
 import Payment from './pages/payment';
-import MoreOptions from './pages/moreOptions';
+import MoreOptions from './pages/MoreOptions';
 import MyProfile from './pages/myProfile';
 import OriginIn from './pages/input_origin'
 import DestinationIn from './pages/input_destination'
