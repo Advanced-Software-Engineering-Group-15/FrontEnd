@@ -5,7 +5,8 @@ const AvailableJourneyCard = (props: any) => {
     console.log(JSON.stringify(props.data, null, 2))
 
     const openInMap = () => {
-        props.navigation.navigate("Map",  { 
+        props.navigation.navigate("Map",  {
+            journeyID: props.data.journeyID, 
             start: {name: props.data.startName,
                     latitude: props.data.startLat,
                     longitude: props.data.startLong}

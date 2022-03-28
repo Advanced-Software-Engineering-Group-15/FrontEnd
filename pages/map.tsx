@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, Text, Dimensions, View } from 'react-native';
+import { StyleSheet, Text, Dimensions, View, TouchableOpacity } from 'react-native';
 
 import MapView, {Callout, Marker, Circle} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
@@ -13,6 +13,7 @@ const Map = (props: any) => {
   
   const originData = props.navigation.state.params.start;
   const destData = props.navigation.state.params.end;
+  const journeyID = props.navigation.state.params.journeyID;
   
   const origin = {latitude: Number(originData.latitude), longitude: Number(originData.longitude)};
   const destination = {latitude: Number(destData.latitude), longitude: Number(destData.longitude)};
@@ -22,7 +23,12 @@ const Map = (props: any) => {
     longitude: Number(originData.longitude),
     latitudeDelta: 0.000281,
     longitudeDelta: 0.002661
-  }         
+  }       
+  const routePage = () => {
+
+    props.navigation.navigate("Home", {
+    })
+  }  
 
   console.log("ORIGIN: ",origin)
   console.log("DESTINATION: ",destination)
@@ -85,6 +91,9 @@ const Map = (props: any) => {
         apikey={GOOGLE_MAPS_APIKEY}/>
         
     </MapView>
+    <TouchableOpacity style={styles.ViewJourneyBtn}>
+          <Text style={styles.homePageBtnText} onPress={routePage}>Join Journey</Text>
+    </TouchableOpacity>
     </View>
   )
 }
@@ -149,6 +158,31 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     height: 20,
+  },
+  homePageBtnText: {
+    color: '#000000',
+    fontSize: 18,
+    height: 30,
+  },
+  MapsPageBtn:{
+    width: "40%",
+    backgroundColor: "#fb5b5a",
+    borderRadius: 25,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20,
+    marginBottom: 10
+  },
+  ViewJourneyBtn:{
+    width: "40%",
+    backgroundColor: "#33FF99",
+    borderRadius: 25,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20,
+    marginBottom: 10
   },
 });
 export default Map;
