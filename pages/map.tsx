@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, Text, Dimensions } from 'react-native';
+import { StyleSheet, Text, Dimensions, View } from 'react-native';
 
 import MapView, {Callout, Marker, Circle} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
@@ -29,6 +29,7 @@ const Map = (props: any) => {
   const [pin, setPin] = React.useState (origin) // Initial location
 
   return (
+    <View>
     <MapView 
       style={styles.map} 
       initialRegion={initialRegion}
@@ -54,6 +55,26 @@ const Map = (props: any) => {
 
       </Marker>
 
+      <Marker 
+        coordinate={destination}
+        pinColor="green"
+        draggable={true}
+        onDragStart={(e) => {
+          console.log("Drag starts", e.nativeEvent.coordinate)
+        }}
+        onDragEnd={(e) => {
+          setPin({
+            latitude: e.nativeEvent.coordinate.latitude,
+            longitude: e.nativeEvent.coordinate.longitude
+          })
+        }}>
+
+        <Callout>
+          <Text>Current location</Text>
+        </Callout>
+
+      </Marker>
+
       <MapViewDirections
         lineCap="square"
         lineDashPattern={[1]}
@@ -62,8 +83,9 @@ const Map = (props: any) => {
         origin={origin}
         destination={destination}
         apikey={GOOGLE_MAPS_APIKEY}/>
-
+        
     </MapView>
+    </View>
   )
 }
 

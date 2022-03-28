@@ -1,21 +1,19 @@
 // import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, ActivityIndicator, TextInput, TouchableOpacity, Button } from 'react-native';
+import { StyleSheet, Text, View, ActivityIndicator, TextInput, TouchableOpacity, Alert } from 'react-native';
 import axios from 'axios';
 import { IP } from '../constants';
 
 const Login = (props: any) => {
 
-  let login_json = {
-    userName: '',
-    password: ''
-  };
-  
+  const [userName, setUserName] = useState('');
+  const [password, setPassword] = useState('');
+ 
   const SignIn = () => {
     let url = 'http://' + IP + '/sign-in'
     var data = {
-      "userName": login_json.userName,
-      "password": login_json.password
+      "userName": userName,
+      "password": password
     }
     console.log(data)
     axios.post(url, {
@@ -27,12 +25,21 @@ const Login = (props: any) => {
       if (isLogin) {     
         // Check for login status
         props.navigation.navigate("Home", {
-          username: login_json.userName,
-          password: login_json.password,
+          username: userName,
+          password: password,
         })
       }
       else{
-        console.log("Sign in failed")
+        return Alert.alert("Login details incorrect,", "please try again", 
+        [
+          {
+            text: "OK",
+            onPress: () => {
+              console.log("Login failed");
+              console.log("LOGIN DETAILS: ", userName, password)
+              }    
+          }
+        ]);
       }
     })
     .catch(function (error) {
@@ -53,7 +60,7 @@ const Login = (props: any) => {
             style={styles.inputText}
             placeholder="Username..." 
             placeholderTextColor="#003f5c"
-            onChangeText={(text) => {login_json.userName = text}}
+            onChangeText={(text) => setUserName(text)}
           />
         </View>
         <View style={styles.inputView} >
@@ -62,7 +69,7 @@ const Login = (props: any) => {
             style={styles.inputText}
             placeholder="Password..." 
             placeholderTextColor="#003f5c"
-            onChangeText={(text) => login_json.password = text}/>
+            onChangeText={(text) => setPassword(text)}/>
         </View>
         <TouchableOpacity>
           <Text style={styles.forgot}>Forgot Password?</Text>
