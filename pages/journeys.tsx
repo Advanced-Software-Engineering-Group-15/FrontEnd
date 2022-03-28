@@ -56,14 +56,10 @@ const Journeys = (props: any) => {
           <AvailableJourneyCard data={data[i]} navigation={props.navigation}/>
         </View>
       );
-      // if(displayFilter._method != ''){
-        
+      // if(displayFilter._method != ''){  
       // }
       // if(data[i].journeyType == displayFilter._method){
-        
-      // }
-
-        
+      // }  
     }
   }
   else {
