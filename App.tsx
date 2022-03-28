@@ -20,7 +20,7 @@ import CreateNewUserPage from './pages/CreateNewUsers';
 import Create_Journey from './pages/create_journey';
 import Confirm_Journey from './pages/confirmJourney';
 import Payment from './pages/payment';
-import MoreOptions from './pages/MoreOptions';
+import MoreOptions from './pages/moreOptions';
 import MyProfile from './pages/myProfile';
 import OriginIn from './pages/input_origin'
 import DestinationIn from './pages/input_destination'

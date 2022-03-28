@@ -19,7 +19,7 @@ const CreateNewUserPage = (props: any) => {
   };
 
   const SendNewUser = () => {
-    let url = 'http://' + IP + '/new-user'
+    const url = 'http://' + IP + '/new-user'
     var json_data = {
       "firstName": newUser_json.firstName,
       "familyName": newUser_json.familyName,
@@ -54,7 +54,7 @@ const CreateNewUserPage = (props: any) => {
       }
       else{
         setWarning(0)  
-        axios.post(localHost, {
+        axios.post(url, {
           body: JSON.stringify(json_data)
         })
         .then(function (response) {
