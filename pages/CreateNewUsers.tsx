@@ -19,7 +19,7 @@ const CreateNewUserPage = (props: any) => {
   };
 
   const SendNewUser = () => {
-    let url = 'http://' + IP + '/new-user'
+    let localHost = 'http://' + IP + '/new-user'
     var json_data = {
       "firstName": newUser_json.firstName,
       "familyName": newUser_json.familyName,
