@@ -26,21 +26,22 @@ const CreateNewUserPage = (props: any) => {
       "phoneNumber": newUser_json.phoneNumber,
       "emailAddress": newUser_json.emailAddress,
       "homeAddress": newUser_json.homeAddress,
-      "userName": newUser_json.firstName.concat('-', newUser_json.familyName),
+      "userName": newUser_json.userName,
       "password": newUser_json.password,
       "repeated_password": newUser_json.repeated_password,
       "userID": newUser_json.userID,
     }
-    let check_blank = newUser_json.firstName.concat(
-      newUser_json.firstName,
-      newUser_json.familyName,
-      newUser_json.phoneNumber,
-      newUser_json.emailAddress,
-      newUser_json.password,
-      newUser_json.repeated_password,
-    );
+    // let check_blank = newUser_json.firstName.concat(
+    //   newUser_json.userName,
+    //   newUser_json.firstName,
+    //   newUser_json.familyName,
+    //   newUser_json.phoneNumber,
+    //   newUser_json.emailAddress,
+    //   newUser_json.password,
+    //   newUser_json.repeated_password,
+    // );
 
-    if (json_data["firstName"] === "" || json_data["familyName"] === "" || json_data["phoneNumber"] === "" 
+    if (json_data["userName"] === "" || json_data["firstName"] === "" || json_data["familyName"] === "" || json_data["phoneNumber"] === "" 
         || json_data["emailAddress"] === "" || json_data["password"] === "" ||  json_data["repeated_password"] === ""){
       console.log("There are blanks to be filled.")
       setWarning(1)
@@ -87,6 +88,14 @@ const CreateNewUserPage = (props: any) => {
         <Text style={styles.title2}>Welcome to Carma! </Text>
         <Text style={styles.title3}>Welcome to Carma! </Text>
         <Text style={styles.note}>Please fill in the following blanks: </Text>
+        <Text style={styles.questions}>1.* Username: </Text>
+        <View style={styles.inputView} >
+          <TextInput  
+            style={styles.inputText}
+            placeholder="Username..." 
+            placeholderTextColor="#C0C0C0"
+            onChangeText={(text) => {newUser_json.userName = text}}/>
+        </View>
         <Text style={styles.questions}>1.* First Name: </Text>
         <View style={styles.inputView} >
           <TextInput  
