@@ -8,7 +8,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { IP } from '../constants';
 
 const localHost = 'http://' + IP + '/journeys'
-const maxPrice = ["None", 5, 10, 15, 20, 25, 30, "30+"]
+const maxPrice = ["None", 5, 10, 15, 20, 25, 30]
 const minRate = ["None", 1, 2, 3, 4, 5]
 const journeyType_withImage = [
   { title: "None",},
@@ -63,37 +63,65 @@ const Journeys = (props: any) => {
   // }
 
   const filterData = () => {
+
     var matchingJourneys = [];
+    var matchingJourneys_1 = [];
+    var matchingJourneys_2 = [];
+    var matchingJourneys_3 = [];
+
     var journeys_filter_final_temp = [];
     for( var i = 0; i < data.length; i++){ 
       if(methodFilter !== '' && methodFilter !== "None"){
         if(methodFilter === data[i]["journeyType"]){
-          matchingJourneys.push(data[i])
+          matchingJourneys_1.push(data[i])
         }
       }
       else{
-        matchingJourneys.push(data[i]);
+        matchingJourneys_1.push(data[i]);
       }
     }
-    console.log(matchingJourneys);
-    setJourneysFiltered(matchingJourneys)
+    for( var i = 0; i < matchingJourneys_1.length; i++){ 
+      if(maxPriceFilter !== '' && maxPriceFilter !== "None"){
+        if(parseFloat(maxPriceFilter) >= matchingJourneys_1[i]["cost"]){
+          matchingJourneys_2.push(matchingJourneys_1[i])
+        }
+      }
+      else{
+        matchingJourneys_2.push(matchingJourneys_1[i]);
+      }
+    }
+    for( var i = 0; i < matchingJourneys_2.length; i++){ 
+      if(minRateFilter !== '' && minRateFilter !== "None"){
+        if(parseFloat(minRateFilter) <= matchingJourneys_2[i]["creatorRating"]){
+          matchingJourneys_3.push(matchingJourneys_2[i])
+        }
+      }
+      else{
+        matchingJourneys_3.push(matchingJourneys_2[i]);
+      }
+    }
+    console.log(matchingJourneys_3);
+    setJourneysFiltered(matchingJourneys_3)
     if(journeysFiltered.length != 0){
       for (let i = 0; i < journeysFiltered.length; i++){
         // console.log(journeys_filter_1[i]["journeyID"])
         // setJourneyList(data[i])
         journeys_filter_final_temp.push(
-          <View key={journeysFiltered[i]["journeyID"]}> 
+          // key={journeysFiltered[i]["journeyID"]}
+          <View>
             <AvailableJourneyCard data={journeysFiltered[i]} navigation={props.navigation}/>
           </View>
         );
       }
-      setFinalList(journeys_filter_final_temp);
     }
     else {
-      <View style={styles.container}> 
-        <Text  style={styles.titleText}>No Journeys</Text> 
-      </View>
+      journeys_filter_final_temp.push(
+        <View style={styles.container}> 
+          <Text  style={styles.titleText}>No Journeys</Text> 
+        </View>
+      )
     }
+    setFinalList(journeys_filter_final_temp);
   }
 
 
@@ -145,7 +173,7 @@ const Journeys = (props: any) => {
           defaultButtonText={"Set price"}
           onSelect={(selectedItem, index) => {
             // console.log(selectedItem, index);
-            setMaxPriceFilter(selectedItem.title);
+            setMaxPriceFilter(selectedItem);
             //displayFilter.maxPrice = selectedItem.title;
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
@@ -171,12 +199,12 @@ const Journeys = (props: any) => {
           rowTextStyle={styles.dropdownRowTxtStyle_2}
         />
         
-        <SelectDropdown     // Maximum price
+        <SelectDropdown     // Min rate
           data={minRate}
           defaultButtonText={"Min rate"}
           onSelect={(selectedItem, index) => {
             console.log(selectedItem, index);
-            setMinRateFilter(selectedItem.title);
+            setMinRateFilter(selectedItem);
             //displayFilter.minRate = selectedItem.title;
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
