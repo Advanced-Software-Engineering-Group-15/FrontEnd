@@ -26,17 +26,11 @@ const Journeys = (props: any) => {
     getData()
   }, []);
 
-  let displayFilter = {
-    _method: '',
-    _maxPrice: '',
-    _minRate: '',
-  }
-
   const getData = async () => {
     try {
       const response = await fetch(localHost);
       const json = await response.json();
-      console.log(JSON.stringify(json.exJourneys,  null, 2))
+      // console.log(JSON.stringify(json.exJourneys,  null, 2))
       setData(json.exJourneys);
     } catch (error) { 
       console.log(error);
@@ -44,28 +38,48 @@ const Journeys = (props: any) => {
       setLoading(false)
     }
   }
+
+  let displayFilter = {
+    method: '',
+    maxPrice: '',
+    minRate: '',
+  };
+
+  var journeys_filter_final = [];
+
+  const json_filter = () =>{
+    var filter_var = {
+      method: displayFilter.method,
+      maxPrice: displayFilter.maxPrice,
+      minRate: displayFilter.minRate,
+    }
+    console.log(filter_var)
+    for( var i = 0; i < data.length; i++){ 
+      if(filter_var.method !== ''){
+        if(filter_var.method !== data[i].journeyType){
+          data.splice(i, i + 1)
+        }
+      }
+    
+    }
+  }
+
   // const data = props.navigation.state.params //journeys received from server
-  console.log(JSON.stringify(data));
   //create array of journeys as react components, these will be rendered to screen
   //Key is there to keep react happy, lets it identify an item by the key
-  var journeys = [];
+  
   if(data.length != 0){
     for (let i = 0; i < data.length; i++){
-      journeys.push(
+      // console.log(journeys_filter_1[i]["journeyID"])
+      journeys_filter_final.push(
         <View key={data[i]["journeyID"]}> 
           <AvailableJourneyCard data={data[i]} navigation={props.navigation}/>
         </View>
       );
-      // if(displayFilter._method != ''){
-        
-      // }
-      // if(data[i].journeyType == displayFilter._method){
-        
-      // }
-
-        
+      
     }
   }
+  
   else {
     <View style={styles.container}> 
       <Text  style={styles.titleText}>No Journeys</Text> 
@@ -82,8 +96,9 @@ const Journeys = (props: any) => {
           buttonStyle={styles.dropdownBtnStyle_1}
           buttonTextStyle={styles.dropdownBtnTxtStyle_1}
           onSelect={(selectedItem, index) => {
-            console.log(selectedItem, index);
-            displayFilter._method = selectedItem.title;
+            // console.log(selectedItem, index);
+            displayFilter.method = selectedItem.title;
+            
           }}
           rowStyle={styles.dropdownRowStyle_1}
           renderCustomizedButtonChild={(selectedItem, index) => {
@@ -112,8 +127,8 @@ const Journeys = (props: any) => {
           data={maxPrice}
           defaultButtonText={"Set price"}
           onSelect={(selectedItem, index) => {
-            console.log(selectedItem, index);
-            displayFilter._maxPrice = selectedItem.title;
+            // console.log(selectedItem, index);
+            displayFilter.maxPrice = selectedItem.title;
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
             return selectedItem;
@@ -143,7 +158,7 @@ const Journeys = (props: any) => {
           defaultButtonText={"Min rate"}
           onSelect={(selectedItem, index) => {
             console.log(selectedItem, index);
-            displayFilter._minRate = selectedItem.title;
+            displayFilter.minRate = selectedItem.title;
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
             return selectedItem;
@@ -171,7 +186,7 @@ const Journeys = (props: any) => {
       </View>
       <View style={styles.dropdownsRow}>
         <ScrollView> 
-          <View style={styles.items}>{journeys}</View> 
+          <View style={styles.items}>{journeys_filter_final}</View> 
         </ScrollView>  
       </View>
     </SafeAreaView>
