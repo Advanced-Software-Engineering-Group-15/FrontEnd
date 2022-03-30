@@ -16,8 +16,7 @@ const AvailableJourneyCard = (props: any) => {
                 latitude: props.data.endLat,
                 longitude: props.data.endLong,}}
                )
-      }
-    
+    }    
       
     return (
         <TouchableOpacity onPress={openInMap}>
@@ -30,8 +29,8 @@ const AvailableJourneyCard = (props: any) => {
                     Destination: {JSON.stringify(props.data.endName).split("\"")[1].split(",")[0]}
                 </Text>
                 <Text style={styles.cardUserTxtStyle}>
-                    {JSON.stringify(props.data.creatorID).split("\"")[1]} 
-                    <Ionicons name="star" style={styles.cardUserTxtStyle}/> 
+                    {JSON.stringify(props.data.creatorID).split("\"")[1]}  
+                    <Ionicons name="star" style={styles.cardUserTxtStyle}/>  
                     {JSON.stringify(props.data.creatorRating)}
                 </Text>
                 <Text style={styles.cardTypeTxtStyle}>
