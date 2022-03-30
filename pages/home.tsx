@@ -67,7 +67,7 @@ const Home = (props: any) => {
   }
 
   const journeys= () => {
-    props.navigation.navigate("Journeys", { journeyData: data })
+    props.navigation.navigate("Journeys")
   }
   
   const Create_Journey = () => {
@@ -147,21 +147,6 @@ const styles = StyleSheet.create({
     height: 44,
     flexDirection: 'row',
   },
-  // homePageBtnText: {
-  //   color: '#000000',
-  //   fontSize: 18,
-  //   height: 30,
-  // },
-  // ViewJourneyBtn:{
-  //   width: "40%",
-  //   backgroundColor: "#33FF99",
-  //   borderRadius: 25,
-  //   height: 50,
-  //   alignItems: "center",
-  //   justifyContent: "center",
-  //   marginTop: 20,
-  //   marginBottom: 10
-  // },
 });
 
 export default Home

@@ -142,7 +142,7 @@ const App = (props: any) => {
             }}
           />
           <NumericInput      
-          onChange={value => journey.pricing.quantity = value}
+            onChange={value => journey.pricing.quantity = value}
           />
           </View> 
           </ScrollView>

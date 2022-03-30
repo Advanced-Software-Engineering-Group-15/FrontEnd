@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Dimensions, ScrollView, Image} from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, Image} from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import NumericInput from "react-native-numeric-input";
 import AvailableJourneyCard from '../components/AvailableJourneyCard';
@@ -17,10 +17,13 @@ const journeyType_withImage = [
   { title: "BICYCLING", image: require("../images/cycling.jpg") },
   { title: "Taxi", image: require("../images/taxi.jpg") },
 ];
+
 const Journeys = (props: any) => {
 
   const [data, setData] = useState([]);
   const [isLoading, setLoading] = useState(true);
+
+  // const [journeys_filter_final, setJourneyList] = useState([]);
 
   useEffect(() => {
     getData()
@@ -45,45 +48,77 @@ const Journeys = (props: any) => {
     minRate: '',
   };
 
-  var journeys_filter_final = [];
+  var journeys_filter_final = []
+  if(data.length != 0){
+    for (let i = 0; i < data.length; i++){
+      // console.log(journeys_filter_1[i]["journeyID"])
+      // setJourneyList(data[i])
+      journeys_filter_final.push(data[i]);
+      //   <View key={data[i]["journeyID"]}> 
+      //     <AvailableJourneyCard data={data[i]} navigation={props.navigation}/>
+      //   </View>
+      // );
+    }
+  }
+  else {
+    <View style={styles.container}> 
+      <Text  style={styles.titleText}>No Journeys</Text> 
+    </View>
+  }
 
   const json_filter = () =>{
     var filter_var = {
       method: displayFilter.method,
       maxPrice: displayFilter.maxPrice,
       minRate: displayFilter.minRate,
-    }
-    console.log(filter_var)
+    };
+
     for( var i = 0; i < data.length; i++){ 
       if(filter_var.method !== ''){
         if(filter_var.method !== data[i].journeyType){
-          data.splice(i, i + 1)
+          console.log('asdasdasda')
+          journeys_filter_final.splice(i, i + 1)
         }
       }
-    
     }
+
+    // journeys_filter_final = [];
+    // if(data.length != 0){
+    //   for (let i = 0; i < data.length; i++){
+    //     // console.log(journeys_filter_1[i]["journeyID"])
+    //     journeys_filter_final.push(
+    //       <View key={data[i]["journeyID"]}> 
+    //         <AvailableJourneyCard data={data[i]} navigation={props.navigation}/>
+    //       </View>
+    //     );
+    //   }
+    //   console.log(journeys_filter_final.length)
+    //   for( var i = 0; i < data.length; i++){ 
+    //     if(filter_var.method !== ''){
+    //       if(filter_var.method !== data[i].journeyType){
+    //         console.log('asdasdasda')
+    //         journeys_filter_final.splice(i, i + 1)
+    //       }
+    //     }
+    //   }
+    // }    
+    // else {
+    //   journeys_filter_final = []
+    //   journeys_filter_final.push(
+    //     <View style={styles.container}> 
+    //       <Text  style={styles.titleText}>No Journeys</Text> 
+    //     </View>
+    //   );
+    // }
+
+  
   }
 
   // const data = props.navigation.state.params //journeys received from server
   //create array of journeys as react components, these will be rendered to screen
   //Key is there to keep react happy, lets it identify an item by the key
   
-  if(data.length != 0){
-    for (let i = 0; i < data.length; i++){
-      // console.log(journeys_filter_1[i]["journeyID"])
-      journeys_filter_final.push(
-        <View key={data[i]["journeyID"]}> 
-          <AvailableJourneyCard data={data[i]} navigation={props.navigation}/>
-        </View>
-      );
-    }
-  }
   
-  else {
-    <View style={styles.container}> 
-      <Text  style={styles.titleText}>No Journeys</Text> 
-    </View>
-  }
   return (
     <SafeAreaView style={styles.container}>
       <Text  style={styles.titleText}>Available Journeys</Text> 
@@ -97,7 +132,6 @@ const Journeys = (props: any) => {
           onSelect={(selectedItem, index) => {
             // console.log(selectedItem, index);
             displayFilter.method = selectedItem.title;
-            
           }}
           rowStyle={styles.dropdownRowStyle_1}
           renderCustomizedButtonChild={(selectedItem, index) => {
@@ -183,11 +217,23 @@ const Journeys = (props: any) => {
         />
 
       </View>
-      <View style={styles.dropdownsRow}>
-        <ScrollView> 
-          <View style={styles.items}>{journeys_filter_final}</View> 
-        </ScrollView>  
-      </View>
+
+      <TouchableOpacity style={styles.applyButt}>
+        <Text style={styles.applyButtTxt} onPress={json_filter}>Apply</Text>
+      </TouchableOpacity>
+
+      <ScrollView>       
+        <View style={styles.items}>
+          {journeys_filter_final.map((journeyCard) =>{
+            return (
+              <View>
+                <Text>{journeyCard["journeyID"]}</Text>
+              </View>
+            )
+          })}
+        </View> 
+      </ScrollView>  
+      
     </SafeAreaView>
   );
 };
@@ -217,7 +263,8 @@ const styles = StyleSheet.create({
   },
   items: {
     flex: 1,
-    padding: 20,
+    padding: 10,
+    marginHorizontal: 0,
   },
 
   dropdownsRow: {
@@ -315,6 +362,21 @@ const styles = StyleSheet.create({
     position: 'absolute', 
     left: 50,
   },
+  applyButt:{
+    width: "24%",
+    backgroundColor: "#33FF99",
+    borderRadius: 10,
+    height: 30,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 5,
+    marginLeft: 265,
+  },
+  applyButtTxt:{
+    color: "#111111",
+    textAlign: "center",
+    fontWeight: "bold",
+  }
 });
 
 export default Journeys;
