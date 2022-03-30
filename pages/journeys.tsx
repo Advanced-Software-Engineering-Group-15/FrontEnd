@@ -22,6 +22,11 @@ const Journeys = (props: any) => {
 
   const [data, setData] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  const [journeysFiltered, setJourneysFiltered] = useState([]);
+  const [methodFilter, setMethodFilter] = useState('');
+  const [maxPriceFilter, setMaxPriceFilter] = useState('');
+  const [minRateFilter, setMinRateFilter] = useState('');
+  const [journeys_filter_final, setFinalList] = useState([]);
 
   // const [journeys_filter_final, setJourneyList] = useState([]);
 
@@ -41,78 +46,40 @@ const Journeys = (props: any) => {
       setLoading(false)
     }
   }
-
-  let displayFilter = {
-    method: '',
-    maxPrice: '',
-    minRate: '',
-  };
-
-  var journeys_filter_final = []
-  if(data.length != 0){
-    for (let i = 0; i < data.length; i++){
-      // console.log(journeys_filter_1[i]["journeyID"])
-      // setJourneyList(data[i])
-      journeys_filter_final.push(data[i]);
-      //   <View key={data[i]["journeyID"]}> 
-      //     <AvailableJourneyCard data={data[i]} navigation={props.navigation}/>
-      //   </View>
-      // );
-    }
-  }
-  else {
-    <View style={styles.container}> 
-      <Text  style={styles.titleText}>No Journeys</Text> 
-    </View>
-  }
-
-  const json_filter = () =>{
-    var filter_var = {
-      method: displayFilter.method,
-      maxPrice: displayFilter.maxPrice,
-      minRate: displayFilter.minRate,
-    };
-
+  const filterData = async () => {
+    var matchingJourneys = [];
+    var journeys_filter_final_temp = [];
     for( var i = 0; i < data.length; i++){ 
-      if(filter_var.method !== ''){
-        if(filter_var.method !== data[i].journeyType){
-          console.log('asdasdasda')
-          journeys_filter_final.splice(i, i + 1)
+      if(methodFilter !== ''){
+        if(methodFilter == data[i]["journeyType"]){
+            matchingJourneys.push(data[i])
         }
       }
+      else{
+        matchingJourneys.push(data[i]);
+      }
     }
-
-    // journeys_filter_final = [];
-    // if(data.length != 0){
-    //   for (let i = 0; i < data.length; i++){
-    //     // console.log(journeys_filter_1[i]["journeyID"])
-    //     journeys_filter_final.push(
-    //       <View key={data[i]["journeyID"]}> 
-    //         <AvailableJourneyCard data={data[i]} navigation={props.navigation}/>
-    //       </View>
-    //     );
-    //   }
-    //   console.log(journeys_filter_final.length)
-    //   for( var i = 0; i < data.length; i++){ 
-    //     if(filter_var.method !== ''){
-    //       if(filter_var.method !== data[i].journeyType){
-    //         console.log('asdasdasda')
-    //         journeys_filter_final.splice(i, i + 1)
-    //       }
-    //     }
-    //   }
-    // }    
-    // else {
-    //   journeys_filter_final = []
-    //   journeys_filter_final.push(
-    //     <View style={styles.container}> 
-    //       <Text  style={styles.titleText}>No Journeys</Text> 
-    //     </View>
-    //   );
-    // }
-
-  
+    console.log(matchingJourneys);
+    setJourneysFiltered(matchingJourneys)
+    if(journeysFiltered.length != 0){
+      for (let i = 0; i < journeysFiltered.length; i++){
+        // console.log(journeys_filter_1[i]["journeyID"])
+        // setJourneyList(data[i])
+        journeys_filter_final_temp.push(
+          <View> 
+            <AvailableJourneyCard data={journeysFiltered[i]} navigation={props.navigation}/>
+          </View>
+        );
+      }
+      setFinalList(journeys_filter_final_temp);
+    }
+    else {
+      <View style={styles.container}> 
+        <Text  style={styles.titleText}>No Journeys</Text> 
+      </View>
+    }
   }
+
 
   // const data = props.navigation.state.params //journeys received from server
   //create array of journeys as react components, these will be rendered to screen
@@ -130,8 +97,9 @@ const Journeys = (props: any) => {
           buttonStyle={styles.dropdownBtnStyle_1}
           buttonTextStyle={styles.dropdownBtnTxtStyle_1}
           onSelect={(selectedItem, index) => {
-            // console.log(selectedItem, index);
-            displayFilter.method = selectedItem.title;
+            console.log(selectedItem.title, index);
+            //displayFilter.method = selectedItem.title;
+            setMethodFilter(selectedItem.title)
           }}
           rowStyle={styles.dropdownRowStyle_1}
           renderCustomizedButtonChild={(selectedItem, index) => {
@@ -161,7 +129,8 @@ const Journeys = (props: any) => {
           defaultButtonText={"Set price"}
           onSelect={(selectedItem, index) => {
             // console.log(selectedItem, index);
-            displayFilter.maxPrice = selectedItem.title;
+            setMaxPriceFilter(selectedItem.title);
+            //displayFilter.maxPrice = selectedItem.title;
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
             return selectedItem;
@@ -191,7 +160,8 @@ const Journeys = (props: any) => {
           defaultButtonText={"Min rate"}
           onSelect={(selectedItem, index) => {
             console.log(selectedItem, index);
-            displayFilter.minRate = selectedItem.title;
+            setMinRateFilter(selectedItem.title);
+            //displayFilter.minRate = selectedItem.title;
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
             return selectedItem;
@@ -219,18 +189,12 @@ const Journeys = (props: any) => {
       </View>
 
       <TouchableOpacity style={styles.applyButt}>
-        <Text style={styles.applyButtTxt} onPress={json_filter}>Apply</Text>
+        <Text style={styles.applyButtTxt} onPress={filterData}>Apply</Text>
       </TouchableOpacity>
 
       <ScrollView>       
         <View style={styles.items}>
-          {journeys_filter_final.map((journeyCard) =>{
-            return (
-              <View>
-                <Text>{journeyCard["journeyID"]}</Text>
-              </View>
-            )
-          })}
+          {journeys_filter_final}
         </View> 
       </ScrollView>  
       
