@@ -11,7 +11,7 @@ const localHost = 'http://' + IP + '/journeys'
 const maxPrice = ["None", 5, 10, 15, 20, 25, 30, "30+"]
 const minRate = ["None", 1, 2, 3, 4, 5]
 const journeyType_withImage = [
-  { title:"None",},
+  { title: "None",},
   { title: "DRIVING", image: require("../images/driving.png") },
   { title: "WALKING", image: require("../images/walking.jpg") },
   { title: "BICYCLING", image: require("../images/cycling.jpg") },
@@ -27,8 +27,6 @@ const Journeys = (props: any) => {
   const [maxPriceFilter, setMaxPriceFilter] = useState('');
   const [minRateFilter, setMinRateFilter] = useState('');
   const [journeys_filter_final, setFinalList] = useState([]);
-
-  // const [journeys_filter_final, setJourneyList] = useState([]);
 
   useEffect(() => {
     getData()
@@ -46,13 +44,31 @@ const Journeys = (props: any) => {
       setLoading(false)
     }
   }
-  const filterData = async () => {
+
+  // var journeys_filter_final_temp_intial = [];
+  // if(data.length != 0){
+  //   for (let i = 0; i < data.length; i++){
+  //     journeys_filter_final_temp_intial.push(
+  //       <View key={data[i]["journeyID"]}> 
+  //         <AvailableJourneyCard data={data[i]} navigation={props.navigation}/>
+  //       </View>
+  //     );
+  //   }
+  //   setFinalList(journeys_filter_final_temp_intial);
+  // }
+  // else {
+  //   <View style={styles.container}> 
+  //     <Text style={styles.titleText}>No Journeys</Text> 
+  //   </View>
+  // }
+
+  const filterData = () => {
     var matchingJourneys = [];
     var journeys_filter_final_temp = [];
     for( var i = 0; i < data.length; i++){ 
-      if(methodFilter !== ''){
-        if(methodFilter == data[i]["journeyType"]){
-            matchingJourneys.push(data[i])
+      if(methodFilter !== '' && methodFilter !== "None"){
+        if(methodFilter === data[i]["journeyType"]){
+          matchingJourneys.push(data[i])
         }
       }
       else{
@@ -66,7 +82,7 @@ const Journeys = (props: any) => {
         // console.log(journeys_filter_1[i]["journeyID"])
         // setJourneyList(data[i])
         journeys_filter_final_temp.push(
-          <View> 
+          <View key={journeysFiltered[i]["journeyID"]}> 
             <AvailableJourneyCard data={journeysFiltered[i]} navigation={props.navigation}/>
           </View>
         );
@@ -88,7 +104,7 @@ const Journeys = (props: any) => {
   
   return (
     <SafeAreaView style={styles.container}>
-      <Text  style={styles.titleText}>Available Journeys</Text> 
+      <Text style={styles.titleText}>Available Journeys</Text> 
       <View style={styles.dropdownsRow}>
 
         <SelectDropdown
@@ -228,7 +244,7 @@ const styles = StyleSheet.create({
   items: {
     flex: 1,
     padding: 10,
-    marginHorizontal: 0,
+    marginHorizontal: 12,
   },
 
   dropdownsRow: {
@@ -334,7 +350,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 5,
-    marginLeft: 265,
+    marginBottom: 10,
+    marginLeft: 290,
   },
   applyButtTxt:{
     color: "#111111",
