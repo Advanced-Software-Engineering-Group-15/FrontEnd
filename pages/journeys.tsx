@@ -76,7 +76,6 @@ const Journeys = (props: any) => {
           <AvailableJourneyCard data={data[i]} navigation={props.navigation}/>
         </View>
       );
-      
     }
   }
   
