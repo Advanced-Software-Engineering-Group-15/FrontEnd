@@ -31,6 +31,7 @@ function Home(props: any) {
     <View style={styles.container}>
       <Text style={styles.welcomeText}>
         Welcome back
+        {' '}
         {username}
         !
       </Text>
