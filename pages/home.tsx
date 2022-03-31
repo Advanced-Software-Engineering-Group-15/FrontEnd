@@ -1,79 +1,29 @@
 // import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   StyleSheet, Text, View, TouchableOpacity,
 } from 'react-native';
-import { IP } from '../constants.tsx';
-
-// These will be useful resources for adding waypoints etc+
-// https://stackoverflow.com/questions/64002670/how-to-update-google-maps-react-direction-route
-// https://stackblitz.com/edit/adding-direction-waypoint-1xyogt?file=src/MapComponent.js
-
-const localHost = `http://${IP}/journeys`;
 
 function Home(props: any) {
   const { username } = props.navigation.state.params;
-
-  const origin = { latitude: 53.5237268, longitude: -6.4142645 };
-  const destination = { latitude: 53.5395496, longitude: -6.4466271 };
-
-  const [isLoading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
-
-  const [pin, setPin] = React.useState({ latitude: 53.5237268, longitude: -6.4142645 }); // Initial location
-
-  useEffect(() => {
-    getData();
-  }, []);
-
-  const getData = async () => {
-    try {
-      const response = await fetch(localHost);
-      const json = await response.json();
-      // console.log(JSON.stringify(json.exJourneys))
-      setData(json.exJourneys);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const RatingPage = () => {
     props.navigation.navigate('Ratings');
   };
 
-  const dummyJourney = () => {
-    props.navigation.navigate('Dummy', { username });
-  };
-
-  const startJourneyPage = () => {
-    props.navigation.navigate('StartJourney', { username });
-  };
-
-  const journeyInProgress = () => {
-    console.log(username);
-    props.navigation.navigate('JourneyInProgress', { username });
-  };
-  const endJourney = () => {
-    console.log(username);
-    props.navigation.navigate('EndJourney', { username });
-  };
-
   const payment = () => {
-    console.log(username);
     props.navigation.navigate('Payment', { username });
   };
 
   const journeys = () => {
-    props.navigation.navigate('Journeys', { journeyData: data });
+    props.navigation.navigate('Journeys', {});
   };
 
-  const Create_Journey = () => {
+  const createJourney = () => {
     props.navigation.navigate('JourneyType', { username });
   };
 
-  const More_Options = () => {
+  const moreOptions = () => {
     props.navigation.navigate('MoreOptions', { username });
   };
 
@@ -94,10 +44,10 @@ function Home(props: any) {
         <Text style={styles.homePageBtnText} onPress={payment}>Payment Page</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.ViewJourneyBtn}>
-        <Text style={styles.homePageBtnText} onPress={Create_Journey}>Create Journey</Text>
+        <Text style={styles.homePageBtnText} onPress={createJourney}>Create Journey</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.ViewJourneyBtn}>
-        <Text style={styles.homePageBtnText} onPress={More_Options}>More Options</Text>
+        <Text style={styles.homePageBtnText} onPress={moreOptions}>More Options</Text>
       </TouchableOpacity>
     </View>
   );
