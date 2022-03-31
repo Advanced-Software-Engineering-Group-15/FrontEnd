@@ -10,6 +10,7 @@ import { IP } from '../constants';
 const localHost = 'http://' + IP + '/journeys'
 const maxPrice = ["None", 5, 10, 15, 20, 25, 30]
 const minRate = ["None", 1, 2, 3, 4, 5]
+const distance = ["None", 1, 2, 5, 10, 20]
 const journeyType_withImage = [
   { title: "None",},
   { title: "DRIVING", image: require("../images/driving.png") },
@@ -19,6 +20,11 @@ const journeyType_withImage = [
 ];
 
 const Journeys = (props: any) => {
+  const idealJourney = props.navigation.state.params;
+
+  const origin = idealJourney.origin;
+  const dest = idealJourney.dest;
+
 
   const [Filtered, setFiltered] = useState(false);
   const [data, setData] = useState([]);
@@ -27,6 +33,7 @@ const Journeys = (props: any) => {
   const [methodFilter, setMethodFilter] = useState('None');
   const [maxPriceFilter, setMaxPriceFilter] = useState('None');
   const [minRateFilter, setMinRateFilter] = useState('None');
+  const [distFilter, setDistFilter] = useState('None');
   const [journeys_filter_final, setFinalList] = useState([]);
   const [journeys_filter_initial, setInitialList] = useState([]);
 
@@ -52,6 +59,46 @@ const Journeys = (props: any) => {
     }
   }
 
+  const distCalc = (region1, region2) =>{
+
+    let lat1 = region1.latitude;
+    let lat2 = region2.latitude;
+    let lon1 = region1.longitude;
+    let lon2 = region2.longitude;
+    const R = 6371e3; // metres
+    const φ1 = lat1 * Math.PI/180; // φ, λ in radians
+    const φ2 = lat2 * Math.PI/180;
+    const Δφ = (lat2-lat1) * Math.PI/180;
+    const Δλ = (lon2-lon1) * Math.PI/180;
+     
+    const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+             Math.cos(φ1) * Math.cos(φ2) *
+             Math.sin(Δλ/2) * Math.sin(Δλ/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    let d = R * c/1000;
+    console.log('Calc Dist: ',d)
+    
+    return d; // in metres
+  }
+
+  const distanceComp = ( region1, region2, distFilter) => {
+    console.log(distCalc(region1, region2),distFilter)
+    if (distCalc(region1, region2) <= distFilter){
+      console.log('True')
+      return true
+    }
+    return false
+  }
+
+
+  const isInDistance = ( origin1, origin2, dest1, dest2, distFilter) => {
+    if (distanceComp(origin1, origin2, distFilter) && distanceComp(dest1, dest2, distFilter)){
+      console.log('True')
+      return true
+    }
+    return false
+  }
+
   const filterData = async () => {
     var matchingJourneys = [];
     console.log("asdasdasd!")
@@ -61,9 +108,12 @@ const Journeys = (props: any) => {
       if(methodFilter == data[i]["journeyType"] || methodFilter == "None"){
         if(parseFloat(maxPriceFilter) >= data[i]["cost"] || maxPriceFilter == "None"){
           if(parseFloat(minRateFilter) <= data[i]["creatorRating"] || minRateFilter == "None"){
+            console.log(typeof(distFilter))
+            if( isInDistance(origin, {latitude: data[i].startLat, longitude: data[i].startLong}, dest, {latitude: data[i].endLat, longitude: data[i].endLong}, parseFloat(distFilter)) || distFilter == "None"){
             matchingJourneys.push(data[i])
           }
         }
+      }
       }
     }
     //console.log(data)
@@ -84,7 +134,7 @@ const Journeys = (props: any) => {
       )
     }
     setFinalList(journeys_filter_final_temp);
-  }
+}
 
 
   const initialData = async (msg) => {
@@ -141,6 +191,7 @@ const Journeys = (props: any) => {
             console.log(selectedItem.title, index);
             //displayFilter.method = selectedItem.title;
             setMethodFilter(selectedItem.title)
+            console.log(selectedItem.title)
           }}
           rowStyle={styles.dropdownRowStyle_1}
           renderCustomizedButtonChild={(selectedItem, index) => {
@@ -163,6 +214,39 @@ const Journeys = (props: any) => {
               </View>
             );
           }}
+        />
+        
+        <SelectDropdown     // Acceptable Distance
+          data={distance}
+          defaultButtonText={"Set Allowed Distance"}
+          onSelect={(selectedItem, index) => {
+            // console.log(selectedItem, index);
+            setDistFilter(selectedItem);
+            console.log(distFilter)
+            console.log(selectedItem)
+            //displayFilter.maxPrice = selectedItem.title;
+          }}
+          buttonTextAfterSelection={(selectedItem, index) => {
+            return selectedItem;
+          }}
+          rowTextForSelection={(item, index) => {
+            return item;
+          }}
+          buttonStyle={styles.dropdownBtnStyle_2}
+          buttonTextStyle={styles.dropdownBtnTxtStyle_1}
+          renderDropdownIcon={(isOpened) => {
+            return (
+              <FontAwesome
+                name={isOpened ? "chevron-up" : "chevron-down"}
+                color={"#444"}
+                size={18}
+              />
+            );
+          }}
+          dropdownIconPosition={"right"}
+          dropdownStyle={styles.dropdownDropdownStyle_1}
+          rowStyle={styles.dropdownRowStyle_1}
+          rowTextStyle={styles.dropdownRowTxtStyle_2}
         />
 
         <SelectDropdown     // Maximum price

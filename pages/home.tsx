@@ -67,8 +67,9 @@ const Home = (props: any) => {
   }
 
   const journeys= () => {
-    props.navigation.navigate("Journeys")
+    props.navigation.navigate("FindJourneys", { username: username })
   }
+  
   
   const Create_Journey = () => {
     props.navigation.navigate("JourneyType", { username: username })
