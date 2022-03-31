@@ -20,24 +20,31 @@ const journeyType_withImage = [
 
 const Journeys = (props: any) => {
 
+  const [Filtered, setFiltered] = useState(false);
   const [data, setData] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [journeysFiltered, setJourneysFiltered] = useState([]);
-  const [methodFilter, setMethodFilter] = useState('');
-  const [maxPriceFilter, setMaxPriceFilter] = useState('');
-  const [minRateFilter, setMinRateFilter] = useState('');
+  const [methodFilter, setMethodFilter] = useState('None');
+  const [maxPriceFilter, setMaxPriceFilter] = useState('None');
+  const [minRateFilter, setMinRateFilter] = useState('None');
   const [journeys_filter_final, setFinalList] = useState([]);
+  const [journeys_filter_initial, setInitialList] = useState([]);
 
   useEffect(() => {
-    getData()
+    getData() 
+    
   }, []);
 
   const getData = async () => {
     try {
       const response = await fetch(localHost);
       const json = await response.json();
-      // console.log(JSON.stringify(json.exJourneys,  null, 2))
-      setData(json.exJourneys);
+      await new Promise((resolve) => {
+        setData(json.exJourneys)
+        return resolve(json.exJourneys)
+      }).then(msg => {
+        initialData(msg);
+      })
     } catch (error) { 
       console.log(error);
     } finally {
@@ -45,71 +52,61 @@ const Journeys = (props: any) => {
     }
   }
 
-  // var journeys_filter_final_temp_intial = [];
-  // if(data.length != 0){
-  //   for (let i = 0; i < data.length; i++){
-  //     journeys_filter_final_temp_intial.push(
-  //       <View key={data[i]["journeyID"]}> 
-  //         <AvailableJourneyCard data={data[i]} navigation={props.navigation}/>
-  //       </View>
-  //     );
-  //   }
-  //   setFinalList(journeys_filter_final_temp_intial);
-  // }
-  // else {
-  //   <View style={styles.container}> 
-  //     <Text style={styles.titleText}>No Journeys</Text> 
-  //   </View>
-  // }
-
-  const filterData = () => {
-
+  const filterData = async () => {
     var matchingJourneys = [];
-    var matchingJourneys_1 = [];
-    var matchingJourneys_2 = [];
-    var matchingJourneys_3 = [];
-
+    console.log("asdasdasd!")
+    console.log(data)
     var journeys_filter_final_temp = [];
     for( var i = 0; i < data.length; i++){ 
-      if(methodFilter !== '' && methodFilter !== "None"){
-        if(methodFilter === data[i]["journeyType"]){
-          matchingJourneys_1.push(data[i])
+      if(methodFilter == data[i]["journeyType"] || methodFilter == "None"){
+        if(parseFloat(maxPriceFilter) >= data[i]["cost"] || maxPriceFilter == "None"){
+          if(parseFloat(minRateFilter) <= data[i]["creatorRating"] || minRateFilter == "None"){
+            matchingJourneys.push(data[i])
+          }
         }
       }
-      else{
-        matchingJourneys_1.push(data[i]);
-      }
     }
-    for( var i = 0; i < matchingJourneys_1.length; i++){ 
-      if(maxPriceFilter !== '' && maxPriceFilter !== "None"){
-        if(parseFloat(maxPriceFilter) >= matchingJourneys_1[i]["cost"]){
-          matchingJourneys_2.push(matchingJourneys_1[i])
-        }
-      }
-      else{
-        matchingJourneys_2.push(matchingJourneys_1[i]);
-      }
-    }
-    for( var i = 0; i < matchingJourneys_2.length; i++){ 
-      if(minRateFilter !== '' && minRateFilter !== "None"){
-        if(parseFloat(minRateFilter) <= matchingJourneys_2[i]["creatorRating"]){
-          matchingJourneys_3.push(matchingJourneys_2[i])
-        }
-      }
-      else{
-        matchingJourneys_3.push(matchingJourneys_2[i]);
-      }
-    }
-    console.log(matchingJourneys_3);
-    setJourneysFiltered(matchingJourneys_3)
-    if(journeysFiltered.length != 0){
-      for (let i = 0; i < journeysFiltered.length; i++){
-        // console.log(journeys_filter_1[i]["journeyID"])
-        // setJourneyList(data[i])
+    //console.log(data)
+    if(matchingJourneys.length != 0){
+      for (let i = 0; i < matchingJourneys.length; i++){
         journeys_filter_final_temp.push(
-          // key={journeysFiltered[i]["journeyID"]}
-          <View>
-            <AvailableJourneyCard data={journeysFiltered[i]} navigation={props.navigation}/>
+          <View key={matchingJourneys[i]["journeyID"]}>
+            <AvailableJourneyCard data={matchingJourneys[i]} navigation={props.navigation}/>
+          </View>
+        );
+      }
+    }
+    else {
+      journeys_filter_final_temp.push(
+        <View style={styles.container}> 
+          <Text  style={styles.titleText}>No Journeys</Text> 
+        </View>
+      )
+    }
+    setFinalList(journeys_filter_final_temp);
+  }
+
+
+  const initialData = async (msg) => {
+    var matchingJourneys = [];
+    console.log("asdasdasd!")
+    console.log(msg)
+    var journeys_filter_final_temp = [];
+    for( var i = 0; i < msg.length; i++){ 
+      if(methodFilter == msg[i]["journeyType"] || methodFilter == "None"){
+        if(parseFloat(maxPriceFilter) >= msg[i]["cost"] || maxPriceFilter == "None"){
+          if(parseFloat(minRateFilter) <= msg[i]["creatorRating"] || minRateFilter == "None"){
+            matchingJourneys.push(msg[i])
+          }
+        }
+      }
+    }
+    //console.log(data)
+    if(matchingJourneys.length != 0){
+      for (let i = 0; i < matchingJourneys.length; i++){
+        journeys_filter_final_temp.push(
+          <View key={matchingJourneys[i]["journeyID"]}>
+            <AvailableJourneyCard data={matchingJourneys[i]} navigation={props.navigation}/>
           </View>
         );
       }
@@ -241,7 +238,14 @@ const Journeys = (props: any) => {
           {journeys_filter_final}
         </View> 
       </ScrollView>  
-      
+
+      {/* {Filtered == true &&
+        <ScrollView>      
+          <View style={styles.items}>
+            {journeys_filter_initial}
+          </View> 
+        </ScrollView>
+      } */}
     </SafeAreaView>
   );
 };
