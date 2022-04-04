@@ -20,6 +20,7 @@ let region = {
 const FindJourneys = (props: any) => {
 
   const userName = props.navigation.state.params.username
+  const userProps = props.navigation.state.params
   console.log('origin username', userName)
 
   const [Origin, setOrigin] = React.useState ({})
@@ -30,7 +31,7 @@ const FindJourneys = (props: any) => {
     props.navigation.navigate("Journeys", {
       origin: Origin,
       dest: Dest,
-      username: userName
+      userProps: userProps
     })
   }
 

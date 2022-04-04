@@ -14,6 +14,7 @@ const Map = (props: any) => {
   const originData = props.navigation.state.params.start;
   const destData = props.navigation.state.params.end;
   const journeyID = props.navigation.state.params.journeyID;
+  const userProps = props.navigation.state.params.userProps;
   
   const origin = {latitude: Number(originData.latitude), longitude: Number(originData.longitude)};
   const destination = {latitude: Number(destData.latitude), longitude: Number(destData.longitude)};
@@ -25,7 +26,7 @@ const Map = (props: any) => {
     longitudeDelta: 0.002661
   }       
   const routePage = () => {
-
+    console.log('maps userProps: ', userProps)
     props.navigation.navigate("Home", {
     })
   }  

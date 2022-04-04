@@ -6,6 +6,7 @@ import {
 
 function Home(props: any) {
   const username  = props.navigation.state.params.userProps.username;
+  const userProps  = props.navigation.state.params.userProps;
   console.log('username is: ', username)
 
   const RatingPage = () => {
@@ -17,7 +18,7 @@ function Home(props: any) {
   };
 
   const journeys= () => {
-    props.navigation.navigate("FindJourneys", { username: username })
+    props.navigation.navigate("FindJourneys", { userProps })
   }
   
   

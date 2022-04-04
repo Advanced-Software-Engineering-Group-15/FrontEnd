@@ -4,6 +4,7 @@ import { View, Text, StyleSheet,  TouchableOpacity} from 'react-native';
 
 const AvailableJourneyCard = (props: any) => {
     console.log(JSON.stringify(props.data, null, 2))
+    const userProps = props.navigation.state.params.userProps
 
     const openInMap = () => {
         props.navigation.navigate("Map",  {
@@ -14,7 +15,9 @@ const AvailableJourneyCard = (props: any) => {
                     , 
             end: {name: props.data.endName,
                 latitude: props.data.endLat,
-                longitude: props.data.endLong,}}
+                longitude: props.data.endLong,},
+            userProps: userProps
+            }
                )
     }    
       
