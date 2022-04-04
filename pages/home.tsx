@@ -15,9 +15,14 @@ function Home(props: any) {
     props.navigation.navigate('Payment', { username });
   };
 
-  const journeys = () => {
-    props.navigation.navigate('Journeys', {});
-  };
+  const journeys= () => {
+    props.navigation.navigate("FindJourneys", { username: username })
+  }
+  
+  
+  const Create_Journey = () => {
+    props.navigation.navigate("JourneyType", { username: username })
+  }
 
   const createJourney = () => {
     props.navigation.navigate('JourneyType', { username });
@@ -98,21 +103,6 @@ const styles = StyleSheet.create({
     height: 44,
     flexDirection: 'row',
   },
-  // homePageBtnText: {
-  //   color: '#000000',
-  //   fontSize: 18,
-  //   height: 30,
-  // },
-  // ViewJourneyBtn:{
-  //   width: "40%",
-  //   backgroundColor: "#33FF99",
-  //   borderRadius: 25,
-  //   height: 50,
-  //   alignItems: "center",
-  //   justifyContent: "center",
-  //   marginTop: 20,
-  //   marginBottom: 10
-  // },
 });
 
 export default Home;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Dimensions, ScrollView, Image} from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, Image} from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import NumericInput from "react-native-numeric-input";
 import AvailableJourneyCard from '../components/AvailableJourneyCard';
@@ -8,68 +8,178 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { IP } from '../constants';
 
 const localHost = 'http://' + IP + '/journeys'
-const maxPrice = ["None", 5, 10, 15, 20, 25, 30, "30+"]
+const maxPrice = ["None", 5, 10, 15, 20, 25, 30]
 const minRate = ["None", 1, 2, 3, 4, 5]
+const distance = ["None", 1, 2, 5, 10, 20]
 const journeyType_withImage = [
-  { title:"None",},
+  { title: "None",},
   { title: "DRIVING", image: require("../images/driving.png") },
   { title: "WALKING", image: require("../images/walking.jpg") },
   { title: "BICYCLING", image: require("../images/cycling.jpg") },
   { title: "Taxi", image: require("../images/taxi.jpg") },
 ];
-const Journeys = (props: any) => {
 
+const Journeys = (props: any) => {
+  const idealJourney = props.navigation.state.params;
+
+  const origin = idealJourney.origin;
+  const dest = idealJourney.dest;
+
+
+  const [Filtered, setFiltered] = useState(false);
   const [data, setData] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  const [journeysFiltered, setJourneysFiltered] = useState([]);
+  const [methodFilter, setMethodFilter] = useState('None');
+  const [maxPriceFilter, setMaxPriceFilter] = useState('None');
+  const [minRateFilter, setMinRateFilter] = useState('None');
+  const [distFilter, setDistFilter] = useState('None');
+  const [journeys_filter_final, setFinalList] = useState([]);
+  const [journeys_filter_initial, setInitialList] = useState([]);
 
   useEffect(() => {
-    getData()
+    getData() 
+    
   }, []);
-
-  let displayFilter = {
-    _method: '',
-    _maxPrice: '',
-    _minRate: '',
-  }
 
   const getData = async () => {
     try {
       const response = await fetch(localHost);
       const json = await response.json();
-      console.log(JSON.stringify(json.exJourneys,  null, 2))
-      setData(json.exJourneys);
+      await new Promise((resolve) => {
+        setData(json.exJourneys)
+        return resolve(json.exJourneys)
+      }).then(msg => {
+        initialData(msg);
+      })
     } catch (error) { 
       console.log(error);
     } finally {
       setLoading(false)
     }
   }
+
+  const distCalc = (region1, region2) =>{
+
+    let lat1 = region1.latitude;
+    let lat2 = region2.latitude;
+    let lon1 = region1.longitude;
+    let lon2 = region2.longitude;
+    const R = 6371e3; // metres
+    const φ1 = lat1 * Math.PI/180; // φ, λ in radians
+    const φ2 = lat2 * Math.PI/180;
+    const Δφ = (lat2-lat1) * Math.PI/180;
+    const Δλ = (lon2-lon1) * Math.PI/180;
+     
+    const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+             Math.cos(φ1) * Math.cos(φ2) *
+             Math.sin(Δλ/2) * Math.sin(Δλ/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    let d = R * c/1000;
+    console.log('Calc Dist: ',d)
+    
+    return d; // in metres
+  }
+
+  const distanceComp = ( region1, region2, distFilter) => {
+    console.log(distCalc(region1, region2),distFilter)
+    if (distCalc(region1, region2) <= distFilter){
+      console.log('True')
+      return true
+    }
+    return false
+  }
+
+
+  const isInDistance = ( origin1, origin2, dest1, dest2, distFilter) => {
+    if (distanceComp(origin1, origin2, distFilter) && distanceComp(dest1, dest2, distFilter)){
+      console.log('True')
+      return true
+    }
+    return false
+  }
+
+  const filterData = async () => {
+    var matchingJourneys = [];
+    console.log("asdasdasd!")
+    console.log(data)
+    var journeys_filter_final_temp = [];
+    for( var i = 0; i < data.length; i++){ 
+      if(methodFilter == data[i]["journeyType"] || methodFilter == "None"){
+        if(parseFloat(maxPriceFilter) >= data[i]["cost"] || maxPriceFilter == "None"){
+          if(parseFloat(minRateFilter) <= data[i]["creatorRating"] || minRateFilter == "None"){
+            console.log(typeof(distFilter))
+            if( isInDistance(origin, {latitude: data[i].startLat, longitude: data[i].startLong}, dest, {latitude: data[i].endLat, longitude: data[i].endLong}, parseFloat(distFilter)) || distFilter == "None"){
+              matchingJourneys.push(data[i])
+          }
+        }
+      }
+      }
+    }
+    //console.log(data)
+    if(matchingJourneys.length != 0){
+      for (let i = 0; i < matchingJourneys.length; i++){
+        journeys_filter_final_temp.push(
+          <View key={matchingJourneys[i]["journeyID"]}>
+            <AvailableJourneyCard data={matchingJourneys[i]} navigation={props.navigation}/>
+          </View>
+        );
+      }
+    }
+    else {
+      journeys_filter_final_temp.push(
+        <View style={styles.container}> 
+          <Text  style={styles.titleText}>No Journeys</Text> 
+        </View>
+      )
+    }
+    setFinalList(journeys_filter_final_temp);
+}
+
+
+  const initialData = async (msg) => {
+    var matchingJourneys = [];
+    console.log("asdasdasd!")
+    console.log(msg)
+    var journeys_filter_final_temp = [];
+    for( var i = 0; i < msg.length; i++){ 
+      if(methodFilter == msg[i]["journeyType"] || methodFilter == "None"){
+        if(parseFloat(maxPriceFilter) >= msg[i]["cost"] || maxPriceFilter == "None"){
+          if(parseFloat(minRateFilter) <= msg[i]["creatorRating"] || minRateFilter == "None"){
+            matchingJourneys.push(msg[i])
+          }
+        }
+      }
+    }
+    //console.log(data)
+    if(matchingJourneys.length != 0){
+      for (let i = 0; i < matchingJourneys.length; i++){
+        journeys_filter_final_temp.push(
+          <View key={matchingJourneys[i]["journeyID"]}>
+            <AvailableJourneyCard data={matchingJourneys[i]} navigation={props.navigation}/>
+          </View>
+        );
+      }
+    }
+    else {
+      journeys_filter_final_temp.push(
+        <View style={styles.container}> 
+          <Text  style={styles.titleText}>No Journeys</Text> 
+        </View>
+      )
+    }
+    setFinalList(journeys_filter_final_temp);
+  }
+
+
   // const data = props.navigation.state.params //journeys received from server
-  console.log(JSON.stringify(data));
   //create array of journeys as react components, these will be rendered to screen
   //Key is there to keep react happy, lets it identify an item by the key
-  var journeys = [];
-  if(data.length != 0){
-    for (let i = 0; i < data.length; i++){
-      journeys.push(
-        <View key={data[i]["journeyID"]}> 
-          <AvailableJourneyCard data={data[i]} navigation={props.navigation}/>
-        </View>
-      );
-      // if(displayFilter._method != ''){  
-      // }
-      // if(data[i].journeyType == displayFilter._method){
-      // }  
-    }
-  }
-  else {
-    <View style={styles.container}> 
-      <Text  style={styles.titleText}>No Journeys</Text> 
-    </View>
-  }
+  
+  
   return (
     <SafeAreaView style={styles.container}>
-      <Text  style={styles.titleText}>Available Journeys</Text> 
+      <Text style={styles.titleText}>Available Journeys</Text> 
       <View style={styles.dropdownsRow}>
 
         <SelectDropdown
@@ -78,17 +188,19 @@ const Journeys = (props: any) => {
           buttonStyle={styles.dropdownBtnStyle_1}
           buttonTextStyle={styles.dropdownBtnTxtStyle_1}
           onSelect={(selectedItem, index) => {
-            console.log(selectedItem, index);
-            displayFilter._method = selectedItem.title;
+            console.log(selectedItem.title, index);
+            //displayFilter.method = selectedItem.title;
+            setMethodFilter(selectedItem.title)
+            console.log(selectedItem.title)
           }}
           rowStyle={styles.dropdownRowStyle_1}
           renderCustomizedButtonChild={(selectedItem, index) => {
             return (
               <View style={styles.dropdownBtnChildStyle_1}>
                 <Text style={styles.dropdownBtnTxtStyle_1}>
-                  {selectedItem ? selectedItem.title : "Select method"}
+                  {selectedItem ? selectedItem.title : "Method"}
                 </Text>
-                <FontAwesome name="chevron-down" color={"#444"} size={11}/>
+                <FontAwesome name="chevron-down" color={"#444"} size={12}/>
               </View>
             );
           }}
@@ -103,13 +215,16 @@ const Journeys = (props: any) => {
             );
           }}
         />
-
-        <SelectDropdown     // Maximum price
-          data={maxPrice}
-          defaultButtonText={"Set price"}
+        
+        <SelectDropdown     // Acceptable Distance
+          data={distance}
+          defaultButtonText={"Dist."} // Set allowed distance
           onSelect={(selectedItem, index) => {
-            console.log(selectedItem, index);
-            displayFilter._maxPrice = selectedItem.title;
+            // console.log(selectedItem, index);
+            setDistFilter(selectedItem);
+            console.log(distFilter)
+            console.log(selectedItem)
+            //displayFilter.maxPrice = selectedItem.title;
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
             return selectedItem;
@@ -124,7 +239,7 @@ const Journeys = (props: any) => {
               <FontAwesome
                 name={isOpened ? "chevron-up" : "chevron-down"}
                 color={"#444"}
-                size={18}
+                size={12}
               />
             );
           }}
@@ -133,13 +248,14 @@ const Journeys = (props: any) => {
           rowStyle={styles.dropdownRowStyle_1}
           rowTextStyle={styles.dropdownRowTxtStyle_2}
         />
-        
+
         <SelectDropdown     // Maximum price
-          data={minRate}
-          defaultButtonText={"Min rate"}
+          data={maxPrice}
+          defaultButtonText={"Price"}
           onSelect={(selectedItem, index) => {
-            console.log(selectedItem, index);
-            displayFilter._minRate = selectedItem.title;
+            // console.log(selectedItem, index);
+            setMaxPriceFilter(selectedItem);
+            //displayFilter.maxPrice = selectedItem.title;
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
             return selectedItem;
@@ -154,7 +270,38 @@ const Journeys = (props: any) => {
               <FontAwesome
                 name={isOpened ? "chevron-up" : "chevron-down"}
                 color={"#444"}
-                size={18}
+                size={12}
+              />
+            );
+          }}
+          dropdownIconPosition={"right"}
+          dropdownStyle={styles.dropdownDropdownStyle_1}
+          rowStyle={styles.dropdownRowStyle_1}
+          rowTextStyle={styles.dropdownRowTxtStyle_2}
+        />
+        
+        <SelectDropdown     // Min rate
+          data={minRate}
+          defaultButtonText={"Rate"}
+          onSelect={(selectedItem, index) => {
+            console.log(selectedItem, index);
+            setMinRateFilter(selectedItem);
+            //displayFilter.minRate = selectedItem.title;
+          }}
+          buttonTextAfterSelection={(selectedItem, index) => {
+            return selectedItem;
+          }}
+          rowTextForSelection={(item, index) => {
+            return item;
+          }}
+          buttonStyle={styles.dropdownBtnStyle_4}
+          buttonTextStyle={styles.dropdownBtnTxtStyle_1}
+          renderDropdownIcon={(isOpened) => {
+            return (
+              <FontAwesome
+                name={isOpened ? "chevron-up" : "chevron-down"}
+                color={"#444"}
+                size={12}
               />
             );
           }}
@@ -165,11 +312,24 @@ const Journeys = (props: any) => {
         />
 
       </View>
-      <View style={styles.dropdownsRow}>
-        <ScrollView> 
-          <View style={styles.items}>{journeys}</View> 
-        </ScrollView>  
-      </View>
+
+      <TouchableOpacity style={styles.applyButt}>
+        <Text style={styles.applyButtTxt} onPress={filterData}>Apply</Text>
+      </TouchableOpacity>
+
+      <ScrollView>       
+        <View style={styles.items}>
+          {journeys_filter_final}
+        </View> 
+      </ScrollView>  
+
+      {/* {Filtered == true &&
+        <ScrollView>      
+          <View style={styles.items}>
+            {journeys_filter_initial}
+          </View> 
+        </ScrollView>
+      } */}
     </SafeAreaView>
   );
 };
@@ -199,7 +359,8 @@ const styles = StyleSheet.create({
   },
   items: {
     flex: 1,
-    padding: 20,
+    padding: 10,
+    marginHorizontal: 12,
   },
 
   dropdownsRow: {
@@ -208,9 +369,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: "5%",
   },
   dropdownBtnStyle_1: {
-    width: "40%",
+    width: "25%",
     height: 40,
-    backgroundColor: "#bfb",
+    backgroundColor: "#AAFFFF",
     borderRadius: 15,
     borderWidth: 1,
     borderColor: "#444",
@@ -247,9 +408,9 @@ const styles = StyleSheet.create({
   },
 
   dropdownBtnStyle_2: {
-    width: "30%",
+    width: "25%",
     height: 40,
-    backgroundColor: "#FBB",
+    backgroundColor: "#FFEEAA",
     borderRadius: 15,
     borderWidth: 1,
     borderColor: "#444",
@@ -262,9 +423,9 @@ const styles = StyleSheet.create({
   },
 
   dropdownBtnStyle_3: {
-    width: "30%",
+    width: "25%",
     height: 40,
-    backgroundColor: "#BBF",
+    backgroundColor: "#99FF99",
     borderRadius: 15,
     borderWidth: 1,
     borderColor: "#444",
@@ -297,6 +458,30 @@ const styles = StyleSheet.create({
     position: 'absolute', 
     left: 50,
   },
+  applyButt:{
+    width: "24%",
+    backgroundColor: "#33FF99",
+    borderRadius: 10,
+    height: 30,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 5,
+    marginBottom: 10,
+    marginLeft: 290,
+  },
+  applyButtTxt:{
+    color: "#111111",
+    textAlign: "center",
+    fontWeight: "bold",
+  },
+  dropdownBtnStyle_4:{
+    width: "25%",
+    height: 40,
+    backgroundColor: "#FFAAAA",
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: "#444",
+  }
 });
 
 export default Journeys;
