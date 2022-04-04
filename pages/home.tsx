@@ -5,7 +5,8 @@ import {
 } from 'react-native';
 
 function Home(props: any) {
-  const { username } = props.navigation.state.params;
+  const username  = props.navigation.state.params.userProps.username;
+  console.log('username is: ', username)
 
   const RatingPage = () => {
     props.navigation.navigate('Ratings');
