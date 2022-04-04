@@ -1,19 +1,23 @@
-import * as React from 'react';
-import { StyleSheet, Text, Dimensions, View, TouchableOpacity } from 'react-native';
-
+import React, { useEffect, useState, useRef } from 'react';
+import { StyleSheet, Text, Dimensions, View, TouchableOpacity,TextInput } from 'react-native';
+import axios from 'axios';
 import MapView, {Callout, Marker, Circle} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 const GOOGLE_MAPS_APIKEY='AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8'
-
+import { IP } from '../constants';
 //These will be useful resources for adding waypoints etc+
 //https://stackoverflow.com/questions/64002670/how-to-update-google-maps-react-direction-route
 //https://stackblitz.com/edit/adding-direction-waypoint-1xyogt?file=src/MapComponent.js
+
+const localHost = 'http://'+ IP +'/newPassenger'
 
 const Map = (props: any) => {
   
   const originData = props.navigation.state.params.start;
   const destData = props.navigation.state.params.end;
   const journeyID = props.navigation.state.params.journeyID;
+  const creatorID = props.navigation.state.params.creatorID;
+  const [userID, setUserID] = useState(1)
   
   const origin = {latitude: Number(originData.latitude), longitude: Number(originData.longitude)};
   const destination = {latitude: Number(destData.latitude), longitude: Number(destData.longitude)};
@@ -29,6 +33,29 @@ const Map = (props: any) => {
     props.navigation.navigate("Home", {
     })
   }  
+
+  const addToJourney = () => {
+    console.log("HERE\n\n\n\n")
+    console.log(journeyID, creatorID, userID);
+   
+    var data = {
+      "journeyID": journeyID,
+      "creatorID": creatorID,
+      "userID": userID
+    }
+
+    axios.post(localHost, {
+      body: JSON.stringify(data)
+    })
+    .then(function (response) {
+      console.log(response);
+      props.navigation.navigate("Home", { status: 'True'})
+    })
+    .catch(function (error) {
+      console.log(error);
+      props.navigation.navigate("Home", { status: 'False' })
+    });
+  };
 
   console.log("ORIGIN: ",origin)
   console.log("DESTINATION: ",destination)
@@ -92,8 +119,14 @@ const Map = (props: any) => {
         
     </MapView>
     <TouchableOpacity style={styles.ViewJourneyBtn}>
-          <Text style={styles.homePageBtnText} onPress={routePage}>Join Journey</Text>
+          <Text style={styles.homePageBtnText} onPress={addToJourney}>Join Journey</Text>
     </TouchableOpacity>
+    <TextInput  
+            style={styles.inputText}
+            placeholder="Username..." 
+            placeholderTextColor="#003f5c"
+            onChangeText={(text) => setUserID(text)}
+          />
     </View>
   )
 }
@@ -183,6 +216,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: 20,
     marginBottom: 10
+  },
+  inputText:{
+    height:50,
+    color: "white",
+    textAlign: 'center'
   },
 });
 export default Map;

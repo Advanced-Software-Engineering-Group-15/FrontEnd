@@ -14,7 +14,9 @@ const AvailableJourneyCard = (props: any) => {
                     , 
             end: {name: props.data.endName,
                 latitude: props.data.endLat,
-                longitude: props.data.endLong,}}
+                longitude: props.data.endLong,},
+            creatorID: props.data.creatorID
+            }
                )
     }    
       
