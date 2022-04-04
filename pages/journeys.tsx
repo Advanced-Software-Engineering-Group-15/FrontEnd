@@ -110,7 +110,7 @@ const Journeys = (props: any) => {
           if(parseFloat(minRateFilter) <= data[i]["creatorRating"] || minRateFilter == "None"){
             console.log(typeof(distFilter))
             if( isInDistance(origin, {latitude: data[i].startLat, longitude: data[i].startLong}, dest, {latitude: data[i].endLat, longitude: data[i].endLong}, parseFloat(distFilter)) || distFilter == "None"){
-            matchingJourneys.push(data[i])
+              matchingJourneys.push(data[i])
           }
         }
       }
@@ -198,9 +198,9 @@ const Journeys = (props: any) => {
             return (
               <View style={styles.dropdownBtnChildStyle_1}>
                 <Text style={styles.dropdownBtnTxtStyle_1}>
-                  {selectedItem ? selectedItem.title : "Select method"}
+                  {selectedItem ? selectedItem.title : "Method"}
                 </Text>
-                <FontAwesome name="chevron-down" color={"#444"} size={11}/>
+                <FontAwesome name="chevron-down" color={"#444"} size={12}/>
               </View>
             );
           }}
@@ -218,7 +218,7 @@ const Journeys = (props: any) => {
         
         <SelectDropdown     // Acceptable Distance
           data={distance}
-          defaultButtonText={"Set Allowed Distance"}
+          defaultButtonText={"Dist."} // Set allowed distance
           onSelect={(selectedItem, index) => {
             // console.log(selectedItem, index);
             setDistFilter(selectedItem);
@@ -239,7 +239,7 @@ const Journeys = (props: any) => {
               <FontAwesome
                 name={isOpened ? "chevron-up" : "chevron-down"}
                 color={"#444"}
-                size={18}
+                size={12}
               />
             );
           }}
@@ -251,42 +251,11 @@ const Journeys = (props: any) => {
 
         <SelectDropdown     // Maximum price
           data={maxPrice}
-          defaultButtonText={"Set price"}
+          defaultButtonText={"Price"}
           onSelect={(selectedItem, index) => {
             // console.log(selectedItem, index);
             setMaxPriceFilter(selectedItem);
             //displayFilter.maxPrice = selectedItem.title;
-          }}
-          buttonTextAfterSelection={(selectedItem, index) => {
-            return selectedItem;
-          }}
-          rowTextForSelection={(item, index) => {
-            return item;
-          }}
-          buttonStyle={styles.dropdownBtnStyle_2}
-          buttonTextStyle={styles.dropdownBtnTxtStyle_1}
-          renderDropdownIcon={(isOpened) => {
-            return (
-              <FontAwesome
-                name={isOpened ? "chevron-up" : "chevron-down"}
-                color={"#444"}
-                size={18}
-              />
-            );
-          }}
-          dropdownIconPosition={"right"}
-          dropdownStyle={styles.dropdownDropdownStyle_1}
-          rowStyle={styles.dropdownRowStyle_1}
-          rowTextStyle={styles.dropdownRowTxtStyle_2}
-        />
-        
-        <SelectDropdown     // Min rate
-          data={minRate}
-          defaultButtonText={"Min rate"}
-          onSelect={(selectedItem, index) => {
-            console.log(selectedItem, index);
-            setMinRateFilter(selectedItem);
-            //displayFilter.minRate = selectedItem.title;
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
             return selectedItem;
@@ -301,7 +270,38 @@ const Journeys = (props: any) => {
               <FontAwesome
                 name={isOpened ? "chevron-up" : "chevron-down"}
                 color={"#444"}
-                size={18}
+                size={12}
+              />
+            );
+          }}
+          dropdownIconPosition={"right"}
+          dropdownStyle={styles.dropdownDropdownStyle_1}
+          rowStyle={styles.dropdownRowStyle_1}
+          rowTextStyle={styles.dropdownRowTxtStyle_2}
+        />
+        
+        <SelectDropdown     // Min rate
+          data={minRate}
+          defaultButtonText={"Rate"}
+          onSelect={(selectedItem, index) => {
+            console.log(selectedItem, index);
+            setMinRateFilter(selectedItem);
+            //displayFilter.minRate = selectedItem.title;
+          }}
+          buttonTextAfterSelection={(selectedItem, index) => {
+            return selectedItem;
+          }}
+          rowTextForSelection={(item, index) => {
+            return item;
+          }}
+          buttonStyle={styles.dropdownBtnStyle_4}
+          buttonTextStyle={styles.dropdownBtnTxtStyle_1}
+          renderDropdownIcon={(isOpened) => {
+            return (
+              <FontAwesome
+                name={isOpened ? "chevron-up" : "chevron-down"}
+                color={"#444"}
+                size={12}
               />
             );
           }}
@@ -369,9 +369,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: "5%",
   },
   dropdownBtnStyle_1: {
-    width: "40%",
+    width: "25%",
     height: 40,
-    backgroundColor: "#bfb",
+    backgroundColor: "#AAFFFF",
     borderRadius: 15,
     borderWidth: 1,
     borderColor: "#444",
@@ -408,9 +408,9 @@ const styles = StyleSheet.create({
   },
 
   dropdownBtnStyle_2: {
-    width: "30%",
+    width: "25%",
     height: 40,
-    backgroundColor: "#FBB",
+    backgroundColor: "#FFEEAA",
     borderRadius: 15,
     borderWidth: 1,
     borderColor: "#444",
@@ -423,9 +423,9 @@ const styles = StyleSheet.create({
   },
 
   dropdownBtnStyle_3: {
-    width: "30%",
+    width: "25%",
     height: 40,
-    backgroundColor: "#BBF",
+    backgroundColor: "#99FF99",
     borderRadius: 15,
     borderWidth: 1,
     borderColor: "#444",
@@ -473,6 +473,14 @@ const styles = StyleSheet.create({
     color: "#111111",
     textAlign: "center",
     fontWeight: "bold",
+  },
+  dropdownBtnStyle_4:{
+    width: "25%",
+    height: 40,
+    backgroundColor: "#FFAAAA",
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: "#444",
   }
 });
 
