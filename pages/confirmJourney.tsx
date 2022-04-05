@@ -41,6 +41,7 @@ const App = (props: any) => {
     },
     creatorID: userName,
     creatorRating: '2.5',
+    capacity: 1,
   };
 
   const createJourney = () => {
@@ -59,7 +60,8 @@ const App = (props: any) => {
       "currency": journey.pricing.currency,
       "cost": journey.pricing.quantity,
       "creatorID": journey.creatorID,
-      "creatorRating": journey.creatorRating
+      "creatorRating": journey.creatorRating,
+      "capacity": journey.capacity
     }
 
     axios.post(localHost, {
@@ -76,12 +78,14 @@ const App = (props: any) => {
   };
   return (
     <ScrollView>
-      <View style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        
-      }}>
+      <View style={
+      //   {
+      //   flex: 1,
+      //   justifyContent: 'center',
+      //   alignItems: 'center',  
+      // }
+      styles.items
+      }>
         {/* https://reactnativeexample.com/a-highly-customized-dropdown-select-picker-menu-for-react-native/ */}
         {/* <SelectDropdown
           data={journeyTypes}
@@ -100,20 +104,36 @@ const App = (props: any) => {
         /> */}
 
 
-        <Text>Start of Journey:</Text>
+        <Text style={styles.cardDestinationTxtStyle}>Start of Journey:</Text>
         <Text>{startInfo.data.description}</Text>
         {/* <TextInput
           style={styles.input}
           onChangeText={text => journey.journeyStart.name = text}/> */}
-        <Text>End of Journey:</Text>
+        <Text style = {styles.cardDepatureTxtStyle}>End of Journey:</Text>
         <Text>{destInfo.data.description}</Text>
+
+        <ScrollView>
+          <Text style={styles.cardDestinationTxtStyle}>Max Capacity (excluding self):</Text>
+          <View style={{
+            flexDirection: 'row',
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <NumericInput      
+            onChange={value => journey.pricing.quantity = value}
+          />
+          </View> 
+          </ScrollView>
+        
         {/* <TextInput
         style={styles.input}
         onChangeText={text => journey.journeyEnd.name = text}/> */}
         {/* https://reactnativeexample.com/a-highly-customized-dropdown-select-picker-menu-for-react-native/ */}
+        </View>
         { journeyType == "DRIVING" &&
           <ScrollView>
-          <Text>Cost of Journey:</Text>
+          <Text style={styles.cardDestinationTxtStyle}>Cost of Journey:</Text>
           <View style={{
             flexDirection: 'row',
             flex: 1,
@@ -156,12 +176,55 @@ const App = (props: any) => {
           color="#841584"
           accessibilityLabel="Submit your journey to be created"
         />
-      </View>
+      
       
     </ScrollView>
   );
 }
 const styles = StyleSheet.create({
+  items: {
+    marginBottom: 10,
+    padding: 20,
+    borderWidth: 1,
+    borderColor: "#27ae60",
+    borderRadius: 50,
+},
+
+cardDepatureTxtStyle: {
+    fontSize: 17,
+    textAlign: "left",
+    fontWeight: "bold",
+    color: '#FF2222',
+},
+cardDestinationTxtStyle: {
+    fontSize: 17,
+    textAlign: "left",
+    fontWeight: "bold",
+    color: '#22AA22',
+},
+
+cardTypeTxtStyle: {
+    fontSize: 20,
+    textAlign: "right",
+    fontWeight: "bold",
+    color: '#333333',
+},
+cardPriceTxtStyle: {
+    fontSize: 20,
+    textAlign: "right",
+    marginRight: 20,
+    fontWeight: "bold",
+    color: '#FFA500',
+},
+
+cardUserTxtStyle: {
+    fontSize: 25,
+    textAlign: "center",
+    marginTop: 10,
+    marginBottom: 5,
+    fontWeight: "bold",
+    color: '#2222FF',
+},
   container: {
     flex: 1,
     alignItems: 'center',

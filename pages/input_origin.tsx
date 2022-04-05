@@ -83,9 +83,11 @@ const OriginIn = (props: any) => {
       />
     </MapView>
     </ScrollView>
+    <View style={styles.container}>
     <TouchableOpacity style={styles.ViewJourneyBtn}>
           <Text style={styles.homePageBtnText} onPress={destinationPage}>Confirm origin</Text>
     </TouchableOpacity>
+    </View> 
     </View> 
 
   );

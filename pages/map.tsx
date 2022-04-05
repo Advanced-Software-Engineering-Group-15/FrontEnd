@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { StyleSheet, Text, Dimensions, View, TouchableOpacity } from 'react-native';
-
+import { IP } from '../constants';
 import MapView, {Callout, Marker, Circle} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 const GOOGLE_MAPS_APIKEY='AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8'
@@ -9,11 +9,14 @@ const GOOGLE_MAPS_APIKEY='AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8'
 //https://stackoverflow.com/questions/64002670/how-to-update-google-maps-react-direction-route
 //https://stackblitz.com/edit/adding-direction-waypoint-1xyogt?file=src/MapComponent.js
 
+const localHost = 'http://'+ IP +'/passengers'
+
 const Map = (props: any) => {
   
   const originData = props.navigation.state.params.start;
   const destData = props.navigation.state.params.end;
   const journeyID = props.navigation.state.params.journeyID;
+  //const creatorID = props.navigation.state.params.creatorID;
   const userProps = props.navigation.state.params.userProps;
   
   const origin = {latitude: Number(originData.latitude), longitude: Number(originData.longitude)};
@@ -25,6 +28,11 @@ const Map = (props: any) => {
     latitudeDelta: 0.000281,
     longitudeDelta: 0.002661
   }       
+  let journeyEntry = {
+    journeyID : journeyID,
+    userID : userProps.userID,
+   // creatorID : creatorID,
+  }
   const routePage = () => {
     console.log('maps userProps: ', userProps)
     props.navigation.navigate("Home", {
@@ -92,9 +100,11 @@ const Map = (props: any) => {
         apikey={GOOGLE_MAPS_APIKEY}/>
         
     </MapView>
+    <View style={styles.container}>
     <TouchableOpacity style={styles.ViewJourneyBtn}>
           <Text style={styles.homePageBtnText} onPress={routePage}>Join Journey</Text>
     </TouchableOpacity>
+    </View>
     </View>
   )
 }
