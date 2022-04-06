@@ -45,7 +45,7 @@ const App = (props: any) => {
   };
 
   const createJourney = () => {
-    console.log("HERE\n\n\n\n")
+
     console.log(journey);
    
     var data = {

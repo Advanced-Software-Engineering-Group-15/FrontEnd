@@ -5,6 +5,7 @@ import NumericInput from "react-native-numeric-input";
 import AvailableJourneyCard from '../components/AvailableJourneyCard';
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import axios from 'axios';
 import { IP } from '../constants';
 
 const localHost = 'http://' + IP + '/journeys'
@@ -48,6 +49,7 @@ const Journeys = (props: any) => {
       const json = await response.json();
       await new Promise((resolve) => {
         setData(json.exJourneys)
+        console.log('this one boy', json.exJourneys)
         return resolve(json.exJourneys)
       }).then(msg => {
         initialData(msg);
@@ -139,7 +141,7 @@ const Journeys = (props: any) => {
 
   const initialData = async (msg) => {
     var matchingJourneys = [];
-    console.log("asdasdasd!")
+    console.log("journeyss recieved")
     console.log(msg)
     var journeys_filter_final_temp = [];
     for( var i = 0; i < msg.length; i++){ 

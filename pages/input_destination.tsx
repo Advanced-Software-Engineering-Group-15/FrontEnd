@@ -87,12 +87,12 @@ const DestinationIn = (props: any) => {
         />
 
     </MapView>
-    </ScrollView>
     <View style={styles.container}>
     <TouchableOpacity style={styles.ViewJourneyBtn}>
           <Text style={styles.homePageBtnText} onPress={routePage}>Confirm Destination</Text>
     </TouchableOpacity>
     </View>
+    </ScrollView>
     </View> 
 
   );
