@@ -3,20 +3,25 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { View, Text, StyleSheet,  TouchableOpacity} from 'react-native';
 
 const AvailableJourneyCard = (props: any) => {
+    
     console.log(JSON.stringify(props.data, null, 2))
+    const userProps = props.navigation.state.params.userProps
+    console.log('Journey Card PROPSSS:', props)
 
     const openInMap = () => {
         props.navigation.navigate("Map",  {
-            journeyID: props.data.journeyID, 
+            journeyID: props.data.journeyID,
+            creatorID: props.data.creatorID,
             start: {name: props.data.startName,
                     latitude: props.data.startLat,
                     longitude: props.data.startLong}
                     , 
             end: {name: props.data.endName,
                 latitude: props.data.endLat,
-                longitude: props.data.endLong,}}
-               )
-    }    
+                longitude: props.data.endLong,},
+            userProps
+        })
+    }  
       
     return (
         <TouchableOpacity onPress={openInMap}>

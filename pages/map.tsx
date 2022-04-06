@@ -16,9 +16,10 @@ const Map = (props: any) => {
   const originData = props.navigation.state.params.start;
   const destData = props.navigation.state.params.end;
   const journeyID = props.navigation.state.params.journeyID;
-  //const creatorID = props.navigation.state.params.creatorID;
+  const creatorID = props.navigation.state.params.creatorID;
   const userProps = props.navigation.state.params.userProps;
-  
+  console.log('MAP PROPSSS: ', creatorID) // No username being passed atm
+
   const origin = {latitude: Number(originData.latitude), longitude: Number(originData.longitude)};
   const destination = {latitude: Number(destData.latitude), longitude: Number(destData.longitude)};
   
@@ -31,7 +32,7 @@ const Map = (props: any) => {
   let journeyEntry = {
     journeyID : journeyID,
     userID : userProps.userID,
-   // creatorID : creatorID,
+    creatorID : creatorID,
   }
   const routePage = () => {
     console.log('maps userProps: ', userProps)

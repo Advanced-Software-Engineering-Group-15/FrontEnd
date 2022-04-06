@@ -24,7 +24,7 @@ const Journeys = (props: any) => {
 
   const origin = idealJourney.origin;
   const dest = idealJourney.dest;
-
+  const userProps = idealJourney.userProps;
 
   const [Filtered, setFiltered] = useState(false);
   const [data, setData] = useState([]);
