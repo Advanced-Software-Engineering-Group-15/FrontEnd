@@ -37,6 +37,7 @@ function Home(props: any) {
     <View style={styles.container}>
       <Text style={styles.welcomeText}>
         Welcome back
+        {' '}
         {username}
         !
       </Text>
@@ -61,7 +62,6 @@ function Home(props: any) {
 
 // styling
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
     backgroundColor: '#003f5c',
