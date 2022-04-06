@@ -11,20 +11,22 @@ import {
 import axios from 'axios';
 import { IP } from '../constants.tsx';
 
-function CreateNewUserPage(props: any) {
+var newUser_json = {
+  firstName: '',
+  familyName: '',
+  phoneNumber: '',
+  emailAddress: '',
+  homeAddress: '',
+  userName: '', 
+  password: '',
+  repeated_password: '',
+  userID: '2000',
+};
+
+const CreateNewUserPage = (props: any) => {
   const [warning, setWarning] = useState(0);
-  const [warningMsg, setWarningMsg] = useState('');
-  const newUserJson = {
-    firstName: '',
-    familyName: '',
-    phoneNumber: '',
-    emailAddress: '',
-    homeAddress: '',
-    userName: '',
-    password: '',
-    repeated_password: '',
-    userID: '2000',
-  };
+  const [warning_msg, setWarning_msg] = useState('');
+  
 
   const SendNewUser = () => {
     let localHost = 'http://' + IP + '/new-user'
@@ -39,29 +41,25 @@ function CreateNewUserPage(props: any) {
       "repeated_password": newUser_json.repeated_password,
       "userID": newUser_json.userID,
     }
-    // let check_blank = newUser_json.firstName.concat(
-    //   newUser_json.userName,
-    //   newUser_json.firstName,
-    //   newUser_json.familyName,
-    //   newUser_json.phoneNumber,
-    //   newUser_json.emailAddress,
-    //   newUser_json.password,
-    //   newUser_json.repeated_password,
-    // );
 
-    if (jsonData.userName === '' || jsonData.firstName === '' || jsonData.familyName === '' || jsonData.phoneNumber === ''
-        || jsonData.emailAddress === '' || jsonData.password === '' || jsonData.repeated_password === '') {
-      setWarning(1);
-      setWarningMsg('Please fill the mandatory field.');
-    } else if (newUserJson.password !== newUserJson.repeated_password) {
-      setWarning(1);
-      setWarningMsg('The input passwords are different.');
-    } else {
-      setWarning(0);
-      axios.post(url, {
-        body: JSON.stringify(jsonData),
-      })
-        .then((response) => {
+    if (json_data["userName"] === "" || json_data["firstName"] === "" || json_data["familyName"] === "" || json_data["phoneNumber"] === "" 
+        || json_data["emailAddress"] === "" || json_data["password"] === "" ||  json_data["repeated_password"] === ""){
+      console.log("There are blanks to be filled.")
+      setWarning(1)
+      setWarning_msg("Please fill the mandatory field.")
+    }
+    else{
+      if (newUser_json.password !== newUser_json.repeated_password){
+        console.log("Passwords are different!!")
+        setWarning(1)
+        setWarning_msg("The input passwords are different.")
+      }
+      else{
+        setWarning(0)  
+        axios.post(localHost, {
+          body: JSON.stringify(json_data)
+        })
+        .then(function (response) {
           if (response) {
             // Check for login status
 
