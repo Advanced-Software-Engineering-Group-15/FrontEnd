@@ -21,12 +21,14 @@ const Login = (props: any) => {
     })
     .then(function (response) {
       const isLogin = response.data.isLoginSuccessful;
+      const userProps = response.data.userProps
+
+      console.log(userProps)
       console.log(isLogin);
       if (isLogin) {     
         // Check for login status
         props.navigation.navigate("Home", {
-          username: userName,
-          password: password,
+          userProps: userProps
         })
       }
       else{

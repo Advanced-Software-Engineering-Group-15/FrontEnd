@@ -27,26 +27,26 @@ function CreateNewUserPage(props: any) {
   };
 
   const SendNewUser = () => {
-    const url = `http://${IP}/new-user`;
-    const jsonData = {
-      firstName: newUserJson.firstName,
-      familyName: newUserJson.familyName,
-      phoneNumber: newUserJson.phoneNumber,
-      emailAddress: newUserJson.emailAddress,
-      homeAddress: newUserJson.homeAddress,
-      userName: newUserJson.userName,
-      password: newUserJson.password,
-      repeated_password: newUserJson.repeated_password,
-      userID: newUserJson.userID,
-    };
-    // let check_blank = newUserJson.firstName.concat(
-    //   newUserJson.userName,
-    //   newUserJson.firstName,
-    //   newUserJson.familyName,
-    //   newUserJson.phoneNumber,
-    //   newUserJson.emailAddress,
-    //   newUserJson.password,
-    //   newUserJson.repeated_password,
+    let localHost = 'http://' + IP + '/new-user'
+    var json_data = {
+      "firstName": newUser_json.firstName,
+      "familyName": newUser_json.familyName,
+      "phoneNumber": newUser_json.phoneNumber,
+      "emailAddress": newUser_json.emailAddress,
+      "homeAddress": newUser_json.homeAddress,
+      "userName": newUser_json.userName,
+      "password": newUser_json.password,
+      "repeated_password": newUser_json.repeated_password,
+      "userID": newUser_json.userID,
+    }
+    // let check_blank = newUser_json.firstName.concat(
+    //   newUser_json.userName,
+    //   newUser_json.firstName,
+    //   newUser_json.familyName,
+    //   newUser_json.phoneNumber,
+    //   newUser_json.emailAddress,
+    //   newUser_json.password,
+    //   newUser_json.repeated_password,
     // );
 
     if (jsonData.userName === '' || jsonData.firstName === '' || jsonData.familyName === '' || jsonData.phoneNumber === ''

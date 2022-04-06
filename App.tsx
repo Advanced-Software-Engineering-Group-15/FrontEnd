@@ -25,6 +25,7 @@ import MyProfile from './pages/myProfile';
 import OriginIn from './pages/input_origin'
 import DestinationIn from './pages/input_destination'
 import JourneyType from './pages/journeyType'
+import FindJourneys from './pages/findJourneys'
 
 const AppNavigator = createStackNavigator(
   {
@@ -45,7 +46,8 @@ const AppNavigator = createStackNavigator(
     MoreOptions: MoreOptions,
     MyProfile: MyProfile,
     Confirm_Journey:  Confirm_Journey,
-    JourneyType: JourneyType
+    JourneyType: JourneyType,
+    FindJourneys: FindJourneys
   },
   {
     defaultNavigationOptions: {
