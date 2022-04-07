@@ -1,11 +1,17 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, Image} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  TouchableOpacity,
+  ScrollView,
+  Image
+} from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
-import NumericInput from "react-native-numeric-input";
-import AvailableJourneyCard from '../components/AvailableJourneyCard';
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import { IP } from '../constants';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import AvailableJourneyCard from '../components/AvailableJourneyCard.tsx';
+import { IP } from '../constants.tsx';
 
 const localHost = 'http://' + IP + '/journeys'
 const maxPrice = ["None", 5, 10, 15, 20, 25, 30]
