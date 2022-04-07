@@ -5,8 +5,10 @@ import {
 } from 'react-native';
 
 function Home(props: any) {
-  const username  = props.navigation.state.params.userProps.username;
+  const username  = props.navigation.state.params.userProps.name;
+  const userProps  = props.navigation.state.params.userProps;
   console.log('username is: ', username)
+  console.log('userProps is: ', userProps)
 
   const RatingPage = () => {
     props.navigation.navigate('Ratings');
@@ -17,20 +19,19 @@ function Home(props: any) {
   };
 
   const journeys= () => {
-    props.navigation.navigate("FindJourneys", { username: username })
+    props.navigation.navigate("FindJourneys", { userProps })
   }
-  
   
   const Create_Journey = () => {
     props.navigation.navigate("JourneyType", { username: username })
   }
 
   const createJourney = () => {
-    props.navigation.navigate('JourneyType', { username });
+    props.navigation.navigate('JourneyType', { userProps });
   };
 
   const moreOptions = () => {
-    props.navigation.navigate('MoreOptions', { username });
+    props.navigation.navigate('MoreOptions', { username }); 
   };
 
   return (

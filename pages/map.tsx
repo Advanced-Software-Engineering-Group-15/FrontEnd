@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, Text, Dimensions, View, TouchableOpacity } from 'react-native';
-
+import { IP } from '../constants';
+import axios from 'axios';
 import MapView, {Callout, Marker, Circle} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 const GOOGLE_MAPS_APIKEY='AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8'
@@ -9,12 +10,17 @@ const GOOGLE_MAPS_APIKEY='AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8'
 //https://stackoverflow.com/questions/64002670/how-to-update-google-maps-react-direction-route
 //https://stackblitz.com/edit/adding-direction-waypoint-1xyogt?file=src/MapComponent.js
 
+const localHost = 'http://'+ IP +'/add-to-journey'
+
 const Map = (props: any) => {
   
   const originData = props.navigation.state.params.start;
   const destData = props.navigation.state.params.end;
   const journeyID = props.navigation.state.params.journeyID;
-  
+  const creatorID = props.navigation.state.params.creatorID;
+  const userProps = props.navigation.state.params.userProps;
+  console.log('MAP PROPSSS: ', creatorID) // No username being passed atm
+
   const origin = {latitude: Number(originData.latitude), longitude: Number(originData.longitude)};
   const destination = {latitude: Number(destData.latitude), longitude: Number(destData.longitude)};
   
@@ -24,7 +30,27 @@ const Map = (props: any) => {
     latitudeDelta: 0.000281,
     longitudeDelta: 0.002661
   }       
-  const routePage = () => {
+  let journeyEntry = {
+    journeyID : journeyID,
+    userID : userProps.userID,
+    creatorID : creatorID,
+    userProps : userProps
+  }
+  const joinJourney = () => {
+    console.log('\n\nMAP userProps: ', userProps)
+    console.log('\n\nMAP journeyEntry: ', journeyEntry)
+
+    axios.post(localHost, {
+      body: JSON.stringify(journeyEntry)
+    })
+    .then(function (response) {
+      console.log(response);
+      props.navigation.navigate("Home", { status: 'True'})
+    })
+    .catch(function (error) {
+      console.log(error);
+      props.navigation.navigate("Home", { status: 'False' })
+    });
 
     props.navigation.navigate("Home", {
     })
@@ -91,10 +117,13 @@ const Map = (props: any) => {
         apikey={GOOGLE_MAPS_APIKEY}/>
         
     </MapView>
+    <View style={styles.container}>
     <TouchableOpacity style={styles.ViewJourneyBtn}>
-          <Text style={styles.homePageBtnText} onPress={routePage}>Join Journey</Text>
+          <Text style={styles.homePageBtnText} onPress={joinJourney}>Join Journey</Text>
     </TouchableOpacity>
     </View>
+    </View>
+    
   )
 }
 

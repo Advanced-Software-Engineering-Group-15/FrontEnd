@@ -3,20 +3,30 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { View, Text, StyleSheet,  TouchableOpacity} from 'react-native';
 
 const AvailableJourneyCard = (props: any) => {
+    
     console.log(JSON.stringify(props.data, null, 2))
+    const userProps = props.navigation.state.params.userProps
+    console.log('Journey Card PROPSSS:', props)
 
     const openInMap = () => {
+
+        var currTime = new Date()
+
         props.navigation.navigate("Map",  {
-            journeyID: props.data.journeyID, 
+            journeyID: props.data.journeyID,
+            creatorID: props.data.creatorID,
             start: {name: props.data.startName,
                     latitude: props.data.startLat,
                     longitude: props.data.startLong}
                     , 
             end: {name: props.data.endName,
                 latitude: props.data.endLat,
-                longitude: props.data.endLong,}}
-               )
-    }    
+                longitude: props.data.endLong,},
+            dateTime: props.data.departure_datetime,
+            capacity: props.data.capacity,
+            userProps,
+        })
+    }  
       
     return (
         <TouchableOpacity onPress={openInMap}>
@@ -36,9 +46,18 @@ const AvailableJourneyCard = (props: any) => {
                 <Text style={styles.cardTypeTxtStyle}>
                     {JSON.stringify(props.data.journeyType).split("\"")[1]}
                 </Text>
+                <Text style={styles.cardCapacityStyle}>
+                    {JSON.stringify(props.data.capacity)}
+                </Text>  
                 <Text style={styles.cardPriceTxtStyle}>
-                    {JSON.stringify(props.data.cost)} {JSON.stringify(props.data.currency).split("\"")[1]}
-                </Text>                
+                    {JSON.stringify(props.data.cost)}
+                </Text>       
+                <Text style={styles.cardDateTxtStyle}>
+                    {JSON.stringify(props.data.cost)}
+                </Text>    
+                <Text style={styles.cardTimeTxtStyle}>
+                    {JSON.stringify(props.data.cost)}
+                </Text>        
             </View>
         </TouchableOpacity>
     )
@@ -72,7 +91,14 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: '#333333',
     },
-    cardPriceTxtStyle: {
+    cardCapacityStyle: {
+        fontSize: 20,
+        position: 'absolute',
+        top: 20, left: 330, right: 0, bottom: 0,
+        fontWeight: "bold",
+        color: '#FFA5FF',
+    },
+    cardPriceTxtStyle:{
         fontSize: 20,
         textAlign: "right",
         marginRight: 20,
@@ -83,11 +109,24 @@ const styles = StyleSheet.create({
     cardUserTxtStyle: {
         fontSize: 25,
         textAlign: "center",
-        marginTop: 10,
-        marginBottom: 5,
         fontWeight: "bold",
         color: '#2222FF',
     },
+    cardDateTxtStyle: {
+        fontSize: 17,
+        fontWeight: "bold",
+        position: 'absolute',
+        top: 95, left: 23, right: 0, bottom: 0,
+        color: '#20201e',
+    },
+    cardTimeTxtStyle: {
+        fontSize: 17,
+        fontWeight: "bold",
+        position: 'absolute',
+        top: 120, left: 23, right: 0, bottom: 0,
+        color: '#3b3b37',
+    },
+    
 })
 
 export default AvailableJourneyCard;

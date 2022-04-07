@@ -17,7 +17,6 @@ import JourneyInProgress from './pages/journeyInProgress';
 import EndJourney from './pages/endJourney';
 import Journeys from './pages/journeys';
 import CreateNewUserPage from './pages/CreateNewUsers';
-import Create_Journey from './pages/create_journey';
 import Confirm_Journey from './pages/confirmJourney';
 import Payment from './pages/payment';
 import MoreOptions from './pages/moreOptions';
@@ -41,7 +40,6 @@ const AppNavigator = createStackNavigator(
     EndJourney: EndJourney,
     Journeys: Journeys,
     CreateNewUserPage: CreateNewUserPage,
-    Create_Journey: Create_Journey,
     Payment: Payment,
     MoreOptions: MoreOptions,
     MyProfile: MyProfile,

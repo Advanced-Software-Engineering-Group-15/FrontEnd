@@ -5,6 +5,9 @@ import NumericInput from "react-native-numeric-input";
 import axios from 'axios';
 import uuid from "react-native-uuid";
 import { IP } from '../constants';
+
+import DateTimePicker from '@react-native-community/datetimepicker';
+
 const journeyTypes = ["Drive", "Cycle", "Walk"]
 const currencyTypes = ["€", "$", "£"]
 const capacityTypes = [1,2,3,4,5,6,7,8,9,10]
@@ -19,10 +22,11 @@ const App = (props: any) => {
   const startInfo = inputProps.origin_info;
   const destInfo = inputProps.destination_info;
   const journeyType = inputProps.journeyType;
-  const userName = inputProps.username;
-  console.log(userName)
+  const userProps = inputProps.userProps;
+  console.log(userProps.username, userProps.userID)
   //const [globalType, setGlobalType] = React.useState ("")
   console.log('Journey info obtained', props.navigation.state.params)
+  console.log('userID', userProps.userID)
   let journey = {
     journeyID: uuid.v1(),
     journeyType: journeyType,
@@ -40,14 +44,42 @@ const App = (props: any) => {
       currency: '$',
       quantity: 0
     },
-    creatorID: userName,
+    creatorID: userProps.userID,
     creatorRating: '2.5',
-    capacity: 1
+    capacity: 1,
   };
 
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setShow(false);
+    setDate(currentDate);
+  };
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
+  const showTimepicker = () => {
+    showMode('time');
+  };
+
+
+
+  // console.log(date)
+
+
   const createJourney = () => {
-    console.log("HERE\n\n\n\n")
-    console.log(journey);
+
+    // console.log(journey);
    
     var data = {
       "journeyID": journey.journeyID,
@@ -63,8 +95,7 @@ const App = (props: any) => {
       "creatorID": journey.creatorID,
       "creatorRating": journey.creatorRating,
       "capacity": journey.capacity,
-      // "depatureTime": ,
-      // "departureDate": ,
+      "departure_datetime": date
     }
 
     axios.post(localHost, {
@@ -81,73 +112,25 @@ const App = (props: any) => {
   };
   return (
     <ScrollView>
-      <View style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        
-      }}>
-        {/* https://reactnativeexample.com/a-highly-customized-dropdown-select-picker-menu-for-react-native/ */}
-        {/* <SelectDropdown
-          data={journeyTypes}
-          onSelect={(selectedItem, index) => {
-            console.log(selectedItem, index);
-            journey.journeyType = selectedItem;
-            setGlobalType(journey.journeyType);          
-          }}
-          defaultButtonText={"Select Journey Type"}
-          buttonTextAfterSelection={(selectedItem, index) => {
-            return selectedItem
-          }}
-          rowTextForSelection={(item, index) => {
-            return item
-          }}
-        /> */}
-
-
-        <Text>Start of Journey:</Text>
+      <View style={styles.items}>
+        <Text style={styles.cardDestinationTxtStyle}>Start of Journey:</Text>
         <Text>{startInfo.data.description}</Text>
         {/* <TextInput
           style={styles.input}
           onChangeText={text => journey.journeyStart.name = text}/> */}
-        <Text>End of Journey:</Text>
+        <Text style = {styles.cardDepatureTxtStyle}>End of Journey:</Text>
         <Text>{destInfo.data.description}</Text>
-        {/* <TextInput
-        style={styles.input}
-        onChangeText={text => journey.journeyEnd.name = text}/> */}
-        {/* https://reactnativeexample.com/a-highly-customized-dropdown-select-picker-menu-for-react-native/ */}
-        { journeyType == "DRIVING" &&
-          <ScrollView>
-          <Text>Cost of Journey:</Text>
+
+        <ScrollView>
+          <Text style={styles.cardDestinationTxtStyle}>Max Capacity (excluding self):</Text>
           <View style={{
             flexDirection: 'row',
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <SelectDropdown
-            dropdownStyle = {{
-              width:50,
-            }}
-            buttonStyle = {{
-              width:50,
-            }}
-
-            data={currencyTypes}
-            onSelect={(selectedItem, index) => {
-              console.log(selectedItem, index);
-              journey.pricing.currency = selectedItem;
-            }}
-            defaultButtonText={"$"}
-            buttonTextAfterSelection={(selectedItem, index) => {
-              return selectedItem
-            }}
-            rowTextForSelection={(item, index) => {
-              return item
-            }}
-          />
           <NumericInput      
-            onChange={value => journey.pricing.quantity = value}
+            onChange={value => journey.capacity = value}
           />
           </View> 
           {/* CAPACITY */}
@@ -174,22 +157,151 @@ const App = (props: any) => {
             }}
           />
           </ScrollView>
+        </View>
+          { journeyType == "DRIVING" &&
+            <ScrollView>
+            <Text style={styles.cardDestinationTxtStyle}>Cost of Journey:</Text>
+            <View style={{
+              flexDirection: 'row',
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <SelectDropdown
+              dropdownStyle = {{
+                width:50,
+              }}
+              buttonStyle = {{
+                width:50,
+              }}
+
+              data={currencyTypes}
+              onSelect={(selectedItem, index) => {
+                console.log(selectedItem, index);
+                journey.pricing.currency = selectedItem;
+              }}
+              defaultButtonText={"$"}
+              buttonTextAfterSelection={(selectedItem, index) => {
+                return selectedItem
+              }}
+              rowTextForSelection={(item, index) => {
+                return item
+              }}
+            />
+            <NumericInput      
+              onChange={value => journey.pricing.quantity = value}
+            />
+          </View> 
+          </ScrollView>
         }
-        {/* {this.renderCostInput(journey.journeyType)} */}
         
-        
-        <Button
+
+
+
+        <View style={styles.container}>
+      {/* <View>
+        <Button onPress={showDatepicker} title="Show date picker!" />
+      </View>
+      <View>
+        <Button onPress={showTimepicker} title="Show time picker!" />
+      </View> */}
+
+      <TouchableOpacity style={styles.loginBtn} onPress={showDatepicker}>
+          <Text 
+            style={styles.loginText}
+            >SELECT DATE
+          </Text>
+        </TouchableOpacity>
+
+      <TouchableOpacity style={styles.loginBtn} onPress={showTimepicker}>
+          <Text 
+            style={styles.loginText}
+            >SELECT TIME
+          </Text>
+       </TouchableOpacity>
+      </View>
+      <View>
+      <Text>selected: {date.toLocaleString()}</Text>
+      {show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode={mode}
+          is24Hour={true}
+          onChange={onChange}
+        />
+      )}
+    </View>
+    <View style={styles.container}>
+    
+    
+  
+    <TouchableOpacity style={styles.loginBtn} onPress={createJourney}>
+          <Text 
+            style={styles.loginText}
+            >SUBMIT JOURNEY
+          </Text>
+       </TouchableOpacity>
+    </View>
+        {/* <Button
           onPress={createJourney}
           title="Submit Journey"
           color="#841584"
           accessibilityLabel="Submit your journey to be created"
-        />
-      </View>
+        /> */}
+      
       
     </ScrollView>
+
+  
   );
+
+
 }
 const styles = StyleSheet.create({
+  items: {
+    marginBottom: 10,
+    padding: 20,
+    borderWidth: 1,
+    borderColor: "#27ae60",
+    borderRadius: 50,
+},
+
+cardDepatureTxtStyle: {
+    fontSize: 17,
+    textAlign: "left",
+    fontWeight: "bold",
+    color: '#FF2222',
+},
+cardDestinationTxtStyle: {
+    fontSize: 17,
+    textAlign: "left",
+    fontWeight: "bold",
+    color: '#22AA22',
+},
+
+cardTypeTxtStyle: {
+    fontSize: 20,
+    textAlign: "right",
+    fontWeight: "bold",
+    color: '#333333',
+},
+cardPriceTxtStyle: {
+    fontSize: 20,
+    textAlign: "right",
+    marginRight: 20,
+    fontWeight: "bold",
+    color: '#FFA500',
+},
+
+cardUserTxtStyle: {
+    fontSize: 25,
+    textAlign: "center",
+    marginTop: 10,
+    marginBottom: 5,
+    fontWeight: "bold",
+    color: '#2222FF',
+},
   container: {
     flex: 1,
     alignItems: 'center',

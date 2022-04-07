@@ -18,9 +18,9 @@ let region = {
 }
 
 const FindJourneys = (props: any) => {
-
-  const userName = props.navigation.state.params.username
-  console.log('origin username', userName)
+  
+  const userProps = props.navigation.state.params.userProps
+  console.log('origin username', userProps.username)
 
   const [Origin, setOrigin] = React.useState ({})
   const [Dest, setDest] = React.useState ({})
@@ -30,7 +30,7 @@ const FindJourneys = (props: any) => {
     props.navigation.navigate("Journeys", {
       origin: Origin,
       dest: Dest,
-      username: userName
+      userProps: userProps
     })
   }
 
@@ -83,10 +83,17 @@ const FindJourneys = (props: any) => {
 
 
     </ScrollView>
-    <TouchableOpacity style={styles.ViewJourneyBtn}>
-          <Text style={styles.homePageBtnText} onPress={journeysPage}>Confirm selection</Text>
+    <View  style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginBottom: 30,
+          }}
+        >
+    <TouchableOpacity style={styles.confirmBtn} onPress={journeysPage}>
+          <Text style={styles.confirmText} >Confirm selection</Text>
     </TouchableOpacity>
     </View> 
+    </View>
 
   );
 }
@@ -104,6 +111,7 @@ const searchInputStyle={
       opacity: 0.9,
       borderRadius: 8
   },
+
   description: {
       fontWeight: 'bold',
       color: "#007",
@@ -136,6 +144,9 @@ const styles = StyleSheet.create({
     height:50,
     color:"white",
     fontSize:25
+  },
+  confirmText:{
+    color:"white"
   },
   map: {
     width: (Dimensions.get('window').width),
@@ -209,7 +220,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: 20,
     marginBottom: 10
-  }
+  },
+  confirmBtn:{
+    width:"60%",
+    backgroundColor:"#fb5b5a",
+    borderRadius:25,
+    height:50,
+    alignItems:"center",
+    justifyContent:"center",
+    marginTop:40,
+    marginBottom:10
+  },
 });
 
 export default FindJourneys;
