@@ -1,9 +1,5 @@
 // import { StatusBar } from 'expo-status-bar';
-<<<<<<< HEAD
 import React, { useEffect, useState, useRef } from 'react';
-=======
-import React, { useState } from 'react';
->>>>>>> c2f72acc839125a690474a1d5bea7e514e409769
 import {
   StyleSheet, Text, View, TouchableOpacity,
 } from 'react-native';
