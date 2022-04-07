@@ -39,9 +39,9 @@ const AvailableJourneyCard = (props: any) => {
                     Destination: {JSON.stringify(props.data.endName).split("\"")[1].split(",")[0]}
                 </Text>
                 <Text style={styles.cardUserTxtStyle}>
-                    {JSON.stringify(props.data.creatorID).split("\"")[1]}  
+                    {props.data.creatorID}  
                     <Ionicons name="star" style={styles.cardUserTxtStyle}/>  
-                    {JSON.stringify(props.data.creatorRating)}
+                    {props.data.creatorRating}
                 </Text>
                 <Text style={styles.cardTypeTxtStyle}>
                     {JSON.stringify(props.data.journeyType).split("\"")[1]}
