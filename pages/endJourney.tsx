@@ -5,7 +5,8 @@ import { StyleSheet, Text, View, ActivityIndicator, TextInput, TouchableOpacity,
 
 const EndJourney = (props: any) => {
 
-  const username = props.navigation.state.params.username.username 
+  //const username = props.navigation.state.params.username.username
+  const username = "Claudia"
   
   const startJourney = () => {
     console.log(input);

@@ -22,6 +22,7 @@
     ],
     "rules": {
         "linebreak-style": "off",
+        "react/destructuring-assignment": "off",
         "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".ts"] }],
         "no-use-before-define": ["error", { "functions": true, "classes": true, "variables": false }] // disable the rule for variables, but enable it for functions and classes
     },
