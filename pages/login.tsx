@@ -76,15 +76,15 @@ const Login = (props: any) => {
         <TouchableOpacity>
           <Text style={styles.forgot}>Forgot Password?</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.loginBtn}>
+        <TouchableOpacity style={styles.loginBtn} onPress={SignIn}>
           <Text 
             style={styles.loginText}
-            onPress={SignIn}
+            
             >LOGIN
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.loginBtn}>
-          <Text style={styles.loginText} onPress={SignUp}>
+        <TouchableOpacity style={styles.loginBtn}  onPress={SignUp}>
+          <Text style={styles.loginText}>
             SIGN UP
           </Text>
         </TouchableOpacity>

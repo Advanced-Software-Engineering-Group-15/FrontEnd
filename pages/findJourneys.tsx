@@ -89,8 +89,8 @@ const FindJourneys = (props: any) => {
             marginBottom: 30,
           }}
         >
-    <TouchableOpacity style={styles.confirmBtn}>
-          <Text style={styles.confirmText} onPress={journeysPage}>Confirm selection</Text>
+    <TouchableOpacity style={styles.confirmBtn} onPress={journeysPage}>
+          <Text style={styles.confirmText} >Confirm selection</Text>
     </TouchableOpacity>
     </View> 
     </View>

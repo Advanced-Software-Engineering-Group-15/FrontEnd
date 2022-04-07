@@ -5,6 +5,9 @@ import NumericInput from "react-native-numeric-input";
 import axios from 'axios';
 import uuid from "react-native-uuid";
 import { IP } from '../constants';
+
+import DateTimePicker from '@react-native-community/datetimepicker';
+
 const journeyTypes = ["Drive", "Cycle", "Walk"]
 const currencyTypes = ["€", "$", "£"]
 
@@ -44,9 +47,37 @@ const App = (props: any) => {
     capacity: 1,
   };
 
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setShow(false);
+    setDate(currentDate);
+  };
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
+  const showTimepicker = () => {
+    showMode('time');
+  };
+
+
+
+  // console.log(date)
+
+
   const createJourney = () => {
 
-    console.log(journey);
+    // console.log(journey);
    
     var data = {
       "journeyID": journey.journeyID,
@@ -61,7 +92,8 @@ const App = (props: any) => {
       "cost": journey.pricing.quantity,
       "creatorID": journey.creatorID,
       "creatorRating": journey.creatorRating,
-      "capacity": journey.capacity
+      "capacity": journey.capacity,
+      "departure_datetime": date
     }
 
     axios.post(localHost, {
@@ -138,17 +170,68 @@ const App = (props: any) => {
           </ScrollView>
         }
         
-        
-        <Button
+
+
+
+        <View style={styles.container}>
+      {/* <View>
+        <Button onPress={showDatepicker} title="Show date picker!" />
+      </View>
+      <View>
+        <Button onPress={showTimepicker} title="Show time picker!" />
+      </View> */}
+
+      <TouchableOpacity style={styles.loginBtn} onPress={showDatepicker}>
+          <Text 
+            style={styles.loginText}
+            >SELECT DATE
+          </Text>
+        </TouchableOpacity>
+
+      <TouchableOpacity style={styles.loginBtn} onPress={showTimepicker}>
+          <Text 
+            style={styles.loginText}
+            >SELECT TIME
+          </Text>
+       </TouchableOpacity>
+      </View>
+      <View>
+      <Text>selected: {date.toLocaleString()}</Text>
+      {show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode={mode}
+          is24Hour={true}
+          onChange={onChange}
+        />
+      )}
+    </View>
+    <View style={styles.container}>
+    
+    
+  
+    <TouchableOpacity style={styles.loginBtn} onPress={createJourney}>
+          <Text 
+            style={styles.loginText}
+            >SUBMIT JOURNEY
+          </Text>
+       </TouchableOpacity>
+    </View>
+        {/* <Button
           onPress={createJourney}
           title="Submit Journey"
           color="#841584"
           accessibilityLabel="Submit your journey to be created"
-        />
+        /> */}
       
       
     </ScrollView>
+
+  
   );
+
+
 }
 const styles = StyleSheet.create({
   items: {
