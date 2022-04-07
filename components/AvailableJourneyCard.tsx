@@ -53,7 +53,7 @@ const AvailableJourneyCard = (props: any) => {
                     {JSON.stringify(props.data.cost)}
                 </Text>       
                 <Text style={styles.cardDateTxtStyle}>
-                    {JSON.stringify(props.data.departure_datetime).split("T")[0]}
+                    {JSON.stringify(props.data.departure_datetime).split("T")[0].split("\"")[1]}
                 </Text>    
                 <Text style={styles.cardTimeTxtStyle}>
                     {JSON.stringify(props.data.departure_datetime).split("T")[1]}
