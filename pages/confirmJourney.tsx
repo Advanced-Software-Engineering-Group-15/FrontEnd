@@ -7,6 +7,7 @@ import uuid from "react-native-uuid";
 import { IP } from '../constants';
 const journeyTypes = ["Drive", "Cycle", "Walk"]
 const currencyTypes = ["€", "$", "£"]
+const capacityTypes = [1,2,3,4,5,6,7,8,9,10]
 
 const localHost = 'http://'+ IP +'/newJourneys'
 
@@ -41,6 +42,7 @@ const App = (props: any) => {
     },
     creatorID: userName,
     creatorRating: '2.5',
+    capacity: 1
   };
 
   const createJourney = () => {
@@ -59,7 +61,10 @@ const App = (props: any) => {
       "currency": journey.pricing.currency,
       "cost": journey.pricing.quantity,
       "creatorID": journey.creatorID,
-      "creatorRating": journey.creatorRating
+      "creatorRating": journey.creatorRating,
+      "capacity": journey.capacity,
+      // "depatureTime": ,
+      // "departureDate": ,
     }
 
     axios.post(localHost, {
@@ -145,6 +150,29 @@ const App = (props: any) => {
             onChange={value => journey.pricing.quantity = value}
           />
           </View> 
+          {/* CAPACITY */}
+          <Text>Pick capacity size of journey:</Text>
+          <SelectDropdown
+            dropdownStyle = {{
+              width:50,
+            }}
+            buttonStyle = {{
+              width:50,
+            }}
+
+            data={capacityTypes}
+            onSelect={(selectedItem, index) => {
+              console.log(selectedItem, index);
+              journey.capacity = selectedItem;
+            }}
+            defaultButtonText={1}
+            buttonTextAfterSelection={(selectedItem, index) => {
+              return selectedItem
+            }}
+            rowTextForSelection={(item, index) => {
+              return item
+            }}
+          />
           </ScrollView>
         }
         {/* {this.renderCostInput(journey.journeyType)} */}
