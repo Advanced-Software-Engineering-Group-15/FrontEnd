@@ -21,10 +21,11 @@ const App = (props: any) => {
   const startInfo = inputProps.origin_info;
   const destInfo = inputProps.destination_info;
   const journeyType = inputProps.journeyType;
-  const userName = inputProps.username;
-  console.log(userName)
+  const userProps = inputProps.userProps;
+  console.log(userProps.username, userProps.userID)
   //const [globalType, setGlobalType] = React.useState ("")
   console.log('Journey info obtained', props.navigation.state.params)
+  console.log('userID', userProps.userID)
   let journey = {
     journeyID: uuid.v1(),
     journeyType: journeyType,
@@ -42,7 +43,7 @@ const App = (props: any) => {
       currency: '$',
       quantity: 0
     },
-    creatorID: userName,
+    creatorID: userProps.userID,
     creatorRating: '2.5',
     capacity: 1,
   };
