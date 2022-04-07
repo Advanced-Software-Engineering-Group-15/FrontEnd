@@ -30,7 +30,7 @@ function Home(props: any) {
   };
 
   const moreOptions = () => {
-    props.navigation.navigate('MoreOptions', { username });
+    props.navigation.navigate('MoreOptions', { username }); 
   };
 
   return (
