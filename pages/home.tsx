@@ -1,14 +1,167 @@
 // import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   StyleSheet, Text, View, TouchableOpacity,
 } from 'react-native';
+import { IP } from '../constants';
+
+const localHost = 'http://' + IP + '/passengers'
+const journeysURL = 'http://' + IP + '/journeys'
+
 
 function Home(props: any) {
+  const [passengerData, setPassengerData] = useState([]);
+  const [data, setData] = useState([]);
+  const [creatorData, setCreatorData] = useState([]);
+  const [matchingJourneys, setMatchingJourneys] = useState([]);
+  const [isLoading, setLoading] = useState(true);
   const username  = props.navigation.state.params.userProps.name;
   const userProps  = props.navigation.state.params.userProps;
   console.log('username is: ', username)
   console.log('userProps is: ', userProps)
+  const isCreator = userProps.isCreator;
+  console.log(isCreator)
+  
+
+  useEffect(() => {
+    getData()
+    getPassengerData() 
+    getCreatorData() 
+    
+  }, []);
+
+  const getPassengerData = async () => {
+    try {
+      const response = await fetch(localHost);
+      const json = await response.json();
+      await new Promise((resolve) => {
+        console.log('json file content: ', json.exPassengers)
+        setPassengerData(json.exPassengers)
+        return resolve(json.exPassengers)
+      }).then(msg => {
+        initialPassengerData(msg);
+      })
+    } 
+    catch (error) { 
+      console.log(error);
+    } finally {
+      setLoading(false)
+    }
+  }
+  console.log('passenger data out of function: ', passengerData)
+  console.log('creator data out of function: ', creatorData)
+  //console.log('journey data out of function: ', data)
+
+  const getData = async () => {
+    try {
+      const response = await fetch(journeysURL);
+      const json = await response.json();
+      await new Promise((resolve) => {
+        setData(json.exJourneys)
+        return resolve(json.exJourneys)
+      }).then(msg => {
+        initialData(msg);
+      })
+    } catch (error) { 
+      console.log(error);
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const getCreatorData = async () => {
+    try {
+      const response = await fetch(journeysURL);
+      const json = await response.json();
+      await new Promise((resolve) => {
+       // console.log('json file content: ', json.exPassengers)
+        setCreatorData(json.exJourneys)
+        return resolve(json.exJourneys)
+      }).then(msg => {
+        initialCreatorData(msg);
+      })
+    } 
+    catch (error) { 
+      console.log(error);
+    } finally {
+      setLoading(false)
+    }
+  }
+  
+  const initialPassengerData = async (msg) => {
+    var matchingJourneys = [];
+    // console.log("asdasdasd!")
+    // console.log('passenger journeys', msg)
+    var journeys_filter_final_temp = [];
+    for( var i = 0; i < msg.length; i++){ 
+      if(userProps.userID == msg[i]["userID"]){
+            matchingJourneys.push(msg[i])
+          }
+        }
+    //console.log(data)
+    if(matchingJourneys.length != 0){
+     // console.log('Matching Journeys: ', matchingJourneys)
+      setPassengerData(matchingJourneys)
+    }
+    else {
+     // console.log('no matching journeys')
+    }
+  }
+
+  const initialData = async (msg) => {
+    var matchingJourneys = [];
+    // console.log("asdasdasd!")
+    // console.log('journeys list', msg.length)
+    // console.log('passengerJourneys: ', passengerData)
+    // console.log('passengerData', passengerData)
+    // console.log('Data: ', data)
+    var journeys_filter_final_temp = [];
+    for( var i = 0; i < msg.length; i++){
+      for (var j = 0; j < passengerData.length; j++) {
+      if(passengerData[j]["journeyID"] == msg[i]["journeyID"]){
+            matchingJourneys.push(msg[i])
+          }
+         else {//console.log('not matched')
+        } 
+        }
+    }
+    //console.log(data)
+    if(matchingJourneys.length != 0){
+      //console.log('Matching Journeys: ', matchingJourneys)
+    }
+    else {
+      //console.log('no matching journeys')
+    }
+  }
+
+  const initialCreatorData = async (msg) => {
+    var matchingJourneys = [];
+    // console.log("asdasdasd!")
+    // console.log('passenger journeys', msg)
+    var journeys_filter_final_temp = [];
+    for( var i = 0; i < msg.length; i++){ 
+      if(userProps.userID == msg[i]["creatorID"]){
+            matchingJourneys.push(msg[i])
+          }
+        }
+    //console.log(data)
+    if(matchingJourneys.length != 0){
+     // console.log('Matching Journeys: ', matchingJourneys)
+      setCreatorData(matchingJourneys)
+    }
+    else {
+      setCreatorData([])
+     // console.log('no matching journeys')
+    }
+  }
+
+  const viewJourneysPage = () => {
+    props.navigation.navigate('ViewJourneys', {passengerData: passengerData,data : data, userProps: userProps});
+  }
+
+  const viewCreatedJourneysPage = () => {
+    props.navigation.navigate('ViewCreatedJourneys', {creatorData: creatorData, data : data, userProps: userProps});
+  }
 
   const RatingPage = () => {
     props.navigation.navigate('Ratings');
@@ -40,12 +193,17 @@ function Home(props: any) {
   return (
     <View style={styles.container}>
       <Text style={styles.welcomeText}>
-        Welcome back
-        {username}
-        !
+        Welcome back {'\n'}
+        {username}!
       </Text>
       <TouchableOpacity style={styles.ViewJourneyBtn}>
         <Text style={styles.homePageBtnText} onPress={RatingPage}>Rating Page</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.ViewJourneyBtn} onPress={viewJourneysPage}>
+        <Text style={styles.homePageBtnText} >View Journeys</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.ViewJourneyBtn} onPress={viewCreatedJourneysPage}>
+        <Text style={styles.homePageBtnText} >View Created Journeys</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.ViewJourneyBtn}>
         <Text style={styles.homePageBtnText} onPress={journeys}>JourneysPage</Text>
@@ -54,14 +212,15 @@ function Home(props: any) {
         <Text style={styles.homePageBtnText} onPress={payment}>Payment Page</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.ViewJourneyBtn}>
-        <Text style={styles.homePageBtnText} onPress={createJourney}>Create Journey</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.ViewJourneyBtn}>
         <Text style={styles.homePageBtnText} onPress={moreOptions}>More Options</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.ViewJourneyBtn}>
-        <Text style={styles.homePageBtnText} onPress={journeyInProgress}>Journey In Progress</Text>
-      </TouchableOpacity>
+
+      { isCreator == "true" &&
+        <TouchableOpacity style={styles.ViewJourneyBtn}>
+          <Text style={styles.homePageBtnText} onPress={createJourney}>Create Journey</Text>
+        </TouchableOpacity>
+      } 
+
     </View>
   );
 }
@@ -79,6 +238,7 @@ const styles = StyleSheet.create({
     height: 200,
     color: 'white',
     fontSize: 25,
+    textAlign: 'center'
   },
   homePageBtnText: {
     color: '#000000',
