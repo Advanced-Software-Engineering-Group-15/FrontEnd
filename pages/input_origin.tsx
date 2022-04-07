@@ -15,8 +15,8 @@ const GOOGLE_MAPS_APIKEY='AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8'
 const OriginIn = (props: any) => {
 
   const journeyType = props.navigation.state.params.journeyType
-  const userName = props.navigation.state.params.username
-  console.log('origin username', userName)
+  const userProps = props.navigation.state.params.userProps
+  console.log('origin userProps', userProps.userID, userProps.username)
   const initialRegion =  {
     latitude: Number(53.338165314), 
     longitude: Number(-6.256165642),
@@ -40,7 +40,7 @@ const OriginIn = (props: any) => {
       origin: sendinfo,
       location: pin,
       journeyType: journeyType,
-      username: userName
+      userProps: userProps
     })
   }
 
@@ -83,8 +83,8 @@ const OriginIn = (props: any) => {
       />
     </MapView>
     <View style={styles.container}>
-    <TouchableOpacity style={styles.ViewJourneyBtn}>
-          <Text style={styles.homePageBtnText} onPress={destinationPage}>Confirm origin</Text>
+    <TouchableOpacity style={styles.ViewJourneyBtn} onPress={destinationPage}>
+          <Text style={styles.homePageBtnText} >Confirm origin</Text>
     </TouchableOpacity>
     </View> 
     </ScrollView>

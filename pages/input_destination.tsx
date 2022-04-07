@@ -13,7 +13,7 @@ const GOOGLE_MAPS_APIKEY='AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8'
 const DestinationIn = (props: any) => {
   const origin = props.navigation.state.params.location;
   const journeyType = props.navigation.state.params.journeyType;
-  const userName = props.navigation.state.params.username;
+  const userProps = props.navigation.state.params.userProps;
   const [pin, setPin] = React.useState (props.navigation.state.params.location)
 
   const initialRegion =  {
@@ -34,7 +34,7 @@ const DestinationIn = (props: any) => {
       destination_info: sendinfo,
       destination_location: pin ,
       journeyType: journeyType,
-      username: userName
+      userProps: userProps
     })
   }
 
@@ -88,8 +88,8 @@ const DestinationIn = (props: any) => {
 
     </MapView>
     <View style={styles.container}>
-    <TouchableOpacity style={styles.ViewJourneyBtn}>
-          <Text style={styles.homePageBtnText} onPress={routePage}>Confirm Destination</Text>
+    <TouchableOpacity style={styles.ViewJourneyBtn} onPress={routePage}>
+          <Text style={styles.homePageBtnText} >Confirm Destination</Text>
     </TouchableOpacity>
     </View>
     </ScrollView>

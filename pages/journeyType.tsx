@@ -11,7 +11,9 @@ const currencyTypes = ["€", "$", "£"]
 // const localHost = 'http://'+ IP +'/newJourneys'
 
 const JourneyType = (props: any) => {
-    const username = props.navigation.state.params.username
+    const {username} = props.navigation.state.params
+    const userProps = props.navigation.state.params.userProps
+    console.log(userProps, userProps.userID, userProps.username)
 //   console.log('Journey info obtained', props.navigation.state.params)
   let journey = {
     journeyID: uuid.v1(),
@@ -36,7 +38,7 @@ const JourneyType = (props: any) => {
 
   const createJourney = () => {
       if(journey.journeyType) {
-        props.navigation.navigate("OriginIn", { username: username, journeyType: journey.journeyType })
+        props.navigation.navigate("OriginIn", { userProps: userProps, journeyType: journey.journeyType })
       }
 
   };
