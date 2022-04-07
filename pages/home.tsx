@@ -1,5 +1,9 @@
 // import { StatusBar } from 'expo-status-bar';
+<<<<<<< HEAD
 import React, { useEffect, useState, useRef } from 'react';
+=======
+import React, { useState } from 'react';
+>>>>>>> c2f72acc839125a690474a1d5bea7e514e409769
 import {
   StyleSheet, Text, View, TouchableOpacity,
 } from 'react-native';
@@ -7,6 +11,7 @@ import { IP } from '../constants';
 
 const localHost = 'http://' + IP + '/passengers'
 const journeysURL = 'http://' + IP + '/journeys'
+
 
 function Home(props: any) {
   const [passengerData, setPassengerData] = useState([]);
@@ -18,6 +23,9 @@ function Home(props: any) {
   const userProps  = props.navigation.state.params.userProps;
   console.log('username is: ', username)
   console.log('userProps is: ', userProps)
+  const isCreator = userProps.isCreator;
+  console.log(isCreator)
+  
 
   useEffect(() => {
     getData()
@@ -180,15 +188,14 @@ function Home(props: any) {
   };
 
   const moreOptions = () => {
-    props.navigation.navigate('MoreOptions', { username });
+    props.navigation.navigate('MoreOptions', { username }); 
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.welcomeText}>
-        Welcome back
-        {username}
-        !
+        Welcome back {'\n'}
+        {username}!
       </Text>
       <TouchableOpacity style={styles.ViewJourneyBtn}>
         <Text style={styles.homePageBtnText} onPress={RatingPage}>Rating Page</Text>
@@ -206,11 +213,15 @@ function Home(props: any) {
         <Text style={styles.homePageBtnText} onPress={payment}>Payment Page</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.ViewJourneyBtn}>
-        <Text style={styles.homePageBtnText} onPress={createJourney}>Create Journey</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.ViewJourneyBtn}>
         <Text style={styles.homePageBtnText} onPress={moreOptions}>More Options</Text>
       </TouchableOpacity>
+
+      { isCreator == "true" &&
+        <TouchableOpacity style={styles.ViewJourneyBtn}>
+          <Text style={styles.homePageBtnText} onPress={createJourney}>Create Journey</Text>
+        </TouchableOpacity>
+        }
+
     </View>
   );
 }
@@ -228,6 +239,7 @@ const styles = StyleSheet.create({
     height: 200,
     color: 'white',
     fontSize: 25,
+    textAlign: 'center'
   },
   homePageBtnText: {
     color: '#000000',
