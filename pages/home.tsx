@@ -36,7 +36,7 @@ function Home(props: any) {
       const json = await response.json();
       await new Promise((resolve) => {
         console.log('json file content: ', json.exPassengers)
-        setPassengerData(json.exPassengers)
+        //setPassengerData(json.exPassengers)
         return resolve(json.exPassengers)
       }).then(msg => {
         initialPassengerData(msg);
@@ -104,6 +104,7 @@ function Home(props: any) {
       setPassengerData(matchingJourneys)
     }
     else {
+      setPassengerData([])
      // console.log('no matching journeys')
     }
   }
@@ -215,7 +216,8 @@ function Home(props: any) {
         <Text style={styles.homePageBtnText} onPress={moreOptions}>More Options</Text>
       </TouchableOpacity>
 
-      { isCreator == "true" &&
+      { 
+        isCreator == "true" &&
         <TouchableOpacity style={styles.ViewJourneyBtn}>
           <Text style={styles.homePageBtnText} onPress={createJourney}>Create Journey</Text>
         </TouchableOpacity>
