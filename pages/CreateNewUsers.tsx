@@ -55,7 +55,7 @@ const CreateNewUserPage = (props: any) => {
       }
       else{
         setWarning(0)  
-        axios.post(url, {
+        axios.post(localHost, {
           body: JSON.stringify(json_data)
         })
         .then(function (response) {

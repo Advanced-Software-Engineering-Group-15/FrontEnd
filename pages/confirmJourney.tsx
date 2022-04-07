@@ -79,32 +79,7 @@ const App = (props: any) => {
   };
   return (
     <ScrollView>
-      <View style={
-      //   {
-      //   flex: 1,
-      //   justifyContent: 'center',
-      //   alignItems: 'center',  
-      // }
-      styles.items
-      }>
-        {/* https://reactnativeexample.com/a-highly-customized-dropdown-select-picker-menu-for-react-native/ */}
-        {/* <SelectDropdown
-          data={journeyTypes}
-          onSelect={(selectedItem, index) => {
-            console.log(selectedItem, index);
-            journey.journeyType = selectedItem;
-            setGlobalType(journey.journeyType);          
-          }}
-          defaultButtonText={"Select Journey Type"}
-          buttonTextAfterSelection={(selectedItem, index) => {
-            return selectedItem
-          }}
-          rowTextForSelection={(item, index) => {
-            return item
-          }}
-        /> */}
-
-
+      <View style={styles.items}>
         <Text style={styles.cardDestinationTxtStyle}>Start of Journey:</Text>
         <Text>{startInfo.data.description}</Text>
         {/* <TextInput
@@ -122,53 +97,47 @@ const App = (props: any) => {
             alignItems: 'center',
           }}>
           <NumericInput      
-            onChange={value => journey.pricing.quantity = value}
+            onChange={value => journey.capacity = value}
           />
           </View> 
           </ScrollView>
-        
-        {/* <TextInput
-        style={styles.input}
-        onChangeText={text => journey.journeyEnd.name = text}/> */}
-        {/* https://reactnativeexample.com/a-highly-customized-dropdown-select-picker-menu-for-react-native/ */}
         </View>
-        { journeyType == "DRIVING" &&
-          <ScrollView>
-          <Text style={styles.cardDestinationTxtStyle}>Cost of Journey:</Text>
-          <View style={{
-            flexDirection: 'row',
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <SelectDropdown
-            dropdownStyle = {{
-              width:50,
-            }}
-            buttonStyle = {{
-              width:50,
-            }}
+          { journeyType == "DRIVING" &&
+            <ScrollView>
+            <Text style={styles.cardDestinationTxtStyle}>Cost of Journey:</Text>
+            <View style={{
+              flexDirection: 'row',
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <SelectDropdown
+              dropdownStyle = {{
+                width:50,
+              }}
+              buttonStyle = {{
+                width:50,
+              }}
 
-            data={currencyTypes}
-            onSelect={(selectedItem, index) => {
-              console.log(selectedItem, index);
-              journey.pricing.currency = selectedItem;
-            }}
-            defaultButtonText={"$"}
-            buttonTextAfterSelection={(selectedItem, index) => {
-              return selectedItem
-            }}
-            rowTextForSelection={(item, index) => {
-              return item
-            }}
-          />
-          <NumericInput      
-            onChange={value => journey.pricing.quantity = value}
-          />
+              data={currencyTypes}
+              onSelect={(selectedItem, index) => {
+                console.log(selectedItem, index);
+                journey.pricing.currency = selectedItem;
+              }}
+              defaultButtonText={"$"}
+              buttonTextAfterSelection={(selectedItem, index) => {
+                return selectedItem
+              }}
+              rowTextForSelection={(item, index) => {
+                return item
+              }}
+            />
+            <NumericInput      
+              onChange={value => journey.pricing.quantity = value}
+            />
           </View> 
           </ScrollView>
         }
-        {/* {this.renderCostInput(journey.journeyType)} */}
         
         
         <Button
