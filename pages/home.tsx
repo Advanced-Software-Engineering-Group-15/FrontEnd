@@ -3,6 +3,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import {
   StyleSheet, Text, View, TouchableOpacity,
 } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import { IP } from '../constants';
 
 const localHost = 'http://' + IP + '/passengers'
@@ -192,6 +193,7 @@ function Home(props: any) {
     props.navigation.navigate('JourneyInProgress', { userProps });
   };
   return (
+    <ScrollView>
     <View style={styles.container}>
       <Text style={styles.welcomeText}>
         Welcome back {'\n'}
@@ -215,7 +217,6 @@ function Home(props: any) {
       <TouchableOpacity style={styles.ViewJourneyBtn}>
         <Text style={styles.homePageBtnText} onPress={moreOptions}>More Options</Text>
       </TouchableOpacity>
-
       { 
         isCreator == "true" &&
         <TouchableOpacity style={styles.ViewJourneyBtn}>
@@ -223,7 +224,11 @@ function Home(props: any) {
         </TouchableOpacity>
       } 
 
+      <TouchableOpacity style={styles.ViewJourneyBtn}>
+        <Text style={styles.homePageBtnText} onPress={journeyInProgress}>Journey In Progress</Text>
+      </TouchableOpacity>
     </View>
+    </ScrollView>
   );
 }
 
