@@ -77,21 +77,19 @@ function ViewCreatedJourneys(props: any) {
 
 
   return (
+    
     <View style={styles.container}>
-      <Text style={styles.welcomeText}>
-        Welcome back
-        {userProps.name}
-        !
-      </Text>
-      <ScrollView>       
+        <ScrollView >
         <View style={styles.items}>
           {journeys_filter_final}
         </View> 
-      </ScrollView>  
+      
       <TouchableOpacity style={styles.ViewJourneyBtn}>
         <Text style={styles.homePageBtnText} onPress={RatingPage}>Rating Page</Text>
       </TouchableOpacity>
+      </ScrollView>  
     </View>
+    
   );
 }
 

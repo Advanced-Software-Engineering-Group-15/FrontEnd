@@ -3,6 +3,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import {
   StyleSheet, Text, View, TouchableOpacity,
 } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import { IP } from '../constants';
 
 const localHost = 'http://' + IP + '/passengers'
@@ -188,6 +189,7 @@ function Home(props: any) {
   };
 
   return (
+    <ScrollView>
     <View style={styles.container}>
       <Text style={styles.welcomeText}>
         Welcome back {'\n'}
@@ -219,6 +221,7 @@ function Home(props: any) {
         }
 
     </View>
+    </ScrollView>
   );
 }
 
