@@ -2,7 +2,10 @@ import React, { useEffect, useState, useRef } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions, ScrollView, Button, Alert } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { Rating, RatingProps } from 'react-native-elements';
+import axios from 'axios';
+import { IP } from '../constants.tsx';
 
+let url = 'http://' + IP + '/rating'
 
 
 type RatingsComponentProps = {};
@@ -10,31 +13,35 @@ type RatingsComponentProps = {};
 const Ratings: React.FunctionComponent<RatingsComponentProps> = (props: any) => {
   const [showBox, setShowBox] = useState(true);
   const [rate, setRating] = useState({rate: 0});
-  // const ratingConfirm = (rating: number) => {
-  //   console.log('Rating is: ' + rating);
-  //   return Alert.alert(
-  //     "Are your sure?",
-  //     "Confirm Journey Rating",
-  //     [
-  //       // The "Yes" button
-  //       {
-  //         text: "Yes",
-  //         onPress: () => {
-  //           setShowBox(false);
-  //           console.log('Rating is:' + (rating-1) );
-  //         },
-  //       },
-  //       // The "No" button
-  //       // Does nothing but dismiss the dialog when tapped
-  //       {
-  //         text: "No",
-  //       },
-  //     ]
-  //   );
-  //   console.log('hello');
-  // };
+  console.log('Rating propppsspss:', props)
+  var data = {
+    "userId": 2,
+    "rating": 4
+  }
+
+  // axios.post('http://' + IP + '/rating', {
+  //   body: ' '
+  // })
+  // .then(function (response) {
+  //   console.log('RESSSPONSE: ', response.data)
+  // })
+  // .catch(function (error) {
+  //   console.log(error);
+  // });
 
   const ratingConfirm = (rating: number) => {
+    axios.post(url, {
+      body: JSON.stringify({
+        "userID": 2,
+        "rating": 4
+      })
+    })
+    .then(function (response) {
+      console.log('RESSSPONSE: ', response.data)
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
     setRating({rate: rating})
     return Alert.alert(
       "Are your sure?",
