@@ -9,7 +9,7 @@ const AvailableJourneyCard = (props: any) => {
     console.log('Journey Card PROPSSS:', props)
 
     const openInMap = () => {
-        props.navigation.navigate("Home",  {
+        props.navigation.navigate("JourneyInProgress",  {
             journeyID: props.data.journeyID,
             creatorID: props.data.creatorID,
             start: {name: props.data.startName,

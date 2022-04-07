@@ -18,7 +18,7 @@ function JourneyInProgress(props: any) {
   return (
     <View style={styles.container}>
       <Text style={styles.welcomeText}>
-        Welcome
+        {'Welcome '}
         {userProps.username}
         !
       </Text>

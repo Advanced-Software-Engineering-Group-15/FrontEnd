@@ -9,11 +9,8 @@ import {
   Image
 } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
-import NumericInput from "react-native-numeric-input";
 import AvailableJourneyCard from '../components/AvailableJourneyCard';
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import axios from 'axios';
 import { IP } from '../constants';
 
 const localHost = 'http://' + IP + '/journeys'
