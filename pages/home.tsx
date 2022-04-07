@@ -1,14 +1,18 @@
 // import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet, Text, View, TouchableOpacity,
 } from 'react-native';
+
 
 function Home(props: any) {
   const username  = props.navigation.state.params.userProps.name;
   const userProps  = props.navigation.state.params.userProps;
   console.log('username is: ', username)
   console.log('userProps is: ', userProps)
+  const isCreator = userProps.isCreator;
+  console.log(isCreator)
+  
 
   const RatingPage = () => {
     props.navigation.navigate('Ratings');
@@ -37,9 +41,8 @@ function Home(props: any) {
   return (
     <View style={styles.container}>
       <Text style={styles.welcomeText}>
-        Welcome back
-        {username}
-        !
+        Welcome back {'\n'}
+        {username}!
       </Text>
       <TouchableOpacity style={styles.ViewJourneyBtn}>
         <Text style={styles.homePageBtnText} onPress={RatingPage}>Rating Page</Text>
@@ -51,11 +54,15 @@ function Home(props: any) {
         <Text style={styles.homePageBtnText} onPress={payment}>Payment Page</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.ViewJourneyBtn}>
-        <Text style={styles.homePageBtnText} onPress={createJourney}>Create Journey</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.ViewJourneyBtn}>
         <Text style={styles.homePageBtnText} onPress={moreOptions}>More Options</Text>
       </TouchableOpacity>
+
+      { isCreator == "true" &&
+        <TouchableOpacity style={styles.ViewJourneyBtn}>
+          <Text style={styles.homePageBtnText} onPress={createJourney}>Create Journey</Text>
+        </TouchableOpacity>
+        }
+
     </View>
   );
 }
@@ -73,6 +80,7 @@ const styles = StyleSheet.create({
     height: 200,
     color: 'white',
     fontSize: 25,
+    textAlign: 'center'
   },
   homePageBtnText: {
     color: '#000000',
