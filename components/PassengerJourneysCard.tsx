@@ -34,16 +34,25 @@ const AvailableJourneyCard = (props: any) => {
                     Destination: {JSON.stringify(props.data.endName).split("\"")[1].split(",")[0]}
                 </Text>
                 <Text style={styles.cardUserTxtStyle}>
-                    {JSON.stringify(props.data.creatorID).split("\"")[1]}  
+                    {props.data.creatorID}  
                     <Ionicons name="star" style={styles.cardUserTxtStyle}/>  
-                    {JSON.stringify(props.data.creatorRating)}
+                    {props.data.creatorRating}
                 </Text>
                 <Text style={styles.cardTypeTxtStyle}>
                     {JSON.stringify(props.data.journeyType).split("\"")[1]}
                 </Text>
+                <Text style={styles.cardCapacityStyle}>
+                    {JSON.stringify(props.data.capacity)}
+                </Text>  
                 <Text style={styles.cardPriceTxtStyle}>
-                    {JSON.stringify(props.data.cost)} {JSON.stringify(props.data.currency).split("\"")[1]}
-                </Text>                
+                    {JSON.stringify(props.data.cost)}
+                </Text>       
+                <Text style={styles.cardDateTxtStyle}>
+                    {JSON.stringify(props.data.departure_datetime).split("T")[0]}
+                </Text>    
+                <Text style={styles.cardTimeTxtStyle}>
+                    {JSON.stringify(props.data.departure_datetime).split("T")[1]}
+                </Text>        
             </View>
         </TouchableOpacity>
     )
@@ -92,6 +101,27 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         fontWeight: "bold",
         color: '#2222FF',
+    },
+    cardDateTxtStyle: {
+        fontSize: 17,
+        fontWeight: "bold",
+        position: 'absolute',
+        top: 95, left: 23, right: 0, bottom: 0,
+        color: '#20201e',
+    },
+    cardTimeTxtStyle: {
+        fontSize: 17,
+        fontWeight: "bold",
+        position: 'absolute',
+        top: 120, left: 23, right: 0, bottom: 0,
+        color: '#3b3b37',
+    },
+    cardCapacityStyle: {
+        fontSize: 20,
+        position: 'absolute',
+        top: 20, left: 330, right: 0, bottom: 0,
+        fontWeight: "bold",
+        color: '#FFA5FF',
     },
 })
 
