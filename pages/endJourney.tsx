@@ -1,40 +1,34 @@
 // import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, ActivityIndicator, TextInput, TouchableOpacity, Button } from 'react-native';
-  
+import React from 'react';
+import {
+  StyleSheet, Text, View, TouchableOpacity,
+} from 'react-native';
 
-const EndJourney = (props: any) => {
+function EndJourney(props: any) {
+  const { userProps } = props.navigation.state.params;
 
-  const username = props.navigation.state.params.username.username 
-  
-  const startJourney = () => {
-    console.log(input);
-    props.navigation.navigate("journeyInProgress", { username: input })
-  }
   const goToRating = () => {
-    console.log(input);
-    props.navigation.navigate("ratings", { username: input })
-  }
-  
+    props.navigation.navigate('Ratings', { userProps });
+  };
+
   const goBackToHome = () => {
-    props.navigation.navigate("Home")
-	
-  }
-  
+    props.navigation.navigate('Home', { userProps });
+  };
+
   return (
-	<View style={styles.container}>
-	   <Text style={styles.welcomeText}>Welcome to End Journey Page!</Text>
-		<TouchableOpacity style={styles.MapsPageBtn}>
-		  <Text onPress={goToRating}>RATE JOURNEY</Text>
-		</TouchableOpacity>
-		<TouchableOpacity style={styles.MapsPageBtn}>
-		  <Text onPress={goBackToHome}>Back to Homepage</Text>
-		</TouchableOpacity>
-	  </View> 
+    <View style={styles.container}>
+      <Text style={styles.welcomeText}>Welcome to End Journey Page!</Text>
+      <TouchableOpacity style={styles.MapsPageBtn}>
+        <Text onPress={goToRating}>RATE JOURNEY</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.MapsPageBtn}>
+        <Text onPress={goBackToHome}>Back to Homepage</Text>
+      </TouchableOpacity>
+    </View>
   );
 }
 
-//styling
+// styling
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -42,14 +36,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  welcomeText:{
-    height:50,
-    color:"white",
-    fontSize:25
+  welcomeText: {
+    height: 50,
+    color: 'white',
+    fontSize: 25,
   },
   searchBox: {
     top: 0,
-    position: "absolute",
+    position: 'absolute',
     flex: 1,
     justifyContent: 'center',
   },
@@ -73,30 +67,30 @@ const styles = StyleSheet.create({
     borderColor: '#c8c7cc',
     borderTopWidth: 0.5,
   },
-  MapsPageBtn:{
-    width: "40%",
-    backgroundColor: "#fb5b5a",
+  MapsPageBtn: {
+    width: '40%',
+    backgroundColor: '#fb5b5a',
     borderRadius: 25,
     height: 50,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 20,
-    marginBottom: 10
+    marginBottom: 10,
   },
-  startText:{
-    height:50,
-    color:"white",
-    fontSize:25
+  startText: {
+    height: 50,
+    color: 'white',
+    fontSize: 25,
   },
-  startBtn:{
-    width:"80%",
-    backgroundColor:"#fb5b5a",
-    borderRadius:25,
-    height:50,
-    alignItems:"center",
-    justifyContent:"center",
-    marginTop:40,
-    marginBottom:10
+  startBtn: {
+    width: '80%',
+    backgroundColor: '#fb5b5a',
+    borderRadius: 25,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 40,
+    marginBottom: 10,
   },
   powered: {},
   listView: {},
@@ -118,4 +112,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EndJourney
+export default EndJourney;
