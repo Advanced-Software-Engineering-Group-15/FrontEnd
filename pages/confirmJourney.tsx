@@ -10,7 +10,6 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 
 const journeyTypes = ["Drive", "Cycle", "Walk"]
 const currencyTypes = ["€", "$", "£"]
-const capacityTypes = [1,2,3,4,5,6,7,8,9,10]
 
 const localHost = 'http://'+ IP +'/newJourneys'
 
@@ -65,10 +64,12 @@ const App = (props: any) => {
   };
 
   const showDatepicker = () => {
+    setShow(true);
     showMode('date');
   };
 
   const showTimepicker = () => {
+    setShow(true);
     showMode('time');
   };
 
@@ -113,28 +114,26 @@ const App = (props: any) => {
   return (
     <ScrollView>
       <View style={styles.items}>
-        <Text style={styles.cardDestinationTxtStyle}>Start of Journey:</Text>
-        <Text>{startInfo.data.description}</Text>
-        {/* <TextInput
-          style={styles.input}
-          onChangeText={text => journey.journeyStart.name = text}/> */}
-        <Text style = {styles.cardDepatureTxtStyle}>End of Journey:</Text>
-        <Text>{destInfo.data.description}</Text>
+        <Text style={styles.cardDepatureTxtStyle}>Start of Journey:</Text>
+        <Text style={styles.cardDepatureInfoStyle}>{startInfo.data.description}</Text>
+        <Text style = {styles.cardDestinationTxtStyle}>End of Journey:</Text>
+        <Text style = {styles.cardDestinationInfoStyle}>{destInfo.data.description}</Text>
 
-        <ScrollView>
-          <Text style={styles.cardDestinationTxtStyle}>Max Capacity (excluding self):</Text>
-          <View style={{
-            flexDirection: 'row',
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <NumericInput      
+        <View style={styles.itemsNumericInput}>
+          <Text style={styles.cardCapacityTxtStyle}>Max Capacity:                 </Text>
+          <NumericInput  
+            type='up-down'
             onChange={value => journey.capacity = value}
+            onLimitReached={(isMax, msg) => console.log(isMax,'Reached the maximum capacity')}
+            textColor='#5566EF' 
+            rounded
+            borderColor='#5566EF' 
+            iconStyle={{ color:'#5566EF'}} 
           />
-          </View> 
-          {/* CAPACITY */}
-          <Text>Pick capacity size of journey:</Text>
+        </View>
+        { journeyType == "DRIVING" &&
+        <View style={styles.itemsNumericInput}>
+          <Text style={styles.cardCostTxtStyle}>Cost of Journey:</Text>
           <SelectDropdown
             dropdownStyle = {{
               width:50,
@@ -142,13 +141,12 @@ const App = (props: any) => {
             buttonStyle = {{
               width:50,
             }}
-
-            data={capacityTypes}
+            data={currencyTypes}
             onSelect={(selectedItem, index) => {
               console.log(selectedItem, index);
-              journey.capacity = selectedItem;
+              journey.pricing.currency = selectedItem;
             }}
-            defaultButtonText={1}
+            defaultButtonText={"$"}
             buttonTextAfterSelection={(selectedItem, index) => {
               return selectedItem
             }}
@@ -156,99 +154,65 @@ const App = (props: any) => {
               return item
             }}
           />
-          </ScrollView>
+          <NumericInput      
+            type='up-down'
+            onChange={value => journey.pricing.quantity = value}
+            onLimitReached={(isMax, msg) => console.log(isMax,'Reached the maximum capacity')}
+            textColor='#FF9900' 
+            rounded
+            borderColor='#FF9900' 
+            iconStyle={{ color:'#FF9900'}}             
+          />          
         </View>
-          { journeyType == "DRIVING" &&
-            <ScrollView>
-            <Text style={styles.cardDestinationTxtStyle}>Cost of Journey:</Text>
-            <View style={{
-              flexDirection: 'row',
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <SelectDropdown
-              dropdownStyle = {{
-                width:50,
-              }}
-              buttonStyle = {{
-                width:50,
-              }}
-
-              data={currencyTypes}
-              onSelect={(selectedItem, index) => {
-                console.log(selectedItem, index);
-                journey.pricing.currency = selectedItem;
-              }}
-              defaultButtonText={"$"}
-              buttonTextAfterSelection={(selectedItem, index) => {
-                return selectedItem
-              }}
-              rowTextForSelection={(item, index) => {
-                return item
-              }}
-            />
-            <NumericInput      
-              onChange={value => journey.pricing.quantity = value}
-            />
-          </View> 
-          </ScrollView>
         }
-        
-
-
-
-        <View style={styles.container}>
-      {/* <View>
-        <Button onPress={showDatepicker} title="Show date picker!" />
       </View>
-      <View>
-        <Button onPress={showTimepicker} title="Show time picker!" />
-      </View> */}
-
-      <TouchableOpacity style={styles.loginBtn} onPress={showDatepicker}>
-          <Text 
-            style={styles.loginText}
-            >SELECT DATE
-          </Text>
-        </TouchableOpacity>
-
-      <TouchableOpacity style={styles.loginBtn} onPress={showTimepicker}>
-          <Text 
-            style={styles.loginText}
-            >SELECT TIME
-          </Text>
-       </TouchableOpacity>
-      </View>
-      <View>
-      <Text>selected: {date.toLocaleString()}</Text>
-      {show && (
+      <View style={styles.containerBtnStyle}>
         <DateTimePicker
+          style={styles.datePickerStyle}
           testID="dateTimePicker"
           value={date}
-          mode={mode}
+          mode={'date'}
+          is24Hour={true}
+          onChange={onChange}
+          minimumDate={new Date()}
+        />
+        <DateTimePicker
+          style={styles.timePickerStyle}
+          testID="dateTimePicker"
+          value={date}
+          mode={'time'}
           is24Hour={true}
           onChange={onChange}
         />
-      )}
-    </View>
-    <View style={styles.container}>
+      </View>
+        {/* <TouchableOpacity style={styles.pressBtnStyle} onPress={showDatepicker}>
+          <Text style={styles.loginText}>
+            SELECT DATE
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.pressBtnStyle} onPress={showTimepicker}>
+            <Text style={styles.loginText}>
+              SELECT TIME
+            </Text>
+        </TouchableOpacity> */}
+      
+      {/* {show && (
+        
+      )} */}
+      <Text style={styles.timeTxtStyle}>selected: {date.toLocaleString()}</Text>
+
+      <View style={styles.container}>
+      
+      
     
-    
-  
-    <TouchableOpacity style={styles.loginBtn} onPress={createJourney}>
+        <TouchableOpacity style={styles.pressBtnStyle} onPress={createJourney}>
           <Text 
             style={styles.loginText}
             >SUBMIT JOURNEY
           </Text>
-       </TouchableOpacity>
-    </View>
-        {/* <Button
-          onPress={createJourney}
-          title="Submit Journey"
-          color="#841584"
-          accessibilityLabel="Submit your journey to be created"
-        /> */}
+        </TouchableOpacity>
+      </View>
       
       
     </ScrollView>
@@ -259,25 +223,59 @@ const App = (props: any) => {
 
 }
 const styles = StyleSheet.create({
-  items: {
-    marginBottom: 10,
-    padding: 20,
-    borderWidth: 1,
-    borderColor: "#27ae60",
-    borderRadius: 50,
+items: {
+  marginBottom: 10,
+  padding: 20,
+},
+itemsNumericInput: {
+  marginBottom: 10,
+  flexDirection: 'row',
+  flex: 1,
 },
 
 cardDepatureTxtStyle: {
-    fontSize: 17,
+    fontSize: 25,
     textAlign: "left",
     fontWeight: "bold",
-    color: '#FF2222',
+    color: '#226622',
+    marginBottom: 15,
+},
+
+cardDepatureInfoStyle: {
+  fontSize: 20,
+  textAlign: "center",
+  fontWeight: "bold",
+  color: '#229922',
+  marginBottom: 15,
 },
 cardDestinationTxtStyle: {
-    fontSize: 17,
-    textAlign: "left",
-    fontWeight: "bold",
-    color: '#22AA22',
+  fontSize: 25,
+  textAlign: "left",
+  fontWeight: "bold",
+  color: '#BB2222',
+  marginBottom: 15,
+},
+cardDestinationInfoStyle: {
+  fontSize: 20,
+  textAlign: "center",
+  fontWeight: "bold",
+  color: '#FF1111',
+  marginBottom: 15,
+},
+cardCapacityTxtStyle: {
+  fontSize: 22,
+  textAlign: "left",
+  fontWeight: "bold",
+  color: '#5566EF',
+  marginBottom: 15,
+},
+cardCostTxtStyle: {
+  fontSize: 23,
+  textAlign: "left",
+  fontWeight: "bold",
+  color: '#FF9900',
+  marginBottom: 15,
+  justifyContent:"center",
 },
 
 cardTypeTxtStyle: {
@@ -307,6 +305,11 @@ cardUserTxtStyle: {
     alignItems: 'center',
     justifyContent: 'center',
   },
+  containerBtnStyle: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly'
+  },
   box: {
     width: 60,
     height: 60,
@@ -319,15 +322,30 @@ cardUserTxtStyle: {
     padding: 10,
     borderColor: 'gray',
   },
-  loginBtn:{
-    width:"80%",
-    backgroundColor:"#fb5b5a",
+  pressBtnStyle:{
+    width:"40%",
+    backgroundColor:"#333344",
     borderRadius:25,
     height:50,
     alignItems:"center",
     justifyContent:"center",
-    marginTop:40,
-    marginBottom:10
+    marginBottom:50
+  },
+  timeTxtStyle:{
+    fontSize: 23,
+    textAlign: "center",
+    fontWeight: "bold",
+    color: '#444444',
+    marginBottom: 15,
+    justifyContent:"center",
+  },
+  datePickerStyle:{
+    width:200,
+    marginBottom: 25,
+  },
+  timePickerStyle:{
+    width:100,
+    marginBottom: 25,
   },
   loginText:{
     color:"white"
