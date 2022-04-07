@@ -34,12 +34,14 @@ const Map = (props: any) => {
     journeyID : journeyID,
     userID : userProps.userID,
     creatorID : creatorID,
+    userProps : userProps
   }
   const joinJourney = () => {
     console.log('\n\nMAP userProps: ', userProps)
+    console.log('\n\nMAP journeyEntry: ', journeyEntry)
 
     axios.post(localHost, {
-      body: JSON.stringify(userProps)
+      body: JSON.stringify(journeyEntry)
     })
     .then(function (response) {
       console.log(response);
