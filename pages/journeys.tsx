@@ -1,5 +1,13 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, Image} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  TouchableOpacity,
+  ScrollView,
+  Image
+} from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import NumericInput from "react-native-numeric-input";
 import AvailableJourneyCard from '../components/AvailableJourneyCard';

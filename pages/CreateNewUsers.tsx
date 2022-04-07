@@ -3,20 +3,22 @@ import { StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity, Scro
 import axios from 'axios';
 import { IP } from '../constants';
 
+var newUser_json = {
+  firstName: '',
+  familyName: '',
+  phoneNumber: '',
+  emailAddress: '',
+  homeAddress: '',
+  userName: '', 
+  password: '',
+  repeated_password: '',
+  userID: '2000',
+};
+
 const CreateNewUserPage = (props: any) => {
   const [warning, setWarning] = useState(0);
   const [warning_msg, setWarning_msg] = useState('');
-  let newUser_json = {
-    firstName: '',
-    familyName: '',
-    phoneNumber: '',
-    emailAddress: '',
-    homeAddress: '',
-    userName: '', 
-    password: '',
-    repeated_password: '',
-    userID: '2000',
-  };
+  
 
   const SendNewUser = () => {
     let localHost = 'http://' + IP + '/new-user'
@@ -31,15 +33,6 @@ const CreateNewUserPage = (props: any) => {
       "repeated_password": newUser_json.repeated_password,
       "userID": newUser_json.userID,
     }
-    // let check_blank = newUser_json.firstName.concat(
-    //   newUser_json.userName,
-    //   newUser_json.firstName,
-    //   newUser_json.familyName,
-    //   newUser_json.phoneNumber,
-    //   newUser_json.emailAddress,
-    //   newUser_json.password,
-    //   newUser_json.repeated_password,
-    // );
 
     if (json_data["userName"] === "" || json_data["firstName"] === "" || json_data["familyName"] === "" || json_data["phoneNumber"] === "" 
         || json_data["emailAddress"] === "" || json_data["password"] === "" ||  json_data["repeated_password"] === ""){

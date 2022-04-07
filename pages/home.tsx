@@ -188,6 +188,9 @@ function Home(props: any) {
     props.navigation.navigate('MoreOptions', { username }); 
   };
 
+  const journeyInProgress = () => {
+    props.navigation.navigate('JourneyInProgress', { userProps });
+  };
   return (
     <ScrollView>
     <View style={styles.container}>
@@ -213,6 +216,7 @@ function Home(props: any) {
       <TouchableOpacity style={styles.ViewJourneyBtn}>
         <Text style={styles.homePageBtnText} onPress={moreOptions}>More Options</Text>
       </TouchableOpacity>
+<<<<<<< HEAD
 
       { isCreator == "true" &&
         <TouchableOpacity style={styles.ViewJourneyBtn}>
@@ -220,6 +224,11 @@ function Home(props: any) {
         </TouchableOpacity>
         }
 
+=======
+      <TouchableOpacity style={styles.ViewJourneyBtn}>
+        <Text style={styles.homePageBtnText} onPress={journeyInProgress}>Journey In Progress</Text>
+      </TouchableOpacity>
+>>>>>>> origin/master
     </View>
     </ScrollView>
   );

@@ -10,6 +10,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 
 const journeyTypes = ["Drive", "Cycle", "Walk"]
 const currencyTypes = ["€", "$", "£"]
+const capacityTypes = [1,2,3,4,5,6,7,8,9,10]
 
 const localHost = 'http://'+ IP +'/newJourneys'
 
@@ -132,6 +133,29 @@ const App = (props: any) => {
             onChange={value => journey.capacity = value}
           />
           </View> 
+          {/* CAPACITY */}
+          <Text>Pick capacity size of journey:</Text>
+          <SelectDropdown
+            dropdownStyle = {{
+              width:50,
+            }}
+            buttonStyle = {{
+              width:50,
+            }}
+
+            data={capacityTypes}
+            onSelect={(selectedItem, index) => {
+              console.log(selectedItem, index);
+              journey.capacity = selectedItem;
+            }}
+            defaultButtonText={1}
+            buttonTextAfterSelection={(selectedItem, index) => {
+              return selectedItem
+            }}
+            rowTextForSelection={(item, index) => {
+              return item
+            }}
+          />
           </ScrollView>
         </View>
           { journeyType == "DRIVING" &&

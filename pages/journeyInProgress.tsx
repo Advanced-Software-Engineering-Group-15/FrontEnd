@@ -1,37 +1,39 @@
 // import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, ActivityIndicator, TextInput, TouchableOpacity, Button } from 'react-native';
-  
+import React from 'react';
+import {
+  StyleSheet, Text, View, TouchableOpacity,
+} from 'react-native';
 
-const JourneyInProgress = (props: any) => {
-  const username = props.navigation.state.params.username.username 
-  
-  
+function JourneyInProgress(props: any) {
+  const { userProps } = props.navigation.state.params;
+
   const endJourney = () => {
-    console.log(input);
-    props.navigation.navigate("endJourney", { username: input })
-  }
-  
+    props.navigation.navigate('EndJourney', { userProps });
+  };
+
   const goBack = () => {
-    props.navigation.navigate("Home")
-	
-  }
-  
+    props.navigation.navigate('Home', { userProps });
+  };
+
   return (
-	<View style={styles.container}>
-	   <Text style={styles.welcomeText}>Welcome to Journey in Progress Page {username}!</Text>
-	   <Text style={styles.welcomeText}>This page is displayed when journey is ongoing 🚗!</Text>
-		<TouchableOpacity style={styles.MapsPageBtn}>
-		  <Text onPress={endJourney}>END JOURNEY</Text>
-		</TouchableOpacity>
-		<TouchableOpacity style={styles.MapsPageBtn}>
-		  <Text onPress={goBack}>Back to Homepage</Text>
-		</TouchableOpacity>
-	  </View> 
+    <View style={styles.container}>
+      <Text style={styles.welcomeText}>
+        Welcome
+        {userProps.username}
+        !
+      </Text>
+      <Text style={styles.welcomeText}>Your Journey is in progress! 🚗</Text>
+      <TouchableOpacity style={styles.MapsPageBtn}>
+        <Text onPress={endJourney}>END JOURNEY</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.MapsPageBtn}>
+        <Text onPress={goBack}>Back to Homepage</Text>
+      </TouchableOpacity>
+    </View>
   );
 }
 
-//styling
+// styling
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -39,14 +41,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  welcomeText:{
-    height:50,
-    color:"white",
-    fontSize:25
+  welcomeText: {
+    height: 50,
+    color: 'white',
+    fontSize: 25,
   },
   searchBox: {
     top: 0,
-    position: "absolute",
+    position: 'absolute',
     flex: 1,
     justifyContent: 'center',
   },
@@ -62,15 +64,15 @@ const styles = StyleSheet.create({
     fontSize: 15,
     flex: 1,
   },
-  MapsPageBtn:{
-    width: "40%",
-    backgroundColor: "#fb5b5a",
+  MapsPageBtn: {
+    width: '40%',
+    backgroundColor: '#fb5b5a',
     borderRadius: 25,
     height: 50,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 20,
-    marginBottom: 10
+    marginBottom: 10,
   },
   poweredContainer: {
     justifyContent: 'flex-end',
@@ -99,4 +101,4 @@ const styles = StyleSheet.create({
     height: 20,
   },
 });
-export default JourneyInProgress
+export default JourneyInProgress;
