@@ -19,7 +19,8 @@ const AvailableJourneyCard = (props: any) => {
             end: {name: props.data.endName,
                 latitude: props.data.endLat,
                 longitude: props.data.endLong,},
-            userProps
+            userProps,
+            journeyStatus: props.data.journeyStatus
         })
     }  
       

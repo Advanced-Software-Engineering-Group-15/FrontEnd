@@ -25,6 +25,7 @@ const AvailableJourneyCard = (props: any) => {
             dateTime: props.data.departure_datetime,
             capacity: props.data.capacity,
             userProps,
+            journeyStatus: props.data.journeyStatus
         })
     }  
       
@@ -39,7 +40,7 @@ const AvailableJourneyCard = (props: any) => {
                     Destination: {JSON.stringify(props.data.endName).split("\"")[1].split(",")[0]}
                 </Text>
                 <Text style={styles.cardUserTxtStyle}>
-                    {JSON.stringify(props.data.creatorID).split("\"")[1]}  
+                    {JSON.stringify(props.data.creatorID)}  
                     <Ionicons name="star" style={styles.cardUserTxtStyle}/>  
                     {JSON.stringify(props.data.creatorRating)}
                 </Text>
