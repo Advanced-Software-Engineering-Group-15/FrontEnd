@@ -21,7 +21,6 @@ function Home(props: any) {
     props.navigation.navigate("FindJourneys", { userProps })
   }
   
-  
   const Create_Journey = () => {
     props.navigation.navigate("JourneyType", { username: username })
   }
