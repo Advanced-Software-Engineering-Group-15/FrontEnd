@@ -8,7 +8,7 @@ function JourneyInProgress(props: any) {
   const { userProps } = props.navigation.state.params;
 
   const endJourney = () => {
-    props.navigation.navigate('endJourney', { userProps });
+    props.navigation.navigate('EndJourney', { userProps });
   };
 
   const goBack = () => {
