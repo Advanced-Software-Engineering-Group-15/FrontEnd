@@ -19,7 +19,8 @@ const AvailableJourneyCard = (props: any) => {
             end: {name: props.data.endName,
                 latitude: props.data.endLat,
                 longitude: props.data.endLong,},
-            userProps
+            userProps,
+            Status: props.data.Status,
         })
     }  
       
@@ -52,7 +53,10 @@ const AvailableJourneyCard = (props: any) => {
                 </Text>    
                 <Text style={styles.cardTimeTxtStyle}>
                     {JSON.stringify(props.data.departure_datetime).split("T")[1]}
-                </Text>        
+                </Text> 
+                <Text style={styles.cardStatusTxtStyle}>
+                    {JSON.stringify(props.data.Status)}
+                </Text>       
             </View>
         </TouchableOpacity>
     )
@@ -83,6 +87,12 @@ const styles = StyleSheet.create({
     cardTypeTxtStyle: {
         fontSize: 20,
         textAlign: "right",
+        fontWeight: "bold",
+        color: '#333333',
+    },
+    cardStatusTxtStyle: {
+        fontSize: 20,
+        textAlign: "center",
         fontWeight: "bold",
         color: '#333333',
     },

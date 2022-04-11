@@ -25,7 +25,7 @@ function ViewCreatedJourneys(props: any) {
   useEffect(() => {
     matchJourneys()
     
-  }, []);
+  }, [data]);
 
   const matchJourneys = async () => {
     var matchingJourneys = [];
@@ -35,6 +35,7 @@ function ViewCreatedJourneys(props: any) {
         for(var j=0; j < creatorData.length; j++){
             console.log('passenger Journey ID: ', creatorData[j]["journeyID"])
             if(creatorData[j]["journeyID"] == data[i]["journeyID"]){
+                console.log("Status of journey", data[i]["Status"])
                 matchingJourneys.push(data[i])
                 console.log('matched')
               }

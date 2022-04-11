@@ -1,7 +1,7 @@
 // import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState, useRef } from 'react';
 import {
-  StyleSheet, Text, View, TouchableOpacity,
+  StyleSheet, Text, View, TouchableOpacity, RefreshControlBase,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { IP } from '../constants';
@@ -18,6 +18,7 @@ function Home(props: any) {
   const [isLoading, setLoading] = useState(true);
   const username  = props.navigation.state.params.userProps.name;
   const userProps  = props.navigation.state.params.userProps;
+  const signIn = props.navigation.state.params.signIn;
   console.log('username is: ', username)
   console.log('userProps is: ', userProps)
   const isCreator = userProps.isCreator;
@@ -25,19 +26,27 @@ function Home(props: any) {
   
 
   useEffect(() => {
+    console.log("Running useEffect")
     getData()
     getPassengerData() 
     getCreatorData() 
     
-  }, []);
-
+  }, [signIn]);
+  console.log('passenger data out of function: ', passengerData)
+  console.log('creator data out of function: ', creatorData.length)
+  console.log('journey data out of function: ', data)
+  const refresh = () => {
+    getData()
+    getPassengerData() 
+    getCreatorData()
+  }
   const getPassengerData = async () => {
     try {
       const response = await fetch(localHost);
       const json = await response.json();
       await new Promise((resolve) => {
         console.log('json file content: ', json.exPassengers)
-        //setPassengerData(json.exPassengers)
+        setPassengerData(json.exPassengers)
         return resolve(json.exPassengers)
       }).then(msg => {
         initialPassengerData(msg);
@@ -49,15 +58,19 @@ function Home(props: any) {
       setLoading(false)
     }
   }
-  console.log('passenger data out of function: ', passengerData)
-  console.log('creator data out of function: ', creatorData)
-  //console.log('journey data out of function: ', data)
+  // console.log('passenger data out of function: ', passengerData)
+  // console.log('creator data out of function: ', creatorData.length)
+  // console.log('journey data out of function: ', data[0])
 
   const getData = async () => {
     try {
       const response = await fetch(journeysURL);
       const json = await response.json();
+      console.log("json",json)
+      console.log("json.exJourneys",json.exJourneys)
       await new Promise((resolve) => {
+      console.log("json2",json)
+      console.log("json.exJourneys2",json.exJourneys)
         setData(json.exJourneys)
         return resolve(json.exJourneys)
       }).then(msg => {
@@ -105,7 +118,6 @@ function Home(props: any) {
       setPassengerData(matchingJourneys)
     }
     else {
-      setPassengerData([])
      // console.log('no matching journeys')
     }
   }
@@ -157,6 +169,13 @@ function Home(props: any) {
     }
   }
 
+  if (!signIn){
+    console.log("navigated from page other than signin")
+    // props.navigation.navigate('Ratings');
+    // getData()
+    // getPassengerData() 
+    // getCreatorData() 
+  }
   const viewJourneysPage = () => {
     props.navigation.navigate('ViewJourneys', {passengerData: passengerData,data : data, userProps: userProps});
   }
@@ -193,38 +212,41 @@ function Home(props: any) {
     props.navigation.navigate('JourneyInProgress', { userProps });
   };
   return (
-    <ScrollView style={styles.container}>
-      <View>
-        <Text style={styles.welcomeText}>
-          {'\n'}Welcome back {'\n'}
-          {username}!
-        </Text>
-        <TouchableOpacity style={styles.ViewJourneyBtn} onPress={viewJourneysPage}>
-          <Text style={styles.homePageBtnText} >View Journeys</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.ViewJourneyBtn} onPress={viewCreatedJourneysPage}>
-          <Text style={styles.homePageBtnText} >View Created Journeys</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.ViewJourneyBtn}>
-          <Text style={styles.homePageBtnText} onPress={journeys}>JourneysPage</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.ViewJourneyBtn}>
-          <Text style={styles.homePageBtnText} onPress={payment}>Payment Page</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.ViewJourneyBtn}>
-          <Text style={styles.homePageBtnText} onPress={moreOptions}>More Options</Text>
-        </TouchableOpacity>
-        { 
-          isCreator == "true" &&
-          <TouchableOpacity style={styles.ViewJourneyBtn}>
-            <Text style={styles.homePageBtnText} onPress={createJourney}>Create Journey</Text>
-          </TouchableOpacity>
-        } 
+    <ScrollView>
+    <View style={styles.container}>
+      <Text style={styles.welcomeText}>
+        Welcome back {'\n'}
+        {username}!
+      </Text>
+      <TouchableOpacity style={styles.ViewJourneyBtn}>
+        <Text style={styles.homePageBtnText} onPress={RatingPage}>Rating Page</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.ViewJourneyBtn} onPress={viewJourneysPage}>
+        <Text style={styles.homePageBtnText} >Journeys</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.ViewJourneyBtn} onPress={viewCreatedJourneysPage}>
+        <Text style={styles.homePageBtnText} >Created Journeys</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.ViewJourneyBtn}>
+        <Text style={styles.homePageBtnText} onPress={journeys}>Search Journeys</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.ViewJourneyBtn}>
+        <Text style={styles.homePageBtnText} onPress={refresh}>Refresh</Text>
+      </TouchableOpacity>
+      {/* <TouchableOpacity style={styles.ViewJourneyBtn}>
+        <Text style={styles.homePageBtnText} onPress={payment}>Payment Page</Text>
+      </TouchableOpacity> */}
+      <TouchableOpacity style={styles.ViewJourneyBtn}>
+        <Text style={styles.homePageBtnText} onPress={moreOptions}>More Options</Text>
+      </TouchableOpacity>
 
+      { isCreator == "true" &&
         <TouchableOpacity style={styles.ViewJourneyBtn}>
-          <Text style={styles.homePageBtnText} onPress={journeyInProgress}>Journey In Progress</Text>
+          <Text style={styles.homePageBtnText} onPress={createJourney}>Create Journey</Text>
         </TouchableOpacity>
-      </View>
+        }
+
+    </View>
     </ScrollView>
   );
 }
@@ -235,6 +257,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#003f5c',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   welcomeText: {
     height: 200,
@@ -258,15 +282,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   ViewJourneyBtn: {
-    width: '50%',
+    width: '40%',
     backgroundColor: '#33FF99',
     borderRadius: 25,
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 10,
+    marginTop: 20,
     marginBottom: 10,
-    marginLeft: 100,
   },
   row: {
     backgroundColor: '#FFFFFF',

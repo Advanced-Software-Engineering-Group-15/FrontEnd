@@ -1,20 +1,108 @@
 // import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet, Text, View, TouchableOpacity,
 } from 'react-native';
+import axios from 'axios';
+import { IP } from '../constants';
+
+const localHost = 'http://'+ IP +'/journeyStatus'
 
 function JourneyInProgress(props: any) {
+  const Status = props.navigation.state.params.Status
   const { userProps } = props.navigation.state.params;
+  const [currentStatus, setCurrentStatus] = useState("")
 
   const endJourney = () => {
     props.navigation.navigate('EndJourney', { userProps });
   };
+  const setToStarted = () => {
+    var data = {
+      "journeyID": props.navigation.state.params.journeyID,
+      "Status": "Started"
+    }
 
+    axios.post(localHost, {
+      body: JSON.stringify(data)
+    })
+    goBack()
+    // .then(function (response) {
+    //   console.log(response);
+    //   props.navigation.navigate("Home", { status: 'True'})
+    // })
+    // .catch(function (error) {
+    //   console.log(error);
+    //   props.navigation.navigate("Home", { status: 'False' })
+    // });
+
+  }
+  const cancelJourney = () => {
+    var data = {
+      "journeyID": props.navigation.state.params.journeyID,
+      "Status": "Cancelled"
+    }
+
+    axios.post(localHost, {
+      body: JSON.stringify(data)
+    })
+    goBack()
+    // .then(function (response) {
+    //   console.log(response);
+    //   props.navigation.navigate("Home", { status: 'True'})
+    // })
+    // .catch(function (error) {
+    //   console.log(error);
+    //   props.navigation.navigate("Home", { status: 'False' })
+    // });
+  }
+  const setToEnded = () => {
+    var data = {
+      "journeyID": props.navigation.state.params.journeyID,
+      "Status": "Ended"
+    }
+
+    axios.post(localHost, {
+      body: JSON.stringify(data)
+    })
+    // .then(function (response) {
+    //   console.log(response);
+    //   props.navigation.navigate("Home", { status: 'True'})
+    // })
+    // .catch(function (error) {
+    //   console.log(error);
+    //   props.navigation.navigate("Home", { status: 'False' })
+    // });
+    goBack()
+  }
   const goBack = () => {
-    props.navigation.navigate('Home', { userProps });
+    console.log("Status: ", currentStatus)
+    props.navigation.navigate('Home', { userProps, signIn: false });
+    checkStatus()
   };
+  const checkStatus = () => {
+    console.log("Status: ",currentStatus)
+  }
+  const updateJourneyStatus = () => {
 
+    // console.log(journey);
+   
+    var data = {
+      "journeyID": props.navigation.state.params.journeyID,
+      "Status": currentStatus
+    }
+
+    axios.post(localHost, {
+      body: JSON.stringify(data)
+    })
+    .then(function (response) {
+      console.log(response);
+      props.navigation.navigate("Home", { status: 'True'})
+    })
+    .catch(function (error) {
+      console.log(error);
+      props.navigation.navigate("Home", { status: 'False' })
+    });
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.welcomeText}>
@@ -23,9 +111,25 @@ function JourneyInProgress(props: any) {
         !
       </Text>
       <Text style={styles.welcomeText}>Your Journey is in progress! 🚗</Text>
+      
+      {Status == "Pending" &&
       <TouchableOpacity style={styles.MapsPageBtn}>
-        <Text onPress={endJourney}>END JOURNEY</Text>
+      <Text onPress={setToStarted}>START JOURNEY</Text>
       </TouchableOpacity>
+      }
+      {Status == "Pending" &&
+      <TouchableOpacity style={styles.MapsPageBtn}>
+      <Text onPress={cancelJourney}>CANCEL</Text>
+      </TouchableOpacity>
+      }
+      {Status == "Started" &&
+      <TouchableOpacity style={styles.MapsPageBtn}>
+      <Text onPress={setToEnded}>END JOURNEY</Text>
+    </TouchableOpacity>
+      }
+      {/* <TouchableOpacity style={styles.MapsPageBtn}>
+        <Text onPress={endJourney}>END JOURNEY</Text>
+      </TouchableOpacity> */}
       <TouchableOpacity style={styles.MapsPageBtn}>
         <Text onPress={goBack}>Back to Homepage</Text>
       </TouchableOpacity>

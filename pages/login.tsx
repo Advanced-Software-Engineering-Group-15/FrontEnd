@@ -56,7 +56,8 @@ const Login = (props: any) => {
         if (isLogin) {
           // Check for login status
           props.navigation.navigate("Home", {
-            userProps: userProps
+            userProps: userProps,
+            signIn: true
           })
         }
         else {
