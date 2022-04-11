@@ -4,14 +4,13 @@ import { View, Text, StyleSheet,  TouchableOpacity} from 'react-native';
 
 const AvailableJourneyCard = (props: any) => {
     
-    console.log(JSON.stringify(props.data, null, 2))
+    // console.log(JSON.stringify(props.data, null, 2))
     const userProps = props.navigation.state.params.userProps
-    console.log('Journey Card PROPSSS:', props)
+    // console.log('Journey Card PROPSSS:', props)
 
     const openInMap = () => {
 
         var currTime = new Date()
-
         props.navigation.navigate("Map",  {
             journeyID: props.data.journeyID,
             creatorID: props.data.creatorID,
@@ -31,7 +30,6 @@ const AvailableJourneyCard = (props: any) => {
     return (
         <TouchableOpacity onPress={openInMap}>
             <View style={styles.items}>
-                {/* <Text>Journey ID: {JSON.stringify(props.data.journeyID)}</Text> */}
                 <Text style={styles.cardDepatureTxtStyle}>
                     Departure: {JSON.stringify(props.data.startName).split("\"")[1].split(",")[0]}
                 </Text>
@@ -39,7 +37,7 @@ const AvailableJourneyCard = (props: any) => {
                     Destination: {JSON.stringify(props.data.endName).split("\"")[1].split(",")[0]}
                 </Text>
                 <Text style={styles.cardUserTxtStyle}>
-                    {props.data.creatorID}  
+                    {props.data.creatorID}{"  "}
                     <Ionicons name="star" style={styles.cardUserTxtStyle}/>  
                     {props.data.creatorRating}
                 </Text>
@@ -47,17 +45,24 @@ const AvailableJourneyCard = (props: any) => {
                     {JSON.stringify(props.data.journeyType).split("\"")[1]}
                 </Text>
                 <Text style={styles.cardCapacityStyle}>
-                    {JSON.stringify(props.data.capacity)}
+                    MAX: {JSON.stringify(props.data.capacity)}
                 </Text>  
                 <Text style={styles.cardPriceTxtStyle}>
-                    {JSON.stringify(props.data.cost)}
+                    Price: {JSON.stringify(props.data.cost)}
                 </Text>       
                 <Text style={styles.cardDateTxtStyle}>
                     {JSON.stringify(props.data.departure_datetime).split("T")[0].split("\"")[1]}
+                    {'\n'}
+                    
                 </Text>    
                 <Text style={styles.cardTimeTxtStyle}>
-                    {JSON.stringify(props.data.departure_datetime).split("T")[1]}
-                </Text>        
+                    {JSON.stringify(props.data.departure_datetime).split("\:")[0].split("T")[1]}
+                    {" : ".concat(JSON.stringify(props.data.departure_datetime).split("\:")[1])}
+                </Text>       
+                <Text style={styles.cardTimeTxtStyle}>
+                    {JSON.stringify(props.data.departure_datetime).split("\:")[0].split("T")[1]}
+                    {" : ".concat(JSON.stringify(props.data.departure_datetime).split("\:")[1])}
+                </Text>
             </View>
         </TouchableOpacity>
     )
@@ -66,10 +71,12 @@ const AvailableJourneyCard = (props: any) => {
 const styles = StyleSheet.create({
     items: {
         marginBottom: 10,
-        padding: 20,
-        borderWidth: 1,
+        padding: 10,
+        borderWidth: 3,
         borderColor: "#27ae60",
-        borderRadius: 50,
+        borderRadius: 25,
+        height: 180,
+        width: 380,
     },
 
     cardDepatureTxtStyle: {
@@ -84,29 +91,30 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: '#22AA22',
     },
-
     cardTypeTxtStyle: {
         fontSize: 20,
-        textAlign: "right",
+        position: 'absolute',
+        bottom: 30, right: 20,
         fontWeight: "bold",
         color: '#333333',
     },
     cardCapacityStyle: {
-        fontSize: 20,
+        fontSize: 17,
         position: 'absolute',
-        top: 20, left: 330, right: 0, bottom: 0,
+        top: 20, right: 20,
         fontWeight: "bold",
         color: '#FFA5FF',
     },
     cardPriceTxtStyle:{
         fontSize: 20,
-        textAlign: "right",
-        marginRight: 20,
+        position: 'absolute',
+        bottom: 5, right: 20,
         fontWeight: "bold",
         color: '#FFA500',
     },
 
     cardUserTxtStyle: {
+        marginTop: 15,
         fontSize: 25,
         textAlign: "center",
         fontWeight: "bold",
@@ -116,15 +124,22 @@ const styles = StyleSheet.create({
         fontSize: 17,
         fontWeight: "bold",
         position: 'absolute',
-        top: 95, left: 23, right: 0, bottom: 0,
+        bottom: 10, left: 23,
         color: '#20201e',
     },
     cardTimeTxtStyle: {
         fontSize: 17,
         fontWeight: "bold",
         position: 'absolute',
-        top: 120, left: 23, right: 0, bottom: 0,
+        bottom: 5, left: 23,
         color: '#3b3b37',
+    },
+    cardStatusTxtStyle: {
+        fontSize: 17,
+        fontWeight: "bold",
+        position: 'absolute',
+        bottom: 5, left: 23,
+        color: '#FF0000',
     },
     
 })

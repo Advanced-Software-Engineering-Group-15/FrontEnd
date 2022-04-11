@@ -80,13 +80,13 @@ function ViewCreatedJourneys(props: any) {
     
     <View style={styles.container}>
         <ScrollView >
-        <View style={styles.items}>
-          {journeys_filter_final}
-        </View> 
+          <View style={styles.items}>
+            {journeys_filter_final}
+          </View> 
       
-      <TouchableOpacity style={styles.ViewJourneyBtn}>
-        <Text style={styles.homePageBtnText} onPress={RatingPage}>Rating Page</Text>
-      </TouchableOpacity>
+          <TouchableOpacity style={styles.ViewJourneyBtn}>
+            <Text style={styles.homePageBtnText} onPress={RatingPage}>Rating Page</Text>
+          </TouchableOpacity>
       </ScrollView>  
     </View>
     
@@ -112,16 +112,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     height: 30,
   },
-  MapsPageBtn: {
-    width: '40%',
-    backgroundColor: '#fb5b5a',
-    borderRadius: 25,
-    height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 20,
-    marginBottom: 10,
-  },
   ViewJourneyBtn: {
     width: '40%',
     backgroundColor: '#33FF99',
@@ -140,14 +130,14 @@ const styles = StyleSheet.create({
   },
   items: {
     flex: 1,
-    padding: 10,
-    marginHorizontal: 12,
+    // padding: 10,
+    // marginHorizontal: 12,
   },
   titleText: {
     fontSize: 25,
     fontWeight: 'bold',
     textAlign: 'center',
-    paddingVertical: 5,
+    // paddingVertical: 5,
     color: '#27ae60',
   },
 });

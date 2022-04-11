@@ -42,54 +42,64 @@ const AvailableJourneyCard = (props: any) => {
                     {JSON.stringify(props.data.journeyType).split("\"")[1]}
                 </Text>
                 <Text style={styles.cardCapacityStyle}>
-                    {JSON.stringify(props.data.capacity)}
+                    Max: {JSON.stringify(props.data.capacity)}
                 </Text>  
                 <Text style={styles.cardPriceTxtStyle}>
-                    {JSON.stringify(props.data.cost)}
+                    Price: {JSON.stringify(props.data.cost)}
                 </Text>       
                 <Text style={styles.cardDateTxtStyle}>
-                    {JSON.stringify(props.data.departure_datetime).split("T")[0]}
+                    {JSON.stringify(props.data.departure_datetime).split("T")[0].split("\"")[1]}
                 </Text>    
                 <Text style={styles.cardTimeTxtStyle}>
-                    {JSON.stringify(props.data.departure_datetime).split("T")[1]}
+                    {JSON.stringify(props.data.departure_datetime).split("\:")[0].split("T")[1]}
+                    {" : ".concat(JSON.stringify(props.data.departure_datetime).split("\:")[1])}
                 </Text>        
             </View>
         </TouchableOpacity>
     )
 }
-
+// 
 const styles = StyleSheet.create({
     items: {
         marginBottom: 10,
         padding: 20,
-        borderWidth: 1,
+        borderWidth: 3,
         borderColor: "#27ae60",
-        borderRadius: 50,
+        borderRadius: 25,
+        height: 150,
+        width: 380,
     },
 
     cardDepatureTxtStyle: {
-        fontSize: 17,
+        fontSize: 15,
         textAlign: "left",
         fontWeight: "bold",
         color: '#FF2222',
     },
     cardDestinationTxtStyle: {
-        fontSize: 17,
+        fontSize: 15,
         textAlign: "left",
         fontWeight: "bold",
         color: '#22AA22',
     },
-
     cardTypeTxtStyle: {
         fontSize: 20,
-        textAlign: "right",
+        position: 'absolute',
+        bottom: 30, right: 20,
         fontWeight: "bold",
         color: '#333333',
     },
-    cardPriceTxtStyle: {
+    cardCapacityStyle: {
+        fontSize: 17,
+        position: 'absolute',
+        top: 20, right: 20,
+        fontWeight: "bold",
+        color: '#FFA5FF',
+    },
+    cardPriceTxtStyle:{
         fontSize: 20,
-        textAlign: "right",
-        marginRight: 20,
+        position: 'absolute',
+        bottom: 5, right: 20,
         fontWeight: "bold",
         color: '#FFA500',
     },
@@ -97,8 +107,6 @@ const styles = StyleSheet.create({
     cardUserTxtStyle: {
         fontSize: 25,
         textAlign: "center",
-        marginTop: 10,
-        marginBottom: 5,
         fontWeight: "bold",
         color: '#2222FF',
     },
@@ -106,22 +114,22 @@ const styles = StyleSheet.create({
         fontSize: 17,
         fontWeight: "bold",
         position: 'absolute',
-        top: 95, left: 23, right: 0, bottom: 0,
+        bottom: 25, left: 23,
         color: '#20201e',
     },
     cardTimeTxtStyle: {
         fontSize: 17,
         fontWeight: "bold",
         position: 'absolute',
-        top: 120, left: 23, right: 0, bottom: 0,
+        bottom: 5, left: 23,
         color: '#3b3b37',
     },
-    cardCapacityStyle: {
-        fontSize: 20,
-        position: 'absolute',
-        top: 20, left: 330, right: 0, bottom: 0,
+    cardStatusTxtStyle: {
+        fontSize: 17,
         fontWeight: "bold",
-        color: '#FFA5FF',
+        position: 'absolute',
+        bottom: 5, left: 23,
+        color: '#FF0000',
     },
 })
 
