@@ -37,7 +37,7 @@ const Login = (props: any) => {
   }, []);
 
   const SignIn = () => {
-    alert("sign in");
+    // alert("sign in");
     let url = 'http://' + IP + '/sign-in'
     var data = {
       "userName": userName,
@@ -139,16 +139,16 @@ const Login = (props: any) => {
           baseUrl="http://127.0.0.1"
           size={'normal'}
           theme="light"
-          style={{ backgroundColor: 'rgba(244,0,0,0.7)' }}
-          onLoad={() => alert('onLoad event')}
+          style={{ backgroundColor: 'rgba(0,63,92,0.7)' }}
+          onLoad={() => {}}
           // onClose={() => alert('onClose event')}
           onError={(err) => {
-            alert('onError event');
+            // alert('onError event');
             console.warn(err);
           }}
           onExpire={() => alert('onExpire event')}
           onVerify={(token) => {
-            alert('onVerify event');
+            // alert('onVerify event');
             SignIn();
             // setKey(token);
           }}
@@ -177,17 +177,17 @@ const Login = (props: any) => {
           siteKey="6LejsqwZAAAAAGsmSDWH5g09dOyNoGMcanBllKPF"
           baseUrl="http://127.0.0.1"
           size={'normal'}
-          theme="light"
-          style={{ backgroundColor: 'rgba(244,0,0,0.7)' }}
-          onLoad={() => alert('onLoad event')}
+          theme="light" //003f5c
+          style={{ backgroundColor: 'rgba(0,63,92)' }}
+          onLoad={() => {}}
           // onClose={() => alert('onClose event')}
           onError={(err) => {
-            alert('onError event');
+            // alert('onError event');
             console.warn(err);
           }}
           onExpire={() => alert('onExpire event')}
           onVerify={(token) => {
-            alert('onVerify event');
+            // alert('onVerify event');
             SignUp();
             // setKey(token);
           }}

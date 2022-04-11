@@ -193,8 +193,8 @@ function Home(props: any) {
     props.navigation.navigate('JourneyInProgress', { userProps });
   };
   return (
-    <ScrollView>
-      <View style={styles.container}>
+    <ScrollView style={styles.container}>
+      <View>
         <Text style={styles.welcomeText}>
           {'\n'}Welcome back {'\n'}
           {username}!
@@ -235,8 +235,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#003f5c',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   welcomeText: {
     height: 200,
@@ -268,6 +266,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 10,
     marginBottom: 10,
+    marginLeft: 100,
   },
   row: {
     backgroundColor: '#FFFFFF',
