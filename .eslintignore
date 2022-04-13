@@ -10,22 +10,3 @@ images/
 lint_results.html
 tsconfig.json
 
-# components/
-# pages/CreateNewUsers.tsx
-# pages/confirmJourney.tsx
-# pages/findJourneys.tsx
-# pages/home.tsx
-# pages/input_destination.tsx
-# pages/input_origin.tsx
-# pages/journeys.tsx
-# pages/login.tsx
-# pages/map.tsx
-# pages/maps.tsx
-# pages/journeyType.tsx
-# pages/moreOptions.tsx
-# pages/myProfile.tsx
-# pages/ratings.tsx
-# pages/startJourney.tsx
-# pages/viewCreatedJourneys.tsx
-# pages/viewPassengerJourneys.tsx
-# pages/payment.tsx

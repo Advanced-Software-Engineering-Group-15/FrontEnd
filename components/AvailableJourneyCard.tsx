@@ -100,6 +100,7 @@ const AvailableJourneyCard = (props: any) => {
         }
       </View>
     </TouchableOpacity>
+
   );
 };
 
