@@ -52,28 +52,29 @@ const Login = (props: any) => {
       const isLogin = response.data.isLoginSuccessful;
       const userProps = response.data.userProps;
 
-      console.log(userProps);
-      console.log(isLogin);
-      if (isLogin) {
-        return (
-          props.navigation.navigate('Home', { userProps })
-        );
-      }
-      return Alert.alert(
-        'Login details incorrect,',
-        'please try again',
-        [
-          {
-            text: 'OK',
-            onPress: () => {
-              console.log('Login failed');
-              console.log('LOGIN DETAILS: ', userName, password);
-            },
-          },
-        ],
-      );
-    })
-      .catch((error) => {
+        console.log(userProps)
+        console.log(isLogin);
+        if (isLogin) {
+          // Check for login status
+          props.navigation.navigate("Home", {
+            userProps: userProps,
+            signIn: true
+          })
+        }
+        else {
+          return Alert.alert("Login details incorrect,", "please try again",
+            [
+              {
+                text: "OK",
+                onPress: () => {
+                  console.log("Login failed");
+                  console.log("LOGIN DETAILS: ", userName, password)
+                }
+              }
+            ]);
+        }
+      })
+      .catch(function (error) {
         console.log(error);
       });
   };

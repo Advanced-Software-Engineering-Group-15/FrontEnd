@@ -15,6 +15,8 @@ const GOOGLE_MAPS_APIKEY='AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8'
 const OriginIn = (props: any) => {
 
   const journeyType = props.navigation.state.params.journeyType
+  const currentStatus  = props.navigation.state.params.currentStatus
+  console.log(currentStatus)
   const userProps = props.navigation.state.params.userProps
   console.log('origin userProps', userProps.userID, userProps.username)
   const initialRegion =  {
@@ -40,7 +42,8 @@ const OriginIn = (props: any) => {
       origin: sendinfo,
       location: pin,
       journeyType: journeyType,
-      userProps: userProps
+      userProps: userProps,
+      currentStatus: currentStatus
     })
   }
 

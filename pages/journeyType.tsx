@@ -13,6 +13,8 @@ const currencyTypes = ["€", "$", "£"]
 const JourneyType = (props: any) => {
     const {username} = props.navigation.state.params
     const userProps = props.navigation.state.params.userProps
+    const [journeyStatus, setJourneyStatus] = useState('Pending')
+    const [journeyType, setJourneyType] = useState('')
     console.log(userProps, userProps.userID, userProps.username)
 //   console.log('Journey info obtained', props.navigation.state.params)
   let journey = {
@@ -36,9 +38,14 @@ const JourneyType = (props: any) => {
     creatorRating: '2.5',
   };
 
+  const isDaily = () => {
+    setJourneyStatus('Daily')
+  }
   const createJourney = () => {
-      if(journey.journeyType) {
-        props.navigation.navigate("OriginIn", { userProps: userProps, journeyType: journey.journeyType })
+      
+      if(journeyType != '') {
+        console.log(journeyStatus)
+        props.navigation.navigate("OriginIn", { userProps: userProps, journeyType: journeyType, currentStatus : journeyStatus })
       }
 
   };
@@ -56,7 +63,7 @@ const JourneyType = (props: any) => {
           data={journeyTypes}
           onSelect={(selectedItem, index) => {
             console.log(selectedItem, index);
-            journey.journeyType = selectedItem;
+            setJourneyType(selectedItem);
           }}
           defaultButtonText={"Select Journey Type"}
           buttonTextAfterSelection={(selectedItem, index) => {
@@ -67,7 +74,12 @@ const JourneyType = (props: any) => {
           }}
         />
 
-
+      <Button
+          onPress={isDaily}
+          title="Set as Daily Trip"
+          color="#841584"
+          //accessibilityLabel="Submit your journey to be created"
+        />
 
         <Button
           onPress={createJourney}

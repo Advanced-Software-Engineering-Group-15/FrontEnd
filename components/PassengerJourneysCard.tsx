@@ -69,34 +69,34 @@ const AvailableJourneyCard = (props: any) => {
           {' : '.concat(JSON.stringify(props.data.departure_datetime).split(':')[1])}
         </Text>
         {
-                    JSON.stringify(props.data.Status).split('"')[1] === 'Started' && (
-                    <Text style={styles.cardStatusRedTxtStyle}>
-                      In Progress
-                    </Text>
-                    )
-}
+            JSON.stringify(props.data.Status).split('"')[1] === 'Started' && (
+            <Text style={styles.cardStatusRedTxtStyle}>
+            In Progress
+            </Text>
+            )
+        }
         {
-                    JSON.stringify(props.data.Status).split('"')[1] === 'Ended' && (
-                    <Text style={styles.cardStatusRedTxtStyle}>
-                      Finished
-                    </Text>
-                    )
-}
+            JSON.stringify(props.data.Status).split('"')[1] === 'Ended' && (
+            <Text style={styles.cardStatusRedTxtStyle}>
+            Finished
+            </Text>
+            )
+        }
         {
-                    JSON.stringify(props.data.Status).split('"')[1] === 'Cancelled' && (
-                    <Text style={styles.cardStatusPurpleTxtStyle}>
-                      Cancelled
-                    </Text>
-                    )
-}
+            JSON.stringify(props.data.Status).split('"')[1] === 'Cancelled' && (
+            <Text style={styles.cardStatusPurpleTxtStyle}>
+                Cancelled
+            </Text>
+            )
+        }
         {
-                    JSON.stringify(props.data.Status).split('"')[1] == null
-                    && (
-                    <Text style={styles.cardStatusGreenTxtStyle}>
-                      Recruiting
-                    </Text>
-                    )
-                }
+            JSON.stringify(props.data.Status).split('"')[1] == null
+            && (
+            <Text style={styles.cardStatusGreenTxtStyle}>
+                Recruiting
+            </Text>
+            )
+        }
       </View>
     </TouchableOpacity>
   );

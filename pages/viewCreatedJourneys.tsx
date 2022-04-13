@@ -13,19 +13,36 @@ const ViewCreatedJourneys = (props: any) => {
   const data = props.navigation.state.params.data;
 
   useEffect(() => {
-    matchJourneys();
-  }, []);
+    matchJourneys()
+    
+  }, [data]);
 
   const matchJourneys = async () => {
-    const matchingJourneys = [];
-    const journeysFilterFinalTemp = [];
-    for (let i = 0; i < data.length; i += 1) {
-      for (let j = 0; j < creatorData.length; j += 1) {
-        if (creatorData[j].journeyID === data[i].journeyID) {
-          matchingJourneys.push(data[i]);
+    var matchingJourneys = [];
+    var journeys_filter_final_temp = []
+    for(var i=0; i < data.length; i++){
+        console.log('Journey ID: ', data[i]["journeyID"])
+        for(var j=0; j < creatorData.length; j++){
+            console.log('passenger Journey ID: ', creatorData[j]["journeyID"])
+            if(creatorData[j]["journeyID"] == data[i]["journeyID"]){
+                console.log("Status of journey", data[i]["Status"])
+                matchingJourneys.push(data[i])
+                console.log('matched')
+              }
+        else {console.log('not matched')}
+        }
+    }
+    setMatchedJourneys(matchingJourneys)
+    if(matchingJourneys.length != 0){
+        for (let i = 0; i < matchingJourneys.length; i++){
+          journeys_filter_final_temp.push(
+            <View key={matchingJourneys[i]["journeyID"]}>
+              <PassengerJourneysCard data={matchingJourneys[i]} navigation={props.navigation}/>
+            </View>
+          );
         }
       }
-    }
+    
     if (matchingJourneys.length !== 0) {
       for (let i = 0; i < matchingJourneys.length; i += 1) {
         journeysFilterFinalTemp.push(
