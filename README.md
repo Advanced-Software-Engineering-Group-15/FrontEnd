@@ -33,7 +33,13 @@ The code dependancies are installed using NPM.
       
 * If you are running the backend server locally you will need to change this line to your local endpoint: https://github.com/Advanced-Software-Engineering-Group-15/FrontEnd/blob/df12b88817215143f0cd31b3da39e89a0febb26a/constants.tsx#L1
 
+## Linting
 
+`npx eslint "./**" -o "./lint_results.html" --format html` - To lint the entire project and store in file as html
+
+`npx eslint .\pages\CreateNewUsers.tsx` - To print all linting errors
+
+`npx eslint --fix .\pages\CreateNewUsers.tsx` - To fix linting errors that are basic
 
 
 
