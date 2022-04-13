@@ -1,6 +1,8 @@
 import React from 'react';
-import Ionicons from "react-native-vector-icons/Ionicons";
-import { View, Text, StyleSheet,  TouchableOpacity} from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {
+  View, Text, StyleSheet, TouchableOpacity,
+} from 'react-native';
 
 const AvailableJourneyCard = (props: any) => {
     
