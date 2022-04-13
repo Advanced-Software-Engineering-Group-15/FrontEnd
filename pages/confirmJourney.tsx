@@ -22,6 +22,8 @@ const App = (props: any) => {
   const destInfo = inputProps.destination_info;
   const journeyType = inputProps.journeyType;
   const userProps = inputProps.userProps;
+  const currentStatus = inputProps.currentStatus;
+  console.log(currentStatus)
   console.log(userProps.username, userProps.userID)
   //const [globalType, setGlobalType] = React.useState ("")
   console.log('Journey info obtained', props.navigation.state.params)
@@ -96,7 +98,8 @@ const App = (props: any) => {
       "creatorID": journey.creatorID,
       "creatorRating": journey.creatorRating,
       "capacity": journey.capacity,
-      "departure_datetime": date
+      "departure_datetime": date,
+      "Status": currentStatus,
     }
 
     axios.post(localHost, {

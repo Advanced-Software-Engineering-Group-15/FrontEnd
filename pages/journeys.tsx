@@ -1,16 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  SafeAreaView,
-  TouchableOpacity,
-  ScrollView,
-  Image
-} from 'react-native';
+import React, { useEffect, useState, useRef } from 'react';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, Image} from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
+import NumericInput from "react-native-numeric-input";
 import AvailableJourneyCard from '../components/AvailableJourneyCard';
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import { IP } from '../constants';
 
 const localHost = 'http://' + IP + '/journeys'
@@ -32,6 +26,7 @@ const Journeys = (props: any) => {
   const dest = idealJourney.dest;
   const userProps = idealJourney.userProps;
 
+
   const [Filtered, setFiltered] = useState(false);
   const [data, setData] = useState([]);
   const [isLoading, setLoading] = useState(true);
@@ -41,6 +36,7 @@ const Journeys = (props: any) => {
   const [minRateFilter, setMinRateFilter] = useState('None');
   const [distFilter, setDistFilter] = useState('None');
   const [journeys_filter_final, setFinalList] = useState([]);
+  const [isDaily, setIsDaily] = useState('Pending');
   const [journeys_filter_initial, setInitialList] = useState([]);
 
   useEffect(() => {
@@ -54,7 +50,6 @@ const Journeys = (props: any) => {
       const json = await response.json();
       await new Promise((resolve) => {
         setData(json.exJourneys)
-        console.log('this one boy', json.exJourneys)
         return resolve(json.exJourneys)
       }).then(msg => {
         initialData(msg);
@@ -112,6 +107,7 @@ const Journeys = (props: any) => {
     console.log(data)
     var journeys_filter_final_temp = [];
     for( var i = 0; i < data.length; i++){ 
+      if(isDaily == data[i]["Status"]){
       if(methodFilter == data[i]["journeyType"] || methodFilter == "None"){
         if(parseFloat(maxPriceFilter) >= data[i]["cost"] || maxPriceFilter == "None"){
           if(parseFloat(minRateFilter) <= data[i]["creatorRating"] || minRateFilter == "None"){
@@ -123,6 +119,7 @@ const Journeys = (props: any) => {
       }
       }
     }
+  }
     //console.log(data)
     if(matchingJourneys.length != 0){
       for (let i = 0; i < matchingJourneys.length; i++){
@@ -143,13 +140,19 @@ const Journeys = (props: any) => {
     setFinalList(journeys_filter_final_temp);
 }
 
+  const searchforDaily = async () => {
+    setIsDaily('Daily')
+    filterData()
+
+  }
 
   const initialData = async (msg) => {
     var matchingJourneys = [];
-    console.log("journeyss recieved")
+    console.log("asdasdasd!")
     console.log(msg)
     var journeys_filter_final_temp = [];
-    for( var i = 0; i < msg.length; i++){ 
+    for( var i = 0; i < msg.length; i++){
+    if (msg[i]["Status"] == 'Daily' || msg[i]["Status"] == 'Pending'){ 
       if(methodFilter == msg[i]["journeyType"] || methodFilter == "None"){
         if(parseFloat(maxPriceFilter) >= msg[i]["cost"] || maxPriceFilter == "None"){
           if(parseFloat(minRateFilter) <= msg[i]["creatorRating"] || minRateFilter == "None"){
@@ -158,6 +161,7 @@ const Journeys = (props: any) => {
         }
       }
     }
+  }
     //console.log(data)
     if(matchingJourneys.length != 0){
       for (let i = 0; i < matchingJourneys.length; i++){
@@ -324,6 +328,10 @@ const Journeys = (props: any) => {
         <Text style={styles.applyButtTxt} onPress={filterData}>Apply</Text>
       </TouchableOpacity>
 
+      <TouchableOpacity style={styles.dailyButt}>
+        <Text style={styles.applyButtTxt} onPress={searchforDaily}>Daily Trips</Text>
+      </TouchableOpacity>
+
       <ScrollView>       
         <View style={styles.items}>
           {journeys_filter_final}
@@ -466,6 +474,17 @@ const styles = StyleSheet.create({
     left: 50,
   },
   applyButt:{
+    width: "24%",
+    backgroundColor: "#33FF99",
+    borderRadius: 10,
+    height: 30,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 5,
+    marginBottom: 10,
+    marginLeft: 290,
+  },
+  dailyButt:{
     width: "24%",
     backgroundColor: "#33FF99",
     borderRadius: 10,

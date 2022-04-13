@@ -14,6 +14,7 @@ const DestinationIn = (props: any) => {
   const origin = props.navigation.state.params.location;
   const journeyType = props.navigation.state.params.journeyType;
   const userProps = props.navigation.state.params.userProps;
+  const { currentStatus } = props.navigation.state.params
   const [pin, setPin] = React.useState (props.navigation.state.params.location)
 
   const initialRegion =  {
@@ -34,7 +35,8 @@ const DestinationIn = (props: any) => {
       destination_info: sendinfo,
       destination_location: pin ,
       journeyType: journeyType,
-      userProps: userProps
+      userProps: userProps,
+      currentStatus: currentStatus
     })
   }
 

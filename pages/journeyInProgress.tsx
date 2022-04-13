@@ -103,6 +103,11 @@ function JourneyInProgress(props: any) {
       props.navigation.navigate("Home", { status: 'False' })
     });
   };
+
+  const ratingPage = () => {
+    props.navigation.navigate('Ratings', userProps);
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.welcomeText}>
@@ -125,6 +130,11 @@ function JourneyInProgress(props: any) {
       {Status == "Started" &&
       <TouchableOpacity style={styles.MapsPageBtn}>
       <Text onPress={setToEnded}>END JOURNEY</Text>
+    </TouchableOpacity>
+      }
+      {Status == "Ended" &&
+      <TouchableOpacity style={styles.MapsPageBtn}>
+      <Text onPress={ratingPage}>Review Journey</Text>
     </TouchableOpacity>
       }
       {/* <TouchableOpacity style={styles.MapsPageBtn}>
