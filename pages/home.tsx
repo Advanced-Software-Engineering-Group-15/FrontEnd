@@ -212,8 +212,8 @@ function Home(props: any) {
     props.navigation.navigate('JourneyInProgress', { userProps });
   };
   return (
-    <ScrollView>
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
+    <View>
       <Text style={styles.welcomeText}>
         Welcome back {'\n'}
         {username}!
@@ -230,12 +230,6 @@ function Home(props: any) {
       <TouchableOpacity style={styles.ViewJourneyBtn}>
         <Text style={styles.homePageBtnText} onPress={journeys}>Search Journeys</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.ViewJourneyBtn}>
-        <Text style={styles.homePageBtnText} onPress={refresh}>Refresh</Text>
-      </TouchableOpacity>
-      {/* <TouchableOpacity style={styles.ViewJourneyBtn}>
-        <Text style={styles.homePageBtnText} onPress={payment}>Payment Page</Text>
-      </TouchableOpacity> */}
       <TouchableOpacity style={styles.ViewJourneyBtn}>
         <Text style={styles.homePageBtnText} onPress={moreOptions}>More Options</Text>
       </TouchableOpacity>
@@ -257,8 +251,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#003f5c',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   welcomeText: {
     height: 200,
@@ -282,14 +274,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   ViewJourneyBtn: {
-    width: '40%',
+    width: '50%',
     backgroundColor: '#33FF99',
     borderRadius: 25,
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 20,
-    marginBottom: 10,
+    marginTop: 15,
+    marginLeft: '24%',
   },
   row: {
     backgroundColor: '#FFFFFF',

@@ -91,10 +91,18 @@ const AvailableJourneyCard = (props: any) => {
             )
         }
         {
-          JSON.stringify(props.data.Status).split('"')[1] === null
+          JSON.stringify(props.data.Status).split('"')[1] === 'Pending'
             && (
             <Text style={styles.cardStatusGreenTxtStyle}>
               Recruiting
+            </Text>
+            )
+        }
+        {
+          JSON.stringify(props.data.Status).split('"')[1] === 'Daily'
+            && (
+            <Text style={styles.cardStatusGreenTxtStyle}>
+              Daily Recruiting
             </Text>
             )
         }
