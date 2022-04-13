@@ -30,13 +30,11 @@ const AvailableJourneyCard = (props: any) => {
       <View style={styles.items}>
         <Text style={styles.cardDepatureTxtStyle}>
           Departure:
-          {' '}
           {'\n         '}
           {JSON.stringify(props.data.startName).split('"')[1].split(',')[0]}
         </Text>
         <Text style={styles.cardDestinationTxtStyle}>
           Destination:
-          {' '}
           {'\n         '}
           {JSON.stringify(props.data.endName).split('"')[1].split(',')[0]}
         </Text>
@@ -52,12 +50,10 @@ const AvailableJourneyCard = (props: any) => {
         </Text>
         <Text style={styles.cardCapacityStyle}>
           MAX:
-          {' '}
           {JSON.stringify(props.data.capacity)}
         </Text>
         <Text style={styles.cardPriceTxtStyle}>
           Price:
-          {' '}
           {JSON.stringify(props.data.cost)}
         </Text>
         <Text style={styles.cardDateTxtStyle}>
@@ -69,36 +65,48 @@ const AvailableJourneyCard = (props: any) => {
           {' : '.concat(JSON.stringify(props.data.departure_datetime).split(':')[1])}
         </Text>
         {
-            JSON.stringify(props.data.Status).split('"')[1] === 'Started' && (
+          JSON.stringify(props.data.Status).split('"')[1] === 'Started'
+            && (
             <Text style={styles.cardStatusRedTxtStyle}>
-            In Progress
+              In Progress
             </Text>
             )
         }
         {
-            JSON.stringify(props.data.Status).split('"')[1] === 'Ended' && (
+          JSON.stringify(props.data.Status).split('"')[1] === 'Ended'
+            && (
             <Text style={styles.cardStatusRedTxtStyle}>
-            Finished
+              Finished
             </Text>
             )
         }
         {
-            JSON.stringify(props.data.Status).split('"')[1] === 'Cancelled' && (
+          JSON.stringify(props.data.Status).split('"')[1] === 'Cancelled'
+            && (
             <Text style={styles.cardStatusPurpleTxtStyle}>
-                Cancelled
+              Cancelled
             </Text>
             )
         }
         {
-            JSON.stringify(props.data.Status).split('"')[1] == null
+          JSON.stringify(props.data.Status).split('"')[1] === 'Pending'
             && (
             <Text style={styles.cardStatusGreenTxtStyle}>
-                Recruiting
+              Recruiting
+            </Text>
+            )
+        }
+        {
+          JSON.stringify(props.data.Status).split('"')[1] === 'Daily'
+            && (
+            <Text style={styles.cardStatusGreenTxtStyle}>
+              Daily Recruiting
             </Text>
             )
         }
       </View>
     </TouchableOpacity>
+
   );
 };
 //

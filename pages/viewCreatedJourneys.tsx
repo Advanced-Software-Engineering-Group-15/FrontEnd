@@ -1,16 +1,26 @@
 // import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useState } from 'react';
-import
-{
-  StyleSheet, Text, View, TouchableOpacity, ScrollView,
-}
-  from 'react-native';
-import PassengerJourneysCard from '../components/PassengerJourneysCard.tsx';
+import React, { useEffect, useState, useRef } from 'react';
+import {
+  StyleSheet, Text, View, TouchableOpacity, ScrollView
+} from 'react-native';
+import { IP } from '../constants';
+import PassengerJourneysCard from '../components/PassengerJourneysCard';
 
-const ViewCreatedJourneys = (props: any) => {
-  const [journeysFilterFinal, setFinalList] = useState([]);
-  const creatorData = props.navigation.state.params.creatorData;
-  const data = props.navigation.state.params.data;
+const localHost = 'http://' + IP + '/passengers'
+const journeysURL = 'http://' + IP + '/journeys'
+
+function ViewCreatedJourneys(props: any) {
+  const [journeys_filter_final, setFinalList] = useState([]);  
+  const creatorData = props.navigation.state.params.creatorData
+  const data = props.navigation.state.params.data
+  const [matchedJourneys, setMatchedJourneys] = useState([])
+  const [isLoading, setLoading] = useState(true);
+//   const username  = props.navigation.state.params.userProps.name;
+  const userProps  = props.navigation.state.params.userProps;
+//   console.log('username is: ', username)
+//   console.log('userProps is: ', userProps)
+//   console.log('passengerData: ', passengerData)  
+//   console.log('Data: ', data.length)  
 
   useEffect(() => {
     matchJourneys()
@@ -42,42 +52,47 @@ const ViewCreatedJourneys = (props: any) => {
           );
         }
       }
-    
-    if (matchingJourneys.length !== 0) {
-      for (let i = 0; i < matchingJourneys.length; i += 1) {
-        journeysFilterFinalTemp.push(
-          <View key={matchingJourneys[i].journeyID}>
-            <PassengerJourneysCard data={matchingJourneys[i]} navigation={props.navigation} />
-          </View>,
-        );
+      else {
+        journeys_filter_final_temp.push(
+          <View style={styles.container}> 
+            <Text  style={styles.titleText}>No Journeys</Text> 
+          </View>
+        )
       }
-    } else {
-      journeysFilterFinalTemp.push(
-        <View style={styles.container}>
-          <Text style={styles.titleText}>No Journeys</Text>
-        </View>,
-      );
-    }
-    setFinalList(journeysFilterFinalTemp);
-  };
+    setFinalList(journeys_filter_final_temp);  
+    console.log('matching journeys array: ', matchingJourneys)
+  }
+
+//   console.log('passenger data out of function: ', passengerData)
+//   console.log('journey data out of function: ', data)
+  console.log('data in matchedJourneys: ', matchedJourneys.length)
+
+
+  const viewJourneys = () => {
+    props.navigation.navigate('ViewJourneys', {creatorData, data, userProps});
+  }
 
   const RatingPage = () => {
     props.navigation.navigate('Ratings');
   };
 
+
   return (
+    
     <View style={styles.container}>
-      <ScrollView>
+        <ScrollView >
         <View style={styles.items}>
-          {journeysFilterFinal}
-        </View>
-        <TouchableOpacity style={styles.ViewJourneyBtn}>
-          <Text style={styles.homePageBtnText} onPress={RatingPage}>Rating Page</Text>
-        </TouchableOpacity>
-      </ScrollView>
+          {journeys_filter_final}
+        </View> 
+      
+      <TouchableOpacity style={styles.ViewJourneyBtn}>
+        <Text style={styles.homePageBtnText} onPress={RatingPage}>Rating Page</Text>
+      </TouchableOpacity>
+      </ScrollView>  
     </View>
+    
   );
-};
+}
 
 // styling
 const styles = StyleSheet.create({
@@ -98,6 +113,16 @@ const styles = StyleSheet.create({
     fontSize: 18,
     height: 30,
   },
+  MapsPageBtn: {
+    width: '40%',
+    backgroundColor: '#fb5b5a',
+    borderRadius: 25,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+    marginBottom: 10,
+  },
   ViewJourneyBtn: {
     width: '40%',
     backgroundColor: '#33FF99',
@@ -116,14 +141,14 @@ const styles = StyleSheet.create({
   },
   items: {
     flex: 1,
-    // padding: 10,
-    // marginHorizontal: 12,
+    padding: 10,
+    marginHorizontal: 12,
   },
   titleText: {
     fontSize: 25,
     fontWeight: 'bold',
     textAlign: 'center',
-    // paddingVertical: 5,
+    paddingVertical: 5,
     color: '#27ae60',
   },
 });
