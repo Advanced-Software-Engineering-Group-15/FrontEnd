@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useEffect, useState, useRef } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions, ScrollView, Button, Alert } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
@@ -8,18 +7,10 @@ import { IP } from '../constants.tsx';
 
 let url = 'http://' + IP + '/rating'
 
-=======
-import React, { useState } from 'react';
-import {
-  StyleSheet, Text, View, TouchableOpacity, ScrollView, Alert,
-} from 'react-native';
-import { Rating } from 'react-native-elements';
->>>>>>> 1e9942a4b1c23a2d6efe82584ad4a334ba56950c
 
 type RatingsComponentProps = {};
 
 const Ratings: React.FunctionComponent<RatingsComponentProps> = (props: any) => {
-<<<<<<< HEAD
   const [rate, setRating] = useState(0);
   // console.log('\n\n\nRating props:', props.navigation.state.params.userProps.userID)
   const userID = props.navigation.state.params.userProps.userID
@@ -39,29 +30,6 @@ const Ratings: React.FunctionComponent<RatingsComponentProps> = (props: any) => 
   const changeRating = (rating: number) => {
     setRating(rating)
     console.log('Rating is: ', rating)
-=======
-  const [rate, setRating] = useState({ rate: 0 });
-  const ratingConfirm = (rating: number) => {
-    setRating({ rate: rating });
-    return Alert.alert(
-      'Are your sure?',
-      `Confirm Journey Rating of: ${rating} stars`,
-      [
-        // The "Yes" button
-        {
-          text: 'Yes',
-          onPress: () => {
-            props.navigation.navigate('Home');
-          },
-        },
-        // The "No" button
-        // Does nothing but dismiss the dialog when tapped
-        {
-          text: 'No',
-        },
-      ],
-    );
->>>>>>> 1e9942a4b1c23a2d6efe82584ad4a334ba56950c
   };
 
   const alertTest = () => Alert.alert(
@@ -96,21 +64,11 @@ const Ratings: React.FunctionComponent<RatingsComponentProps> = (props: any) => 
             style={{ paddingVertical: 10 }}
           />
           <TouchableOpacity style={styles.confirmBtn}>
-<<<<<<< HEAD
           <Text 
           style={styles.confirmText}
           onPress={confirmRating}
           >Confirm</Text>
         </TouchableOpacity>
-=======
-            <Text
-              style={styles.confirmText}
-              onPress={alertTest}
-            >
-              Confirm
-            </Text>
-          </TouchableOpacity>
->>>>>>> 1e9942a4b1c23a2d6efe82584ad4a334ba56950c
           {/* <Rating
             showRating
             type="star"

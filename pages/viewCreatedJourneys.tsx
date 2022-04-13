@@ -7,20 +7,10 @@ import
   from 'react-native';
 import PassengerJourneysCard from '../components/PassengerJourneysCard.tsx';
 
-<<<<<<< HEAD
-function ViewCreatedJourneys(props: any) {
-  const [journeys_filter_final, setFinalList] = useState([]);  
-  const creatorData = props.navigation.state.params.creatorData
-  const data = props.navigation.state.params.data
-  const [matchedJourneys, setMatchedJourneys] = useState([])
-  const userProps  = props.navigation.state.params.userProps;
-
-=======
 const ViewCreatedJourneys = (props: any) => {
   const [journeysFilterFinal, setFinalList] = useState([]);
   const creatorData = props.navigation.state.params.creatorData;
   const data = props.navigation.state.params.data;
->>>>>>> 1e9942a4b1c23a2d6efe82584ad4a334ba56950c
 
   useEffect(() => {
     matchJourneys();
@@ -44,18 +34,6 @@ const ViewCreatedJourneys = (props: any) => {
           </View>,
         );
       }
-<<<<<<< HEAD
-    setFinalList(journeys_filter_final_temp);  
-    console.log('matching journeys array: ', matchingJourneys)
-  }
-
-  console.log('data in matchedJourneys: ', matchedJourneys.length)
-
-  const viewJourneys = () => {
-    props.navigation.navigate('ViewJourneys', {creatorData, data, userProps});
-  }
-
-=======
     } else {
       journeysFilterFinalTemp.push(
         <View style={styles.container}>
@@ -70,16 +48,8 @@ const ViewCreatedJourneys = (props: any) => {
     props.navigation.navigate('Ratings');
   };
 
->>>>>>> 1e9942a4b1c23a2d6efe82584ad4a334ba56950c
   return (
     <View style={styles.container}>
-<<<<<<< HEAD
-        <ScrollView >
-          <View style={styles.items}>
-            {journeys_filter_final}
-          </View> 
-      </ScrollView>  
-=======
       <ScrollView>
         <View style={styles.items}>
           {journeysFilterFinal}
@@ -88,7 +58,6 @@ const ViewCreatedJourneys = (props: any) => {
           <Text style={styles.homePageBtnText} onPress={RatingPage}>Rating Page</Text>
         </TouchableOpacity>
       </ScrollView>
->>>>>>> 1e9942a4b1c23a2d6efe82584ad4a334ba56950c
     </View>
   );
 };

@@ -46,7 +46,7 @@ const Login = (props: any) => {
       password,
     };
     console.log(data);
-    axios.post(url, {
+     axios.post(url, {
       body: JSON.stringify(data),
     }).then((response) => {
       const isLogin = response.data.isLoginSuccessful;
