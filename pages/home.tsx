@@ -215,7 +215,7 @@ function Home(props: any) {
     <ScrollView style={styles.container}>
     <View>
       <Text style={styles.welcomeText}>
-        Welcome back {'\n'}
+        {'\n'}Welcome back {'\n'}
         {username}!
       </Text>
       <TouchableOpacity style={styles.ViewJourneyBtn}>
@@ -253,9 +253,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#003f5c',
   },
   welcomeText: {
-    height: 200,
     color: 'white',
     fontSize: 25,
+    marginTop: 50,
+    marginBottom: 50,
     textAlign: 'center'
   },
   homePageBtnText: {
@@ -274,14 +275,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   ViewJourneyBtn: {
-    width: '50%',
+    width: '45%',
     backgroundColor: '#33FF99',
     borderRadius: 25,
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 15,
-    marginLeft: '24%',
+    marginLeft: '27%',
   },
   row: {
     backgroundColor: '#FFFFFF',
