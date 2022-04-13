@@ -138,11 +138,8 @@ const styles = StyleSheet.create({
   },
 
   cardUserTxtStyle: {
-    marginTop: 15,
+    marginTop: '23%',
     fontSize: 25,
-    position: 'absolute',
-    top: '40%',
-    left: '40%',
     textAlign: 'center',
     fontWeight: 'bold',
     color: '#2222FF',
