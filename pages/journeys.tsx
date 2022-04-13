@@ -251,7 +251,7 @@ const Journeys = (props: any) => {
             );
           }}
           dropdownIconPosition={"right"}
-          dropdownStyle={styles.dropdownDropdownStyle_1}
+          dropdownStyle={styles.dropdownDropdownStyle_2}
           rowStyle={styles.dropdownRowStyle_1}
           rowTextStyle={styles.dropdownRowTxtStyle_2}
         />
@@ -282,7 +282,7 @@ const Journeys = (props: any) => {
             );
           }}
           dropdownIconPosition={"right"}
-          dropdownStyle={styles.dropdownDropdownStyle_1}
+          dropdownStyle={styles.dropdownDropdownStyle_2}
           rowStyle={styles.dropdownRowStyle_1}
           rowTextStyle={styles.dropdownRowTxtStyle_2}
         />
@@ -313,7 +313,7 @@ const Journeys = (props: any) => {
             );
           }}
           dropdownIconPosition={"right"}
-          dropdownStyle={styles.dropdownDropdownStyle_1}
+          dropdownStyle={styles.dropdownDropdownStyle_2}
           rowStyle={styles.dropdownRowStyle_1}
           rowTextStyle={styles.dropdownRowTxtStyle_3}
         />
@@ -376,19 +376,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: "5%",
   },
   dropdownBtnStyle_1: {
-    width: "25%",
+    width: '25%',
     height: 40,
     backgroundColor: "#AAFFFF",
     borderRadius: 15,
     borderWidth: 1,
     borderColor: "#444",
   },
-  dropdownBtnTxtStyle_1: { fontSize: 13, color: "#555555", textAlign: "left" },
-  dropdownDropdownStyle_1: { backgroundColor: "#EFEFEF" },
+  dropdownBtnTxtStyle_1: { fontSize: 13, color: "#555555", textAlign: "left" },//Dropdown
+  dropdownDropdownStyle_1: { backgroundColor: "#EFEFEF", width: '40%'}, // Dropdwon width
   dropdownRowStyle_1: {
     backgroundColor: "#ffffff",
     borderBottomColor: "#444",
     height: 50,
+    width: '100%',
   },
   dropdownRowTxtStyle_1: {
     color: "#111111",
@@ -412,6 +413,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     paddingHorizontal: 18,
+    width: '100%',
   },
 
   dropdownBtnStyle_2: {
@@ -422,6 +424,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#444",
   },
+  dropdownDropdownStyle_2: { backgroundColor: "#EFEFEF", width: '25%'}, // Dropdwon width
   dropdownRowTxtStyle_2: {
     color: "#111111",
     textAlign: "center",
@@ -455,6 +458,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     paddingHorizontal: 18,
+    width: '2%',
   },
   dropdownRowImage: { width: 45, height: 45, resizeMode: "cover", position: 'absolute', left: 0,},
   dropdown3RowTxt: {
@@ -462,7 +466,7 @@ const styles = StyleSheet.create({
     textAlign: "right",
     fontWeight: "bold",
     fontSize: 20,
-    position: 'absolute', 
+    position: 'absolute',
     left: 50,
   },
   applyButt:{
