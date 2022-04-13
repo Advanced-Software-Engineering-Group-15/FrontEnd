@@ -1,38 +1,32 @@
 // Payment.
-import React, { useEffect, useState, useRef } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
-import { StripeProvider, CardField } from '@stripe/stripe-react-native';
-//Styling in future 
-//import './App.css';
+import React from 'react';
+import {
+  StyleSheet, Text, View,
+} from 'react-native';
+import { CardField } from '@stripe/stripe-react-native';
 
-//import StripeCheckoutButton from '../components/stripe-button/stripe.button.component';
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Public Key: pk_test_51KP6MgG8vk1CJkKgWm5D962cWUXuxyFWpSJDDpFpDLjKmcAObx9kWrxrhX8DVc36ZwEBJdndG3EGX6bLHTsDd8vc00CvpXY7pQ
-// Secret Key: sk_test_51KP6MgG8vk1CJkKgK8RZOVXfxwg7ZqOhfogwPkndU02dnHlP4YzsBuKFxDciteoYREE9mPBUQ41AlYE3zFe7Nodx00RVp2lLlK
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-const Payment = (props: any) => {
-
+const Payment = () => {
   const totalPrice = 58;
 
   return (
-    <View style= {styles.container}>
-      <Text style= {styles.welcomeText}>Stripe Payment of ${totalPrice}</Text>
+    <View style={styles.container}>
+      <Text style={styles.welcomeText}>
+        Stripe Payment of $
+        {totalPrice}
+      </Text>
       {/* <StripeCheckoutButton price={totalPrice} /> */}
-      <CardField 
-      style={styles.cardField}
-      cardStyle={{
-        borderColor: '#000000',
-        borderWidth: 1,
-        borderRadius: 8
-      }}
+      <CardField
+        style={styles.cardField}
+        cardStyle={{
+          borderColor: '#000000',
+          borderWidth: 1,
+          borderRadius: 8,
+        }}
       />
     </View>
-    
-    
+
   );
-}
+};
 
 const styles = StyleSheet.create({
 
@@ -42,17 +36,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  welcomeText:{
+  welcomeText: {
     height: 200,
-    color: "white",
-    fontSize: 25
+    color: 'white',
+    fontSize: 25,
   },
-  cardField:{
+  cardField: {
     width: '100%',
     height: 50,
     marginVertical: 30,
     justifyContent: 'center',
-    //flex: 1,
+    // flex: 1,
   },
 });
 export default Payment;
