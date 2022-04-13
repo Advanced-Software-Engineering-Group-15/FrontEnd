@@ -1,84 +1,70 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { NativeRouter, Route, Routes } from 'react-router-native';
-import { createMemoryHistory } from 'history';
-import { createAppContainer } from "react-navigation";
-import { createStackNavigator } from "react-navigation-stack";
-import "react-native-gesture-handler"
-import "react-native-screens"
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import 'react-native-gesture-handler';
+import 'react-native-screens';
 
-import Login from './pages/login';
-import Home from './pages/home';
-import Maps from './pages/maps';
-import Map from './pages/map';
-import Ratings from './pages/ratings';
-import StartJourney from './pages/startJourney';
-import JourneyInProgress from './pages/journeyInProgress';
-import EndJourney from './pages/endJourney';
-import Journeys from './pages/journeys';
-import CreateNewUserPage from './pages/CreateNewUsers';
-import Confirm_Journey from './pages/confirmJourney';
-import Payment from './pages/payment';
-import MoreOptions from './pages/moreOptions';
-import MyProfile from './pages/myProfile';
-import OriginIn from './pages/input_origin'
-import DestinationIn from './pages/input_destination'
-import JourneyType from './pages/journeyType'
-import FindJourneys from './pages/findJourneys'
-import ViewJourneys from './pages/viewPassengerJourneys'
-import ViewCreatedJourneys from './pages/viewCreatedJourneys'
+import Login from './pages/login.tsx';
+import Home from './pages/home.tsx';
+import Maps from './pages/maps.tsx';
+import Map from './pages/map.tsx';
+import Ratings from './pages/ratings.tsx';
+import StartJourney from './pages/startJourney.tsx';
+import JourneyInProgress from './pages/journeyInProgress.tsx';
+import EndJourney from './pages/endJourney.tsx';
+import Journeys from './pages/journeys.tsx';
+import CreateNewUserPage from './pages/CreateNewUsers.tsx';
+import Confirm_Journey from './pages/confirmJourney.tsx';
+import Payment from './pages/payment.tsx';
+import MoreOptions from './pages/moreOptions.tsx';
+import MyProfile from './pages/myProfile.tsx';
+import OriginIn from './pages/input_origin.tsx';
+import DestinationIn from './pages/input_destination.tsx';
+import JourneyType from './pages/journeyType.tsx';
+import FindJourneys from './pages/findJourneys.tsx';
+import ViewJourneys from './pages/viewPassengerJourneys.tsx';
+import ViewCreatedJourneys from './pages/viewCreatedJourneys.tsx';
 
 const AppNavigator = createStackNavigator(
   {
-    Login: Login,
-    Home: Home,
-    Maps: Maps,
-    Map: Map,
-    OriginIn: OriginIn,
-    DestinationIn: DestinationIn,
-    Ratings: Ratings,
-    StartJourney: StartJourney,
-    JourneyInProgress: JourneyInProgress,
-    EndJourney: EndJourney,
-    Journeys: Journeys,
-    CreateNewUserPage: CreateNewUserPage,
-    Payment: Payment,
-    MoreOptions: MoreOptions,
-    MyProfile: MyProfile,
-    Confirm_Journey:  Confirm_Journey,
-    JourneyType: JourneyType,
-    FindJourneys: FindJourneys,
-    ViewJourneys: ViewJourneys,
-    ViewCreatedJourneys: ViewCreatedJourneys,
+    Login,
+    Home,
+    Maps,
+    Map,
+    OriginIn,
+    DestinationIn,
+    Ratings,
+    StartJourney,
+    JourneyInProgress,
+    EndJourney,
+    Journeys,
+    CreateNewUserPage,
+    Payment,
+    MoreOptions,
+    MyProfile,
+    Confirm_Journey,
+    JourneyType,
+    FindJourneys,
+    ViewJourneys,
+    ViewCreatedJourneys,
   },
   {
     defaultNavigationOptions: {
       headerStyle: {
-        backgroundColor: "#006600",
+        backgroundColor: '#006600',
       },
-      headerTintColor: "#FFF",
+      headerTintColor: '#FFF',
     },
-  }
+  },
 );
-  
+
 const Navigator = createAppContainer(AppNavigator);
 
-//what is returned on screen
+// what is returned on screen
 export default function App() {
-
   return (
     <Navigator>
       <Login />
     </Navigator>
   );
-};
-
-//styling
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+}
