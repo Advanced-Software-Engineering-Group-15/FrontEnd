@@ -145,6 +145,11 @@ const Journeys = (props: any) => {
     filterData()
 
   }
+  const searchforPending = async () => {
+    setIsDaily('Pending')
+    filterData()
+
+  }
 
   const initialData = async (msg) => {
     var matchingJourneys = [];
@@ -323,14 +328,21 @@ const Journeys = (props: any) => {
         />
 
       </View>
-
+      <View style={styles.dropdownsRow}>
+      <TouchableOpacity style={styles.dailyButt} onPress={searchforPending}>
+        <Text style={styles.applyButtTxt} >One Off Trips</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.dailyButt} onPress={searchforDaily}>
+        <Text style={styles.applyButtTxt} >Daily Trips</Text>
+      </TouchableOpacity>
+      </View>
+      
+      
       <TouchableOpacity style={styles.applyButt}>
         <Text style={styles.applyButtTxt} onPress={filterData}>Apply</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.dailyButt}>
-        <Text style={styles.applyButtTxt} onPress={searchforDaily}>Daily Trips</Text>
-      </TouchableOpacity>
+      
 
       <ScrollView>       
         <View style={styles.items}>
@@ -350,6 +362,9 @@ const Journeys = (props: any) => {
 };
 
 const styles = StyleSheet.create({
+  row:{
+    flexDirection: 'row'
+  },
   container: {
     flex: 1,
   },
@@ -474,26 +489,27 @@ const styles = StyleSheet.create({
     left: 50,
   },
   applyButt:{
-    width: "24%",
+    width: "90%",
     backgroundColor: "#33FF99",
     borderRadius: 10,
     height: 30,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 5,
-    marginBottom: 10,
-    marginLeft: 290,
+    // marginTop: 5,
+    // marginBottom: 10,
+    marginLeft: 20,
+    marginRight: 10,
   },
   dailyButt:{
-    width: "24%",
-    backgroundColor: "#33FF99",
+    width: "50%",
+    backgroundColor: "#FFEEAA",
     borderRadius: 10,
     height: 30,
-    alignItems: "center",
+    alignItems: 'center',
     justifyContent: "center",
-    marginTop: 5,
-    marginBottom: 10,
-    marginLeft: 290,
+    // marginTop: 5,
+    // marginBottom: 10,
+    // marginLeft: 290,
   },
   applyButtTxt:{
     color: "#111111",
