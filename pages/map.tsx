@@ -1,131 +1,139 @@
 import * as React from 'react';
-import { StyleSheet, Text, Dimensions, View, TouchableOpacity } from 'react-native';
-import { IP } from '../constants';
+import {
+  StyleSheet, Text, Dimensions, View, TouchableOpacity,
+} from 'react-native';
 import axios from 'axios';
-import MapView, {Callout, Marker, Circle} from 'react-native-maps';
+import MapView, { Callout, Marker } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
-const GOOGLE_MAPS_APIKEY='AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8'
+import { IP } from '../constants.tsx';
 
-//These will be useful resources for adding waypoints etc+
-//https://stackoverflow.com/questions/64002670/how-to-update-google-maps-react-direction-route
-//https://stackblitz.com/edit/adding-direction-waypoint-1xyogt?file=src/MapComponent.js
+const GOOGLE_MAPS_APIKEY = 'AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8';
 
-const localHost = 'http://'+ IP +'/add-to-journey'
+// These will be useful resources for adding waypoints etc+
+// https://stackoverflow.com/questions/64002670/how-to-update-google-maps-react-direction-route
+// https://stackblitz.com/edit/adding-direction-waypoint-1xyogt?file=src/MapComponent.js
+
+const localHost = `http://${IP}/add-to-journey`;
 
 const Map = (props: any) => {
-  
   const originData = props.navigation.state.params.start;
   const destData = props.navigation.state.params.end;
   const journeyID = props.navigation.state.params.journeyID;
   const creatorID = props.navigation.state.params.creatorID;
   const userProps = props.navigation.state.params.userProps;
-  console.log('MAP PROPSSS: ', creatorID) // No username being passed atm
 
-  const origin = {latitude: Number(originData.latitude), longitude: Number(originData.longitude)};
-  const destination = {latitude: Number(destData.latitude), longitude: Number(destData.longitude)};
-  
-  const initialRegion =  {
-    latitude: Number(originData.latitude), 
+  const origin = { latitude: Number(originData.latitude), longitude: Number(originData.longitude) };
+  const destination = {
+    latitude: Number(destData.latitude),
+    longitude: Number(destData.longitude),
+  };
+
+  const initialRegion = {
+    latitude: Number(originData.latitude),
     longitude: Number(originData.longitude),
     latitudeDelta: 0.000281,
-    longitudeDelta: 0.002661
-  }       
-  let journeyEntry = {
-    journeyID : journeyID,
-    userID : userProps.userID,
-    creatorID : creatorID,
-    userProps : userProps
-  }
+    longitudeDelta: 0.002661,
+  };
+  const journeyEntry = {
+    journeyID,
+    userID: userProps.userID,
+    creatorID,
+    userProps,
+  };
   const joinJourney = () => {
-    console.log('\n\nMAP userProps: ', userProps)
-    console.log('\n\nMAP journeyEntry: ', journeyEntry)
+    console.log('\n\nMAP userProps: ', userProps);
+    console.log('\n\nMAP journeyEntry: ', journeyEntry);
 
     axios.post(localHost, {
-      body: JSON.stringify(journeyEntry)
+      body: JSON.stringify(journeyEntry),
     })
-    .then(function (response) {
-      console.log(response);
-      props.navigation.navigate("Home", { status: 'True'})
-    })
-    .catch(function (error) {
-      console.log(error);
-      props.navigation.navigate("Home", { status: 'False' })
+      .then((response) => {
+        console.log(response);
+        props.navigation.navigate('Home', { status: 'True' });
+      })
+      .catch((error) => {
+        console.log(error);
+        props.navigation.navigate('Home', { status: 'False' });
+      });
+
+    props.navigation.navigate('Home', {
     });
+  };
 
-    props.navigation.navigate("Home", {
-    })
-  }  
-
-  console.log("ORIGIN: ",origin)
-  console.log("DESTINATION: ",destination)
-  const [pin, setPin] = React.useState (origin) // Initial location
+  console.log('ORIGIN: ', origin);
+  console.log('DESTINATION: ', destination);
+  const [pin, setPin] = React.useState(origin); // Initial location
 
   return (
     <View>
-    <MapView 
-      style={styles.map} 
-      initialRegion={initialRegion}
-      showsUserLocation>
+      <MapView
+        style={styles.map}
+        initialRegion={initialRegion}
+        showsUserLocation
+      >
 
-      <Marker 
-        coordinate={pin}
-        pinColor="red"
-        draggable={true}
-        onDragStart={(e) => {
-          console.log("Drag starts", e.nativeEvent.coordinate)
-        }}
-        onDragEnd={(e) => {
-          setPin({
-            latitude: e.nativeEvent.coordinate.latitude,
-            longitude: e.nativeEvent.coordinate.longitude
-          })
-        }}>
+        <Marker
+          coordinate={pin}
+          pinColor="red"
+          draggable
+          onDragStart={(e) => {
+            console.log('Drag starts', e.nativeEvent.coordinate);
+          }}
+          onDragEnd={(e) => {
+            setPin({
+              latitude: e.nativeEvent.coordinate.latitude,
+              longitude: e.nativeEvent.coordinate.longitude,
+            });
+          }}
+        >
 
-        <Callout>
-          <Text>Current location</Text>
-        </Callout>
+          <Callout>
+            <Text>Current location</Text>
+          </Callout>
 
-      </Marker>
+        </Marker>
 
-      <Marker 
-        coordinate={destination}
-        pinColor="green"
-        draggable={true}
-        onDragStart={(e) => {
-          console.log("Drag starts", e.nativeEvent.coordinate)
-        }}
-        onDragEnd={(e) => {
-          setPin({
-            latitude: e.nativeEvent.coordinate.latitude,
-            longitude: e.nativeEvent.coordinate.longitude
-          })
-        }}>
+        <Marker
+          coordinate={destination}
+          pinColor="green"
+          draggable
+          onDragStart={(e) => {
+            console.log('Drag starts', e.nativeEvent.coordinate);
+          }}
+          onDragEnd={(e) => {
+            setPin({
+              latitude: e.nativeEvent.coordinate.latitude,
+              longitude: e.nativeEvent.coordinate.longitude,
+            });
+          }}
+        >
 
-        <Callout>
-          <Text>Current location</Text>
-        </Callout>
+          <Callout>
+            <Text>Current location</Text>
+          </Callout>
 
-      </Marker>
+        </Marker>
 
-      <MapViewDirections
-        lineCap="square"
-        lineDashPattern={[1]}
-        strokeWidth={5} 
-        strokeColor="blue"
-        origin={origin}
-        destination={destination}
-        apikey={GOOGLE_MAPS_APIKEY}/>
-        
-    </MapView>
-    <View style={styles.container}>
-    <TouchableOpacity style={styles.ViewJourneyBtn}>
+        <MapViewDirections
+          lineCap="square"
+          lineDashPattern={[1]}
+          strokeWidth={5}
+          strokeColor="blue"
+          origin={origin}
+          destination={destination}
+          apikey={GOOGLE_MAPS_APIKEY}
+        />
+
+      </MapView>
+      <View style={styles.container}>
+        <TouchableOpacity style={styles.ViewJourneyBtn}>
           <Text style={styles.homePageBtnText} onPress={joinJourney}>Join Journey</Text>
-    </TouchableOpacity>
+        </TouchableOpacity>
+      </View>
     </View>
-    </View>
-    
-  )
-}
+
+  );
+};
 
 const styles = StyleSheet.create({
 
@@ -135,18 +143,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  welcomeText:{
-    height:50,
-    color:"white",
-    fontSize:25
+  welcomeText: {
+    height: 50,
+    color: 'white',
+    fontSize: 25,
   },
   map: {
     width: (Dimensions.get('window').width),
-    height: (Dimensions.get('window').height-200),
+    height: (Dimensions.get('window').height - 200),
   },
   searchBox: {
     top: 0,
-    position: "absolute",
+    position: 'absolute',
     flex: 1,
     justifyContent: 'center',
   },
@@ -193,25 +201,25 @@ const styles = StyleSheet.create({
     fontSize: 18,
     height: 30,
   },
-  MapsPageBtn:{
-    width: "40%",
-    backgroundColor: "#fb5b5a",
+  MapsPageBtn: {
+    width: '40%',
+    backgroundColor: '#fb5b5a',
     borderRadius: 25,
     height: 50,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 20,
-    marginBottom: 10
+    marginBottom: 10,
   },
-  ViewJourneyBtn:{
-    width: "40%",
-    backgroundColor: "#33FF99",
+  ViewJourneyBtn: {
+    width: '40%',
+    backgroundColor: '#33FF99',
     borderRadius: 25,
     height: 50,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 20,
-    marginBottom: 10
+    marginBottom: 10,
   },
 });
 export default Map;

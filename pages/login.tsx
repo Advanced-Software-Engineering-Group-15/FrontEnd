@@ -1,17 +1,19 @@
 // import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { StyleSheet, Text, View, ActivityIndicator, TextInput, TouchableOpacity, Alert, Button } from 'react-native';
+import React, {
+  useState, useRef, useCallback,
+} from 'react';
+import {
+  StyleSheet, Text, View, ActivityIndicator, TextInput, TouchableOpacity, Alert, Button,
+} from 'react-native';
 import axios from 'axios';
-import { IP } from '../constants';
 
-import Recaptcha, { RecaptchaHandles } from 'react-native-recaptcha-that-works';
+import Recaptcha from 'react-native-recaptcha-that-works';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { IP } from '../constants.tsx';
 
 const Login = (props: any) => {
-
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
-  const [key, setKey] = useState('<none>');
 
   const $recaptchaSignIn = useRef(null);
   const $recaptchaSignUp = useRef(null);
@@ -38,54 +40,53 @@ const Login = (props: any) => {
 
   const SignIn = () => {
     // alert("sign in");
-    let url = 'http://' + IP + '/sign-in'
-    var data = {
-      "userName": userName,
-      "password": password
-    }
-    console.log('This is the login info:', data)
+    const url = `http://${IP}/sign-in`;
+    const data = {
+      userName,
+      password,
+    };
+    console.log(data);
     axios.post(url, {
-      body: JSON.stringify(data)
-    })
-      .then(function (response) {
-        const isLogin = response.data.isLoginSuccessful;
-        const userProps = response.data.userProps
+      body: JSON.stringify(data),
+    }).then((response) => {
+      const isLogin = response.data.isLoginSuccessful;
+      const userProps = response.data.userProps;
 
-        console.log(userProps)
-        console.log(isLogin);
-        if (isLogin) {
-          // Check for login status
-          props.navigation.navigate("Home", {
-            userProps: userProps
-          })
-        }
-        else {
-          return Alert.alert("Login details incorrect,", "please try again",
-            [
-              {
-                text: "OK",
-                onPress: () => {
-                  console.log("Login failed");
-                  console.log("LOGIN DETAILS: ", userName, password)
-                }
-              }
-            ]);
-        }
-      })
-      .catch(function (error) {
+      console.log(userProps);
+      console.log(isLogin);
+      if (isLogin) {
+        return (
+          props.navigation.navigate('Home', { userProps })
+        );
+      }
+      return Alert.alert(
+        'Login details incorrect,',
+        'please try again',
+        [
+          {
+            text: 'OK',
+            onPress: () => {
+              console.log('Login failed');
+              console.log('LOGIN DETAILS: ', userName, password);
+            },
+          },
+        ],
+      );
+    })
+      .catch((error) => {
         console.log(error);
       });
   };
 
   const SignUp = () => {
-    //console.log(input);
-    props.navigation.navigate("CreateNewUserPage")
+    // console.log(input);
+    props.navigation.navigate('CreateNewUserPage');
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.logo}>Carma</Text>
-      <View style={styles.inputView} >
+      <View style={styles.inputView}>
         <TextInput
           style={styles.inputText}
           placeholder="Username..."
@@ -93,13 +94,14 @@ const Login = (props: any) => {
           onChangeText={(text) => setUserName(text)}
         />
       </View>
-      <View style={styles.inputView} >
+      <View style={styles.inputView}>
         <TextInput
-          secureTextEntry={true}
+          secureTextEntry
           style={styles.inputText}
           placeholder="Password..."
           placeholderTextColor="#003f5c"
-          onChangeText={(text) => setPassword(text)} />
+          onChangeText={(text) => setPassword(text)}
+        />
       </View>
       <TouchableOpacity>
         <Text style={styles.forgot}>Forgot Password?</Text>
@@ -107,7 +109,8 @@ const Login = (props: any) => {
       <TouchableOpacity style={styles.loginBtn} onPress={handleOpenPressSignIn}>
         <Text
           style={styles.loginText}
-        >LOGIN
+        >
+          LOGIN
         </Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.loginBtn} onPress={handleOpenPressSignUp}>
@@ -119,25 +122,25 @@ const Login = (props: any) => {
         <Recaptcha
           ref={$recaptchaSignIn}
           lang="en"
-          headerComponent={
+          headerComponent={(
             <SafeAreaView>
               <Button title="Close" onPress={handleClosePressSignIn} />
             </SafeAreaView>
-          }
-          footerComponent={
+          )}
+          footerComponent={(
             <SafeAreaView>
               <Text>Footer here</Text>
             </SafeAreaView>
-          }
-          loadingComponent={
+          )}
+          loadingComponent={(
             <>
               <ActivityIndicator color="green" />
               <Text>Loading reCaptcha...</Text>
             </>
-          }
+          )}
           siteKey="6LejsqwZAAAAAGsmSDWH5g09dOyNoGMcanBllKPF"
           baseUrl="http://127.0.0.1"
-          size={'normal'}
+          size="normal"
           theme="light"
           style={{ backgroundColor: 'rgba(0,63,92,0.7)' }}
           onLoad={() => {}}
@@ -147,7 +150,7 @@ const Login = (props: any) => {
             console.warn(err);
           }}
           onExpire={() => alert('onExpire event')}
-          onVerify={(token) => {
+          onVerify={() => {
             // alert('onVerify event');
             SignIn();
             // setKey(token);
@@ -158,26 +161,26 @@ const Login = (props: any) => {
         <Recaptcha
           ref={$recaptchaSignUp}
           lang="en"
-          headerComponent={
+          headerComponent={(
             <SafeAreaView>
               <Button title="Close" onPress={handleClosePressSignUp} />
             </SafeAreaView>
-          }
-          footerComponent={
+          )}
+          footerComponent={(
             <SafeAreaView>
               <Text>Footer here</Text>
             </SafeAreaView>
-          }
-          loadingComponent={
+          )}
+          loadingComponent={(
             <>
               <ActivityIndicator color="green" />
               <Text>Loading reCaptcha...</Text>
             </>
-          }
+          )}
           siteKey="6LejsqwZAAAAAGsmSDWH5g09dOyNoGMcanBllKPF"
           baseUrl="http://127.0.0.1"
-          size={'normal'}
-          theme="light" //003f5c
+          size="normal"
+          theme="light" // 003f5c
           style={{ backgroundColor: 'rgba(0,63,92)' }}
           onLoad={() => {}}
           // onClose={() => alert('onClose event')}
@@ -186,7 +189,7 @@ const Login = (props: any) => {
             console.warn(err);
           }}
           onExpire={() => alert('onExpire event')}
-          onVerify={(token) => {
+          onVerify={() => {
             // alert('onVerify event');
             SignUp();
             // setKey(token);
@@ -195,9 +198,9 @@ const Login = (props: any) => {
       </SafeAreaView>
     </View>
   );
-}
+};
 
-//styling
+// styling
 const styles = StyleSheet.create({
 
   container: {
@@ -207,42 +210,42 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   logo: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
     fontSize: 50,
-    color: "#fb5b5a",
-    marginBottom: 40
+    color: '#fb5b5a',
+    marginBottom: 40,
   },
   inputView: {
-    width: "70%",
-    backgroundColor: "#465881",
+    width: '70%',
+    backgroundColor: '#465881',
     borderRadius: 25,
     height: 50,
     marginBottom: 20,
-    justifyContent: "center",
-    padding: 20
+    justifyContent: 'center',
+    padding: 20,
   },
   inputText: {
     height: 50,
-    color: "white",
-    textAlign: 'center'
+    color: 'white',
+    textAlign: 'center',
   },
   forgot: {
-    color: "white",
-    fontSize: 11
+    color: 'white',
+    fontSize: 11,
   },
   loginBtn: {
-    width: "35%",
-    backgroundColor: "#fb5b5a",
+    width: '35%',
+    backgroundColor: '#fb5b5a',
     borderRadius: 25,
     height: 50,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 40,
-    marginBottom: 10
+    marginBottom: 10,
   },
   loginText: {
-    color: "white"
-  }
+    color: 'white',
+  },
 });
 
-export default Login
+export default Login;

@@ -1,14 +1,13 @@
 // import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useState, useRef } from 'react';
-import {
-  StyleSheet, Text, View, TouchableOpacity, ScrollView
-} from 'react-native';
-import { IP } from '../constants';
-import PassengerJourneysCard from '../components/PassengerJourneysCard';
+import React, { useEffect, useState } from 'react';
+import
+{
+  StyleSheet, Text, View, TouchableOpacity, ScrollView,
+}
+  from 'react-native';
+import PassengerJourneysCard from '../components/PassengerJourneysCard.tsx';
 
-const localHost = 'http://' + IP + '/passengers'
-const journeysURL = 'http://' + IP + '/journeys'
-
+<<<<<<< HEAD
 function ViewCreatedJourneys(props: any) {
   const [journeys_filter_final, setFinalList] = useState([]);  
   const creatorData = props.navigation.state.params.creatorData
@@ -16,43 +15,36 @@ function ViewCreatedJourneys(props: any) {
   const [matchedJourneys, setMatchedJourneys] = useState([])
   const userProps  = props.navigation.state.params.userProps;
 
+=======
+const ViewCreatedJourneys = (props: any) => {
+  const [journeysFilterFinal, setFinalList] = useState([]);
+  const creatorData = props.navigation.state.params.creatorData;
+  const data = props.navigation.state.params.data;
+>>>>>>> 1e9942a4b1c23a2d6efe82584ad4a334ba56950c
 
   useEffect(() => {
-    matchJourneys()
-    
+    matchJourneys();
   }, []);
 
   const matchJourneys = async () => {
-    var matchingJourneys = [];
-    var journeys_filter_final_temp = []
-    for(var i=0; i < data.length; i++){
-        console.log('Journey ID: ', data[i]["journeyID"])
-        for(var j=0; j < creatorData.length; j++){
-            console.log('passenger Journey ID: ', creatorData[j]["journeyID"])
-            if(creatorData[j]["journeyID"] == data[i]["journeyID"]){
-                matchingJourneys.push(data[i])
-                console.log('matched')
-              }
-        else {console.log('not matched')}
+    const matchingJourneys = [];
+    const journeysFilterFinalTemp = [];
+    for (let i = 0; i < data.length; i += 1) {
+      for (let j = 0; j < creatorData.length; j += 1) {
+        if (creatorData[j].journeyID === data[i].journeyID) {
+          matchingJourneys.push(data[i]);
         }
+      }
     }
-    setMatchedJourneys(matchingJourneys)
-    if(matchingJourneys.length != 0){
-        for (let i = 0; i < matchingJourneys.length; i++){
-          journeys_filter_final_temp.push(
-            <View key={matchingJourneys[i]["journeyID"]}>
-              <PassengerJourneysCard data={matchingJourneys[i]} navigation={props.navigation}/>
-            </View>
-          );
-        }
+    if (matchingJourneys.length !== 0) {
+      for (let i = 0; i < matchingJourneys.length; i += 1) {
+        journeysFilterFinalTemp.push(
+          <View key={matchingJourneys[i].journeyID}>
+            <PassengerJourneysCard data={matchingJourneys[i]} navigation={props.navigation} />
+          </View>,
+        );
       }
-      else {
-        journeys_filter_final_temp.push(
-          <View style={styles.container}> 
-            <Text  style={styles.titleText}>No Journeys</Text> 
-          </View>
-        )
-      }
+<<<<<<< HEAD
     setFinalList(journeys_filter_final_temp);  
     console.log('matching journeys array: ', matchingJourneys)
   }
@@ -63,18 +55,43 @@ function ViewCreatedJourneys(props: any) {
     props.navigation.navigate('ViewJourneys', {creatorData, data, userProps});
   }
 
+=======
+    } else {
+      journeysFilterFinalTemp.push(
+        <View style={styles.container}>
+          <Text style={styles.titleText}>No Journeys</Text>
+        </View>,
+      );
+    }
+    setFinalList(journeysFilterFinalTemp);
+  };
+
+  const RatingPage = () => {
+    props.navigation.navigate('Ratings');
+  };
+
+>>>>>>> 1e9942a4b1c23a2d6efe82584ad4a334ba56950c
   return (
-    
     <View style={styles.container}>
+<<<<<<< HEAD
         <ScrollView >
           <View style={styles.items}>
             {journeys_filter_final}
           </View> 
       </ScrollView>  
+=======
+      <ScrollView>
+        <View style={styles.items}>
+          {journeysFilterFinal}
+        </View>
+        <TouchableOpacity style={styles.ViewJourneyBtn}>
+          <Text style={styles.homePageBtnText} onPress={RatingPage}>Rating Page</Text>
+        </TouchableOpacity>
+      </ScrollView>
+>>>>>>> 1e9942a4b1c23a2d6efe82584ad4a334ba56950c
     </View>
-    
   );
-}
+};
 
 // styling
 const styles = StyleSheet.create({
@@ -126,4 +143,3 @@ const styles = StyleSheet.create({
 });
 
 export default ViewCreatedJourneys;
-

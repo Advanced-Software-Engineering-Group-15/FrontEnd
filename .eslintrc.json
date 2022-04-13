@@ -22,7 +22,9 @@
     ],
     "rules": {
         "linebreak-style": "off",
+        "prefer-destructuring": "off",
         "react/destructuring-assignment": "off",
+        "react/function-component-definition": [2, { "namedComponents": "arrow-function" }],
         "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".ts"] }],
         "no-use-before-define": ["error", { "functions": true, "classes": true, "variables": false }] // disable the rule for variables, but enable it for functions and classes
     },
