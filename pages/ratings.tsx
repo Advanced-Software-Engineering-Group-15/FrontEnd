@@ -1,38 +1,10 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions, ScrollView, Button, Alert } from 'react-native';
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import { Rating, RatingProps } from 'react-native-elements';
-
-
+import React from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import { Rating } from 'react-native-elements';
 
 type RatingsComponentProps = {};
 
 const Ratings: React.FunctionComponent<RatingsComponentProps> = (props: any) => {
-  const [showBox, setShowBox] = useState(true);
-  const [rate, setRating] = useState({rate: 0});
-  // const ratingConfirm = (rating: number) => {
-  //   console.log('Rating is: ' + rating);
-  //   return Alert.alert(
-  //     "Are your sure?",
-  //     "Confirm Journey Rating",
-  //     [
-  //       // The "Yes" button
-  //       {
-  //         text: "Yes",
-  //         onPress: () => {
-  //           setShowBox(false);
-  //           console.log('Rating is:' + (rating-1) );
-  //         },
-  //       },
-  //       // The "No" button
-  //       // Does nothing but dismiss the dialog when tapped
-  //       {
-  //         text: "No",
-  //       },
-  //     ]
-  //   );
-  //   console.log('hello');
-  // };
 
   const ratingConfirm = (rating: number) => {
     setRating({rate: rating})
@@ -59,7 +31,6 @@ const Ratings: React.FunctionComponent<RatingsComponentProps> = (props: any) => 
         },
       ]
     );
-    console.log('hello');
   };
 
   const alertTest = (rate) => {
@@ -83,12 +54,9 @@ const Ratings: React.FunctionComponent<RatingsComponentProps> = (props: any) => 
         },
       ]
     );
-    console.log('hello');
   };
 
- 
 
-  const ratingProps = {};
   return (
     <View style={styles.container}>
       <ScrollView style={styles.viewContainer}>
@@ -111,36 +79,7 @@ const Ratings: React.FunctionComponent<RatingsComponentProps> = (props: any) => 
           style={styles.confirmText}
           onPress={alertTest}
           >Confirm</Text>
-        </TouchableOpacity>
-          {/* <Rating
-            showRating
-            type="star"
-            fractions={1}
-            startingValue={3.6}
-            readonly
-            imageSize={40}
-            onFinishRating={ratingCompleted}
-            style={{ paddingVertical: 10 }}
-          />
-          <Rating
-            type="custom"
-            ratingColor="#3498db"
-            ratingCount={10}
-            imageSize={30}
-            onFinishRating={ratingCompleted}
-            showRating
-            style={{ paddingVertical: 10 }}
-          />
-          <Rating
-            type="heart"
-            ratingCount={3}
-            fractions={2}
-            startingValue={1.57}
-            imageSize={40}
-            onFinishRating={ratingCompleted}
-            showRating
-            style={styles.rating}
-          /> */}
+        </TouchableOpacity>        
         </View>
       </ScrollView>
     </View>

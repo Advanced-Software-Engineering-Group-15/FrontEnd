@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 
 const MyProfile = (props: any) => {
     const username = props.navigation.state.params.props.navigation.state.params.username;
-    //console.log("Props: ", props);
     const consoleLog = () => {
         console.log(props)
         console.log("Username", props.navigation.state.params.props.navigation.state.params.username)

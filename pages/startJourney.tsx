@@ -1,6 +1,6 @@
 // import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, ActivityIndicator, TextInput, TouchableOpacity, Button } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
   
 
 const StartJourney = (props: any) => {

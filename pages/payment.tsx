@@ -1,9 +1,7 @@
 // Payment.
-import React, { useEffect, useState, useRef } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
-import { StripeProvider, CardField } from '@stripe/stripe-react-native';
-//Styling in future 
-//import './App.css';
+import { CardField } from '@stripe/stripe-react-native';
 
 //import StripeCheckoutButton from '../components/stripe-button/stripe.button.component';
 
@@ -29,8 +27,7 @@ const Payment = (props: any) => {
       }}
       />
     </View>
-    
-    
+     
   );
 }
 
@@ -51,8 +48,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 50,
     marginVertical: 30,
-    justifyContent: 'center',
-    //flex: 1,
+    justifyContent: 'center'
   },
 });
 export default Payment;

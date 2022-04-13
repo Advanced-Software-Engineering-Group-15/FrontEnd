@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import axios from 'axios';
 import { IP } from '../constants';
@@ -245,8 +245,6 @@ const styles = StyleSheet.create({
     marginTop:50,
     marginBottom:10
   },
-
-
 });
   
 export default CreateNewUserPage

@@ -1,12 +1,9 @@
-import React, {useState} from 'react';
-import { View, Text, ScrollView, StyleSheet, TextInput, TouchableOpacity, Button } from 'react-native';
+import React from 'react';
+import { View, ScrollView, StyleSheet, Button } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
-import NumericInput from "react-native-numeric-input";
-import axios from 'axios';
 import uuid from "react-native-uuid";
-import { IP } from '../constants';
+
 const journeyTypes = ["DRIVING", "BICYCLING", "WALKING"]
-const currencyTypes = ["€", "$", "£"]
 
 // const localHost = 'http://'+ IP +'/newJourneys'
 
@@ -14,7 +11,7 @@ const JourneyType = (props: any) => {
     const {username} = props.navigation.state.params
     const userProps = props.navigation.state.params.userProps
     console.log(userProps, userProps.userID, userProps.username)
-//   console.log('Journey info obtained', props.navigation.state.params)
+
   let journey = {
     journeyID: uuid.v1(),
     journeyType: '',
@@ -51,7 +48,6 @@ const JourneyType = (props: any) => {
         alignItems: 'center',
 
       }}>
-        {/* https://reactnativeexample.com/a-highly-customized-dropdown-select-picker-menu-for-react-native/ */}
         <SelectDropdown
           data={journeyTypes}
           onSelect={(selectedItem, index) => {
@@ -66,8 +62,6 @@ const JourneyType = (props: any) => {
             return item
           }}
         />
-
-
 
         <Button
           onPress={createJourney}

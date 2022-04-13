@@ -1,16 +1,9 @@
 // import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useState, useRef } from 'react';
-import MapView, {Callout, Marker, Circle} from 'react-native-maps';
-import MapViewDirections from 'react-native-maps-directions';
+import React from 'react';
+import MapView, { Marker } from 'react-native-maps';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
-import { GooglePlaceDetail, GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 const GOOGLE_MAPS_APIKEY='AIzaSyBigzrmp9B-yKgexQZSjtLvEiVzmdnAPy8'
-
-
-//These will be useful resources for adding waypoints etc+
-//https://stackoverflow.com/questions/64002670/how-to-update-google-maps-react-direction-route
-//https://stackblitz.com/edit/adding-direction-waypoint-1xyogt?file=src/MapComponent.js
-
 
 const OriginIn = (props: any) => {
 

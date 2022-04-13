@@ -9,11 +9,8 @@ import {
   Image
 } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
-import NumericInput from "react-native-numeric-input";
 import AvailableJourneyCard from '../components/AvailableJourneyCard';
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import axios from 'axios';
 import { IP } from '../constants';
 
 const localHost = 'http://' + IP + '/journeys'
@@ -33,18 +30,14 @@ const Journeys = (props: any) => {
 
   const origin = idealJourney.origin;
   const dest = idealJourney.dest;
-  const userProps = idealJourney.userProps;
 
-  const [Filtered, setFiltered] = useState(false);
   const [data, setData] = useState([]);
-  const [isLoading, setLoading] = useState(true);
-  const [journeysFiltered, setJourneysFiltered] = useState([]);
+
   const [methodFilter, setMethodFilter] = useState('None');
   const [maxPriceFilter, setMaxPriceFilter] = useState('None');
   const [minRateFilter, setMinRateFilter] = useState('None');
   const [distFilter, setDistFilter] = useState('None');
   const [journeys_filter_final, setFinalList] = useState([]);
-  const [journeys_filter_initial, setInitialList] = useState([]);
 
   useEffect(() => {
     getData() 
@@ -126,7 +119,6 @@ const Journeys = (props: any) => {
       }
       }
     }
-    //console.log(data)
     if(matchingJourneys.length != 0){
       for (let i = 0; i < matchingJourneys.length; i++){
         journeys_filter_final_temp.push(
@@ -181,12 +173,6 @@ const Journeys = (props: any) => {
     setFinalList(journeys_filter_final_temp);
   }
 
-
-  // const data = props.navigation.state.params //journeys received from server
-  //create array of journeys as react components, these will be rendered to screen
-  //Key is there to keep react happy, lets it identify an item by the key
-  
-  
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.titleText}>Available Journeys</Text> 
@@ -333,13 +319,6 @@ const Journeys = (props: any) => {
         </View> 
       </ScrollView>  
 
-      {/* {Filtered == true &&
-        <ScrollView>      
-          <View style={styles.items}>
-            {journeys_filter_initial}
-          </View> 
-        </ScrollView>
-      } */}
     </SafeAreaView>
   );
 };
@@ -446,7 +425,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 20,
   },
-  // try
 
   dropdown3DropdownStyle: { backgroundColor: "slategray" },
   dropdown3RowStyle: {

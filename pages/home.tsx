@@ -9,20 +9,15 @@ import { IP } from '../constants';
 const localHost = 'http://' + IP + '/passengers'
 const journeysURL = 'http://' + IP + '/journeys'
 
-
 function Home(props: any) {
   const [passengerData, setPassengerData] = useState([]);
   const [data, setData] = useState([]);
   const [creatorData, setCreatorData] = useState([]);
-  const [matchingJourneys, setMatchingJourneys] = useState([]);
-  const [isLoading, setLoading] = useState(true);
   const username  = props.navigation.state.params.userProps.name;
   const userProps  = props.navigation.state.params.userProps;
   console.log('username is: ', username)
   console.log('userProps is: ', userProps)
   const isCreator = userProps.isCreator;
-  console.log(isCreator)
-  
 
   useEffect(() => {
     getData()
@@ -91,17 +86,13 @@ function Home(props: any) {
   
   const initialPassengerData = async (msg) => {
     var matchingJourneys = [];
-    // console.log("asdasdasd!")
-    // console.log('passenger journeys', msg)
-    var journeys_filter_final_temp = [];
+ 
     for( var i = 0; i < msg.length; i++){ 
       if(userProps.userID == msg[i]["userID"]){
             matchingJourneys.push(msg[i])
           }
         }
-    //console.log(data)
     if(matchingJourneys.length != 0){
-     // console.log('Matching Journeys: ', matchingJourneys)
       setPassengerData(matchingJourneys)
     }
     else {
@@ -111,12 +102,6 @@ function Home(props: any) {
 
   const initialData = async (msg) => {
     var matchingJourneys = [];
-    // console.log("asdasdasd!")
-    // console.log('journeys list', msg.length)
-    // console.log('passengerJourneys: ', passengerData)
-    // console.log('passengerData', passengerData)
-    // console.log('Data: ', data)
-    var journeys_filter_final_temp = [];
     for( var i = 0; i < msg.length; i++){
       for (var j = 0; j < passengerData.length; j++) {
       if(passengerData[j]["journeyID"] == msg[i]["journeyID"]){
@@ -137,22 +122,18 @@ function Home(props: any) {
 
   const initialCreatorData = async (msg) => {
     var matchingJourneys = [];
-    // console.log("asdasdasd!")
-    // console.log('passenger journeys', msg)
+
     var journeys_filter_final_temp = [];
     for( var i = 0; i < msg.length; i++){ 
       if(userProps.userID == msg[i]["creatorID"]){
             matchingJourneys.push(msg[i])
           }
         }
-    //console.log(data)
     if(matchingJourneys.length != 0){
-     // console.log('Matching Journeys: ', matchingJourneys)
       setCreatorData(matchingJourneys)
     }
     else {
       setCreatorData([])
-     // console.log('no matching journeys')
     }
   }
 
@@ -216,7 +197,6 @@ function Home(props: any) {
       <TouchableOpacity style={styles.ViewJourneyBtn}>
         <Text style={styles.homePageBtnText} onPress={moreOptions}>More Options</Text>
       </TouchableOpacity>
-<<<<<<< HEAD
 
       { isCreator == "true" &&
         <TouchableOpacity style={styles.ViewJourneyBtn}>
@@ -224,11 +204,6 @@ function Home(props: any) {
         </TouchableOpacity>
         }
 
-=======
-      <TouchableOpacity style={styles.ViewJourneyBtn}>
-        <Text style={styles.homePageBtnText} onPress={journeyInProgress}>Journey In Progress</Text>
-      </TouchableOpacity>
->>>>>>> origin/master
     </View>
     </ScrollView>
   );

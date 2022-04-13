@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { View, Text, ScrollView, StyleSheet, TextInput, TouchableOpacity, Button } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import NumericInput from "react-native-numeric-input";
 import axios from 'axios';
@@ -15,7 +15,6 @@ const capacityTypes = [1,2,3,4,5,6,7,8,9,10]
 const localHost = 'http://'+ IP +'/newJourneys'
 
 const App = (props: any) => {
-  //const username = props.navigation.state.params.username
   const inputProps = props.navigation.state.params;
   const startLoc = inputProps.origin_location;
   const destLoc = inputProps.destination_location;
@@ -24,7 +23,6 @@ const App = (props: any) => {
   const journeyType = inputProps.journeyType;
   const userProps = inputProps.userProps;
   console.log(userProps.username, userProps.userID)
-  //const [globalType, setGlobalType] = React.useState ("")
   console.log('Journey info obtained', props.navigation.state.params)
   console.log('userID', userProps.userID)
   let journey = {
@@ -72,14 +70,7 @@ const App = (props: any) => {
     showMode('time');
   };
 
-
-
-  // console.log(date)
-
-
   const createJourney = () => {
-
-    // console.log(journey);
    
     var data = {
       "journeyID": journey.journeyID,
@@ -115,9 +106,6 @@ const App = (props: any) => {
       <View style={styles.items}>
         <Text style={styles.cardDestinationTxtStyle}>Start of Journey:</Text>
         <Text>{startInfo.data.description}</Text>
-        {/* <TextInput
-          style={styles.input}
-          onChangeText={text => journey.journeyStart.name = text}/> */}
         <Text style = {styles.cardDepatureTxtStyle}>End of Journey:</Text>
         <Text>{destInfo.data.description}</Text>
 
@@ -195,16 +183,7 @@ const App = (props: any) => {
           </ScrollView>
         }
         
-
-
-
         <View style={styles.container}>
-      {/* <View>
-        <Button onPress={showDatepicker} title="Show date picker!" />
-      </View>
-      <View>
-        <Button onPress={showTimepicker} title="Show time picker!" />
-      </View> */}
 
       <TouchableOpacity style={styles.loginBtn} onPress={showDatepicker}>
           <Text 
@@ -233,9 +212,7 @@ const App = (props: any) => {
       )}
     </View>
     <View style={styles.container}>
-    
-    
-  
+     
     <TouchableOpacity style={styles.loginBtn} onPress={createJourney}>
           <Text 
             style={styles.loginText}
@@ -243,19 +220,10 @@ const App = (props: any) => {
           </Text>
        </TouchableOpacity>
     </View>
-        {/* <Button
-          onPress={createJourney}
-          title="Submit Journey"
-          color="#841584"
-          accessibilityLabel="Submit your journey to be created"
-        /> */}
-      
-      
-    </ScrollView>
 
+    </ScrollView>
   
   );
-
 
 }
 const styles = StyleSheet.create({
