@@ -176,16 +176,17 @@ function Home(props: any) {
     // getPassengerData() 
     // getCreatorData() 
   }
-  const viewJourneysPage = () => {
-    props.navigation.navigate('ViewJourneys', {passengerData: passengerData,data : data, userProps: userProps});
-  }
+  // const viewJourneysPage = () => {
+  //   props.navigation.navigate('ViewJourneys', {passengerData: passengerData,data : data, userProps: userProps});
+  // }
 
-  const viewCreatedJourneysPage = () => {
-    props.navigation.navigate('ViewCreatedJourneys', {creatorData: creatorData, data : data, userProps: userProps});
-  }
+  // const viewCreatedJourneysPage = () => {
+  //   props.navigation.navigate('ViewCreatedJourneys', {creatorData: creatorData, data : data, userProps: userProps});
+  // }
 
   const RatingPage = () => {
-    props.navigation.navigate('Ratings');
+    //props.navigation.navigate('Ratings');
+    console.log(userProps)
   };
 
   const payment = () => {
@@ -208,6 +209,10 @@ function Home(props: any) {
     props.navigation.navigate('MoreOptions', { username }); 
   };
 
+  const myProfile = () => {
+    props.navigation.navigate("MyProfile", { passengerData: passengerData,data : data, userProps: userProps, creatorData: creatorData, isCreator: isCreator  })
+  }
+
   const journeyInProgress = () => {
     props.navigation.navigate('JourneyInProgress', { userProps });
   };
@@ -221,12 +226,12 @@ function Home(props: any) {
       <TouchableOpacity style={styles.ViewJourneyBtn}>
         <Text style={styles.homePageBtnText} onPress={RatingPage}>Rating Page</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.ViewJourneyBtn} onPress={viewJourneysPage}>
+      {/* <TouchableOpacity style={styles.ViewJourneyBtn} onPress={viewJourneysPage}>
         <Text style={styles.homePageBtnText} >Journeys</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.ViewJourneyBtn} onPress={viewCreatedJourneysPage}>
         <Text style={styles.homePageBtnText} >Created Journeys</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <TouchableOpacity style={styles.ViewJourneyBtn}>
         <Text style={styles.homePageBtnText} onPress={journeys}>Search Journeys</Text>
       </TouchableOpacity>
@@ -237,7 +242,7 @@ function Home(props: any) {
         <Text style={styles.homePageBtnText} onPress={payment}>Payment Page</Text>
       </TouchableOpacity> */}
       <TouchableOpacity style={styles.ViewJourneyBtn}>
-        <Text style={styles.homePageBtnText} onPress={moreOptions}>More Options</Text>
+        <Text style={styles.homePageBtnText} onPress={myProfile}>My Profile</Text>
       </TouchableOpacity>
 
       { isCreator == "true" &&

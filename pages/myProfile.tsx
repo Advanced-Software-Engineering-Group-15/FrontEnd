@@ -2,12 +2,19 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 
 const MyProfile = (props: any) => {
-    const username = props.navigation.state.params.props.navigation.state.params.username;
+    const userProps = props.navigation.state.params.userProps;
+    const username = userProps.username;
+    const data = props.navigation.state.params.data;
+    const passengerData = props.navigation.state.params.passengerData;
+    const creatorData = props.navigation.state.params.creatorData;
+    const isCreator = props.navigation.state.params.isCreator;
     //console.log("Props: ", props);
-    const consoleLog = () => {
-        console.log(props)
-        console.log("Username", props.navigation.state.params.props.navigation.state.params.username)
-       
+    const viewJourneysPage = () => {
+        props.navigation.navigate('ViewJourneys', {passengerData: passengerData,data : data, userProps: userProps});
+      }
+    
+      const viewCreatedJourneysPage = () => {
+        props.navigation.navigate('ViewCreatedJourneys', {creatorData: creatorData, data : data, userProps: userProps});
       }
     return (
         <View style={styles.container}>
@@ -15,24 +22,31 @@ const MyProfile = (props: any) => {
                <Image style={styles.Image}
                source={require('../assets/blank-profile-picture.png')}
                />
-               <View>
+               <View style={styles.containerCentre}>
                    <Text style={styles.Number}>{username}</Text>
                </View>
-               <View>
-                   <Text style={styles.Number}>9</Text>
+               { isCreator &&
+               <View style={styles.containerCentre}>
+                   <Text style={styles.Number}>{creatorData.length}</Text>
                    <Text style={styles.HeadingName}>Trips Created</Text>
                </View>
-               <View>
-                   <Text style={styles.Number}>22</Text>
+                }
+               <View style={styles.containerCentre}>
+                   <Text style={styles.Number}>{passengerData.length}</Text>
                    <Text style={styles.HeadingName}>Trips Joined</Text>
                </View>
-               <TouchableOpacity
-                    onPress={consoleLog}>
-                   <View>
-                        <Text>Console Log</Text>
-                   </View>
-                </TouchableOpacity>
+               
            </View>
+           <View style={styles.containerCentre}>
+                <TouchableOpacity style={styles.ViewJourneyBtn} onPress={viewJourneysPage}>
+                    <Text style={styles.homePageBtnText} >Journeys</Text>
+                </TouchableOpacity>
+                { isCreator &&
+                <TouchableOpacity style={styles.ViewJourneyBtn} onPress={viewCreatedJourneysPage}>
+                    <Text style={styles.homePageBtnText} >Created Journeys</Text>
+                </TouchableOpacity>
+                }
+            </View>
         </View>
     )
 }
@@ -46,11 +60,18 @@ const styles = StyleSheet.create({
         height: '100%',
         padding:10,
     },
+    containerCentre: {
+        backgroundColor: 'white',
+        padding:10,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     TopContainer: {
-        flexDirection: 'row',
+        flexDirection: 'column',
         alignItems: 'center',
         marginTop: 20,
         marginLeft: 10,
+        justifyContent: 'center',
     },
     Image: {
         height: 60,
@@ -70,4 +91,19 @@ const styles = StyleSheet.create({
         color: 'grey',
         paddingHorizontal:10,
     },
+    ViewJourneyBtn: {
+        width: '40%',
+        backgroundColor: '#33FF99',
+        borderRadius: 25,
+        height: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 20,
+        marginBottom: 10,
+      },
+      homePageBtnText: {
+        color: '#000000',
+        fontSize: 18,
+        height: 30,
+      },
 })
