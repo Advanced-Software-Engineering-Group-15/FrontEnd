@@ -72,7 +72,7 @@ function ViewJourneys(props: any) {
   }
 
   const RatingPage = () => {
-    props.navigation.navigate('Ratings');
+    props.navigation.navigate('Ratings', {userProps});
   };
 
 

@@ -14,13 +14,8 @@ function ViewCreatedJourneys(props: any) {
   const creatorData = props.navigation.state.params.creatorData
   const data = props.navigation.state.params.data
   const [matchedJourneys, setMatchedJourneys] = useState([])
-  const [isLoading, setLoading] = useState(true);
-//   const username  = props.navigation.state.params.userProps.name;
   const userProps  = props.navigation.state.params.userProps;
-//   console.log('username is: ', username)
-//   console.log('userProps is: ', userProps)
-//   console.log('passengerData: ', passengerData)  
-//   console.log('Data: ', data.length)  
+
 
   useEffect(() => {
     matchJourneys()
@@ -62,19 +57,11 @@ function ViewCreatedJourneys(props: any) {
     console.log('matching journeys array: ', matchingJourneys)
   }
 
-//   console.log('passenger data out of function: ', passengerData)
-//   console.log('journey data out of function: ', data)
   console.log('data in matchedJourneys: ', matchedJourneys.length)
-
 
   const viewJourneys = () => {
     props.navigation.navigate('ViewJourneys', {creatorData, data, userProps});
   }
-
-  const RatingPage = () => {
-    props.navigation.navigate('Ratings');
-  };
-
 
   return (
     
@@ -83,10 +70,6 @@ function ViewCreatedJourneys(props: any) {
           <View style={styles.items}>
             {journeys_filter_final}
           </View> 
-      
-          <TouchableOpacity style={styles.ViewJourneyBtn}>
-            <Text style={styles.homePageBtnText} onPress={RatingPage}>Rating Page</Text>
-          </TouchableOpacity>
       </ScrollView>  
     </View>
     

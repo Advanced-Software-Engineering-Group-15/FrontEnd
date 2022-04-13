@@ -43,7 +43,7 @@ const Login = (props: any) => {
       "userName": userName,
       "password": password
     }
-    console.log(data)
+    console.log('This is the login info:', data)
     axios.post(url, {
       body: JSON.stringify(data)
     })

@@ -26,6 +26,12 @@ const AvailableJourneyCard = (props: any) => {
             userProps,
         })
     }  
+
+    if (props.data.departure_datetime == null){
+        console.log('fixed error')
+        props.data.departure_datetime = 'Unknown'
+    }
+
       
     return (
         <TouchableOpacity onPress={openInMap}>
