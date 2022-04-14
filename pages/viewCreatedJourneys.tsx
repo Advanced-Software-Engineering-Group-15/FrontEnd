@@ -68,13 +68,6 @@ function ViewCreatedJourneys(props: any) {
   console.log('data in matchedJourneys: ', matchedJourneys.length)
 
 
-  const viewJourneys = () => {
-    props.navigation.navigate('ViewJourneys', {creatorData, data, userProps});
-  }
-
-  const RatingPage = () => {
-    props.navigation.navigate('Ratings');
-  };
 
 
   return (
@@ -84,10 +77,6 @@ function ViewCreatedJourneys(props: any) {
         <View style={styles.items}>
           {journeys_filter_final}
         </View> 
-      
-      <TouchableOpacity style={styles.ViewJourneyBtn}>
-        <Text style={styles.homePageBtnText} onPress={RatingPage}>Rating Page</Text>
-      </TouchableOpacity>
       </ScrollView>  
     </View>
     

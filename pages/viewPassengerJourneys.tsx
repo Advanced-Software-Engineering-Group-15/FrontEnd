@@ -43,9 +43,6 @@ const ViewJourneys = (props: any) => {
     setFinalList(journeysFilterFinalTemp);
   };
 
-  const RatingPage = () => {
-    props.navigation.navigate('Ratings');
-  };
 
   return (
     <View style={styles.container}>
@@ -55,9 +52,6 @@ const ViewJourneys = (props: any) => {
           {journeysFilterFinal}
         </View>
 
-        <TouchableOpacity style={styles.ViewJourneyBtn}>
-          <Text style={styles.homePageBtnText} onPress={RatingPage}>Rating Page</Text>
-        </TouchableOpacity>
       </ScrollView>
     </View>
 
