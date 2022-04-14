@@ -45,38 +45,33 @@ const Login = (props: any) => {
       userName,
       password,
     };
-    console.log(data);
     axios.post(url, {
       body: JSON.stringify(data),
     }).then((response) => {
       const isLogin = response.data.isLoginSuccessful;
       const userProps = response.data.userProps;
 
-        console.log(userProps)
-        console.log(isLogin);
-        if (isLogin) {
-          // Check for login status
-          props.navigation.navigate("Home", {
-            userProps: userProps,
-            signIn: true
+      if (isLogin) {
+        // Check for login status
+        return (
+          props.navigation.navigate('Home', {
+            userProps,
+            signIn: true,
           })
-        }
-        else {
-          return Alert.alert("Login details incorrect,", "please try again",
-            [
-              {
-                text: "OK",
-                onPress: () => {
-                  console.log("Login failed");
-                  console.log("LOGIN DETAILS: ", userName, password)
-                }
-              }
-            ]);
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+        );
+      }
+      return Alert.alert(
+        'Login details incorrect,',
+        'please try again',
+        [
+          {
+            text: 'OK',
+          },
+        ],
+      );
+    }).catch((error) => {
+      console.log(error);
+    });
   };
 
   const SignUp = () => {

@@ -1,11 +1,11 @@
 import * as React from 'react';
 import {
-  StyleSheet, Text, Dimensions, View, TouchableOpacity, ScrollView  
+  StyleSheet, Text, Dimensions, View, TouchableOpacity, ScrollView,
 } from 'react-native';
 import axios from 'axios';
 import MapView, { Callout, Marker } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
-import { IP, GOOGLE_MAPS_APIKEY } from '../constants';
+import { IP, GOOGLE_MAPS_APIKEY } from '../constants.tsx';
 
 const localHost = `http://${IP}/add-to-journey`;
 
@@ -60,72 +60,71 @@ const Map = (props: any) => {
 
   return (
     <ScrollView keyboardShouldPersistTaps="handled">
-    <View>
-      <MapView
-        style={styles.map}
-        initialRegion={initialRegion}
-        showsUserLocation
-      >
-
-        <Marker
-          coordinate={pin}
-          pinColor="red"
-          draggable
-          onDragStart={(e) => {
-            console.log('Drag starts', e.nativeEvent.coordinate);
-          }}
-          onDragEnd={(e) => {
-            setPin({
-              latitude: e.nativeEvent.coordinate.latitude,
-              longitude: e.nativeEvent.coordinate.longitude,
-            });
-          }}
+      <View>
+        <MapView
+          style={styles.map}
+          initialRegion={initialRegion}
+          showsUserLocation
         >
+          <Marker
+            coordinate={pin}
+            pinColor="red"
+            draggable
+            onDragStart={(e) => {
+              console.log('Drag starts', e.nativeEvent.coordinate);
+            }}
+            onDragEnd={(e) => {
+              setPin({
+                latitude: e.nativeEvent.coordinate.latitude,
+                longitude: e.nativeEvent.coordinate.longitude,
+              });
+            }}
+          >
 
-          <Callout>
-            <Text>Current location</Text>
-          </Callout>
+            <Callout>
+              <Text>Current location</Text>
+            </Callout>
 
-        </Marker>
+          </Marker>
 
-        <Marker
-          coordinate={destination}
-          pinColor="green"
-          draggable
-          onDragStart={(e) => {
-            console.log('Drag starts', e.nativeEvent.coordinate);
-          }}
-          onDragEnd={(e) => {
-            setPin({
-              latitude: e.nativeEvent.coordinate.latitude,
-              longitude: e.nativeEvent.coordinate.longitude,
-            });
-          }}
-        >
+          <Marker
+            coordinate={destination}
+            pinColor="green"
+            draggable
+            onDragStart={(e) => {
+              console.log('Drag starts', e.nativeEvent.coordinate);
+            }}
+            onDragEnd={(e) => {
+              setPin({
+                latitude: e.nativeEvent.coordinate.latitude,
+                longitude: e.nativeEvent.coordinate.longitude,
+              });
+            }}
+          >
 
-          <Callout>
-            <Text>Current location</Text>
-          </Callout>
+            <Callout>
+              <Text>Current location</Text>
+            </Callout>
 
-        </Marker>
+          </Marker>
 
-        <MapViewDirections
-          lineCap="square"
-          lineDashPattern={[1]}
-          strokeWidth={5}
-          strokeColor="blue"
-          origin={origin}
-          destination={destination}
-          apikey={GOOGLE_MAPS_APIKEY}
-        />
+          <MapViewDirections
+            lineCap="square"
+            lineDashPattern={[1]}
+            strokeWidth={5}
+            strokeColor="blue"
+            origin={origin}
+            destination={destination}
+            apikey={GOOGLE_MAPS_APIKEY}
+          />
 
-      </MapView>
-      <View style={styles.container}>
-        <TouchableOpacity style={styles.ViewJourneyBtn} onPress={joinJourney}>
-          <Text style={styles.homePageBtnText}>Join Journey</Text>
-        </TouchableOpacity>
+        </MapView>
+        <View style={styles.container}>
+          <TouchableOpacity style={styles.ViewJourneyBtn} onPress={joinJourney}>
+            <Text style={styles.homePageBtnText}>Join Journey</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
     </ScrollView>
 
   );
