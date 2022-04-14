@@ -36,7 +36,7 @@ function ViewCreatedJourneys(props: any) {
     if(matchingJourneys.length != 0){
         for (let i = 0; i < matchingJourneys.length; i++){
           journeys_filter_final_temp.push(
-            <View key={matchingJourneys[i]["journeyID"]}>
+            <View key={matchingJourneys[i]["journeyID"]+(i.toString())}>
               <PassengerJourneysCard data={matchingJourneys[i]} navigation={props.navigation}/>
             </View>
           );
