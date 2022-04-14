@@ -1,98 +1,68 @@
 // import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useState, useRef } from 'react';
-import {
-  StyleSheet, Text, View, TouchableOpacity, ScrollView
+import React, { useEffect, useState } from 'react';
+import
+{
+  StyleSheet, Text, View, TouchableOpacity, ScrollView,
 } from 'react-native';
-import { IP } from '../constants';
-import PassengerJourneysCard from '../components/PassengerJourneysCard';
+import PassengerJourneysCard from '../components/PassengerJourneysCard.tsx';
 
-const localHost = 'http://' + IP + '/passengers'
-const journeysURL = 'http://' + IP + '/journeys'
-
-function ViewJourneys(props: any) {
-    const [journeys_filter_final, setFinalList] = useState([]);  
-  const passengerData = props.navigation.state.params.passengerData
-  const data = props.navigation.state.params.data
-  const [matchedJourneys, setMatchedJourneys] = useState([])
-  const [isLoading, setLoading] = useState(true);
-//   const username  = props.navigation.state.params.userProps.name;
-  const userProps  = props.navigation.state.params.userProps;
-//   console.log('username is: ', username)
-//   console.log('userProps is: ', userProps)
-//   console.log('passengerData: ', passengerData)  
-//   console.log('Data: ', data.length)  
+const ViewJourneys = (props: any) => {
+  const [journeysFilterFinal, setFinalList] = useState([]);
+  const passengerData = props.navigation.state.params.passengerData;
+  const data = props.navigation.state.params.data;
 
   useEffect(() => {
-    matchJourneys()
-    
+    matchJourneys();
   }, []);
 
   const matchJourneys = async () => {
-    var matchingJourneys = [];
-    var journeys_filter_final_temp = []
-    for(var i=0; i < data.length; i++){
-        console.log('Journey ID: ', data[i]["journeyID"])
-        for(var j=0; j < passengerData.length; j++){
-            console.log('passenger Journey ID: ', passengerData[j]["journeyID"])
-            if(passengerData[j]["journeyID"] == data[i]["journeyID"]){
-                matchingJourneys.push(data[i])
-                console.log('matched')
-              }
-        else {console.log('not matched')}
+    const matchingJourneys = [];
+    const journeysFilterFinalTemp = [];
+    for (let i = 0; i < data.length; i += 1) {
+      for (let j = 0; j < passengerData.length; j += 1) {
+        if (passengerData[j].journeyID === data[i].journeyID) {
+          matchingJourneys.push(data[i]);
         }
+      }
     }
-    setMatchedJourneys(matchingJourneys)
-    if(matchingJourneys.length != 0){
-        for (let i = 0; i < matchingJourneys.length; i++){
-          journeys_filter_final_temp.push(
-            <View key={matchingJourneys[i]["journeyID"]}>
-              <PassengerJourneysCard data={matchingJourneys[i]} navigation={props.navigation}/>
-            </View>
-          );
-        }
+    if (matchingJourneys.length !== 0) {
+      for (let i = 0; i < matchingJourneys.length; i += 1) {
+        journeysFilterFinalTemp.push(
+          <View key={matchingJourneys[i].journeyID}>
+            <PassengerJourneysCard data={matchingJourneys[i]} navigation={props.navigation} />
+          </View>,
+        );
       }
-      else {
-        journeys_filter_final_temp.push(
-          <View style={styles.container}> 
-            <Text  style={styles.titleText}>No Journeys</Text> 
-          </View>
-        )
-      }
-    setFinalList(journeys_filter_final_temp);  
-    console.log('matching journeys array: ', matchingJourneys)
-  }
-
-//   console.log('passenger data out of function: ', passengerData)
-//   console.log('journey data out of function: ', data)
-  console.log('data in matchedJourneys: ', matchedJourneys.length)
-
-
-  const viewJourneys = () => {
-    props.navigation.navigate('ViewJourneys', {passengerData, data, userProps});
-  }
+    } else {
+      journeysFilterFinalTemp.push(
+        <View style={styles.container}>
+          <Text style={styles.titleText}>No Journeys</Text>
+        </View>,
+      );
+    }
+    setFinalList(journeysFilterFinalTemp);
+  };
 
   const RatingPage = () => {
     props.navigation.navigate('Ratings');
   };
 
-
   return (
     <View style={styles.container}>
-    <ScrollView>
-    
-             
+      <ScrollView>
+
         <View style={styles.items}>
-          {journeys_filter_final}
-        </View> 
-       
-      <TouchableOpacity style={styles.ViewJourneyBtn}>
-        <Text style={styles.homePageBtnText} onPress={RatingPage}>Rating Page</Text>
-      </TouchableOpacity>
+          {journeysFilterFinal}
+        </View>
+
+        <TouchableOpacity style={styles.ViewJourneyBtn}>
+          <Text style={styles.homePageBtnText} onPress={RatingPage}>Rating Page</Text>
+        </TouchableOpacity>
       </ScrollView>
     </View>
-     
+
   );
-}
+};
 
 // styling
 const styles = StyleSheet.create({
@@ -154,4 +124,3 @@ const styles = StyleSheet.create({
 });
 
 export default ViewJourneys;
-

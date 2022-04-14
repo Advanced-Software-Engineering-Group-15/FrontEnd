@@ -1,5 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet, Text, View, Image, TouchableOpacity
+} from 'react-native';
+
+const img = require('../assets/blank-profile-picture.png');
 
 const MyProfile = (props: any) => {
     const userProps = props.navigation.state.params.userProps;
@@ -48,10 +52,10 @@ const MyProfile = (props: any) => {
                 }
             </View>
         </View>
-    )
-}
+  );
+};
 
-export default MyProfile
+export default MyProfile;
 
 const styles = StyleSheet.create({
     container: {

@@ -220,27 +220,12 @@ function Home(props: any) {
     <ScrollView style={styles.scrollBackground}>
     <View style={styles.container}>
       <Text style={styles.welcomeText}>
-        Welcome back {'\n'}
+        {'\n'}Welcome back {'\n'}
         {username}!
       </Text>
-      {/* <TouchableOpacity style={styles.ViewJourneyBtn}>
-        <Text style={styles.homePageBtnText} onPress={RatingPage}>Rating Page</Text>
-      </TouchableOpacity> */}
-      {/* <TouchableOpacity style={styles.ViewJourneyBtn} onPress={viewJourneysPage}>
-        <Text style={styles.homePageBtnText} >Journeys</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.ViewJourneyBtn} onPress={viewCreatedJourneysPage}>
-        <Text style={styles.homePageBtnText} >Created Journeys</Text>
-      </TouchableOpacity> */}
       <TouchableOpacity style={styles.ViewJourneyBtn}>
         <Text style={styles.homePageBtnText} onPress={journeys}>Search Journeys</Text>
       </TouchableOpacity>
-      {/* <TouchableOpacity style={styles.ViewJourneyBtn}>
-        <Text style={styles.homePageBtnText} onPress={refresh}>Refresh</Text>
-      </TouchableOpacity> */}
-      {/* <TouchableOpacity style={styles.ViewJourneyBtn}>
-        <Text style={styles.homePageBtnText} onPress={payment}>Payment Page</Text>
-      </TouchableOpacity> */}
       <TouchableOpacity style={styles.ViewJourneyBtn}>
         <Text style={styles.homePageBtnText} onPress={myProfile}>My Profile</Text>
       </TouchableOpacity>
@@ -270,9 +255,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#003f5c',
   },
   welcomeText: {
-    height: 200,
     color: 'white',
     fontSize: 25,
+    marginTop: 50,
+    marginBottom: 50,
     textAlign: 'center'
   },
   homePageBtnText: {
@@ -291,14 +277,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   ViewJourneyBtn: {
-    width: '40%',
+    width: '45%',
     backgroundColor: '#33FF99',
     borderRadius: 25,
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 20,
-    marginBottom: 10,
+    marginTop: 15,
+    marginLeft: '27%',
   },
   row: {
     backgroundColor: '#FFFFFF',

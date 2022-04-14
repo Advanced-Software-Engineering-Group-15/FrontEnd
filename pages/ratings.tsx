@@ -77,35 +77,6 @@ const Ratings: React.FunctionComponent<RatingsComponentProps> = (props: any) => 
           
           >Confirm</Text>
         </TouchableOpacity>
-          {/* <Rating
-            showRating
-            type="star"
-            fractions={1}
-            startingValue={3.6}
-            readonly
-            imageSize={40}
-            onFinishRating={ratingCompleted}
-            style={{ paddingVertical: 10 }}
-          />
-          <Rating
-            type="custom"
-            ratingColor="#3498db"
-            ratingCount={10}
-            imageSize={30}
-            onFinishRating={ratingCompleted}
-            showRating
-            style={{ paddingVertical: 10 }}
-          />
-          <Rating
-            type="heart"
-            ratingCount={3}
-            fractions={2}
-            startingValue={1.57}
-            imageSize={40}
-            onFinishRating={ratingCompleted}
-            showRating
-            style={styles.rating}
-          /> */}
         </View>
       </ScrollView>
     </View>
