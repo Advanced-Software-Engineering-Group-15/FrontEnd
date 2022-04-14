@@ -6,7 +6,6 @@ import 'react-native-screens';
 
 import Login from './pages/login.tsx';
 import Home from './pages/home.tsx';
-import Maps from './pages/maps.tsx';
 import Map from './pages/map.tsx';
 import Ratings from './pages/ratings.tsx';
 import StartJourney from './pages/startJourney.tsx';
@@ -29,7 +28,6 @@ const AppNavigator = createStackNavigator(
   {
     Login,
     Home,
-    Maps,
     Map,
     OriginIn,
     DestinationIn,

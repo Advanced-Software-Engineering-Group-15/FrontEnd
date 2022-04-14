@@ -1,7 +1,7 @@
 // import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState, useRef } from 'react';
 import {
-  StyleSheet, Text, View, TouchableOpacity, RefreshControlBase,
+  StyleSheet, Text, View, TouchableOpacity
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { IP } from '../constants';
@@ -14,7 +14,6 @@ function Home(props: any) {
   const [passengerData, setPassengerData] = useState([]);
   const [data, setData] = useState([]);
   const [creatorData, setCreatorData] = useState([]);
-  const [matchingJourneys, setMatchingJourneys] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const username  = props.navigation.state.params.userProps.name;
   const userProps  = props.navigation.state.params.userProps;
@@ -58,9 +57,6 @@ function Home(props: any) {
       setLoading(false)
     }
   }
-  // console.log('passenger data out of function: ', passengerData)
-  // console.log('creator data out of function: ', creatorData.length)
-  // console.log('journey data out of function: ', data[0])
 
   const getData = async () => {
     try {
@@ -104,118 +100,70 @@ function Home(props: any) {
   
   const initialPassengerData = async (msg) => {
     var matchingJourneys = [];
-    // console.log("asdasdasd!")
-    // console.log('passenger journeys', msg)
-    var journeys_filter_final_temp = [];
     for( var i = 0; i < msg.length; i++){ 
       if(userProps.userID == msg[i]["userID"]){
             matchingJourneys.push(msg[i])
           }
         }
-    //console.log(data)
     if(matchingJourneys.length != 0){
-     // console.log('Matching Journeys: ', matchingJourneys)
       setPassengerData(matchingJourneys)
     }
     else {
-     // console.log('no matching journeys')
+     console.log('no matching journeys')
     }
   }
 
   const initialData = async (msg) => {
     var matchingJourneys = [];
-    // console.log("asdasdasd!")
-    // console.log('journeys list', msg.length)
-    // console.log('passengerJourneys: ', passengerData)
-    // console.log('passengerData', passengerData)
-    // console.log('Data: ', data)
-    var journeys_filter_final_temp = [];
     for( var i = 0; i < msg.length; i++){
       for (var j = 0; j < passengerData.length; j++) {
       if(passengerData[j]["journeyID"] == msg[i]["journeyID"]){
             matchingJourneys.push(msg[i])
           }
-         else {//console.log('not matched')
+         else {
         } 
         }
     }
-    //console.log(data)
     if(matchingJourneys.length != 0){
-      //console.log('Matching Journeys: ', matchingJourneys)
     }
     else {
-      //console.log('no matching journeys')
+      console.log('no matching journeys')
     }
   }
 
   const initialCreatorData = async (msg) => {
     var matchingJourneys = [];
-    // console.log("asdasdasd!")
-    // console.log('passenger journeys', msg)
-    var journeys_filter_final_temp = [];
     for( var i = 0; i < msg.length; i++){ 
       if(userProps.userID == msg[i]["creatorID"]){
             matchingJourneys.push(msg[i])
           }
         }
-    //console.log(data)
     if(matchingJourneys.length != 0){
-     // console.log('Matching Journeys: ', matchingJourneys)
       setCreatorData(matchingJourneys)
     }
     else {
       setCreatorData([])
-     // console.log('no matching journeys')
     }
   }
 
   if (!signIn){
     console.log("navigated from page other than signin")
-    // props.navigation.navigate('Ratings');
-    // getData()
-    // getPassengerData() 
-    // getCreatorData() 
+
   }
-  // const viewJourneysPage = () => {
-  //   props.navigation.navigate('ViewJourneys', {passengerData: passengerData,data : data, userProps: userProps});
-  // }
-
-  // const viewCreatedJourneysPage = () => {
-  //   props.navigation.navigate('ViewCreatedJourneys', {creatorData: creatorData, data : data, userProps: userProps});
-  // }
-
-  const RatingPage = () => {
-    props.navigation.navigate('Ratings', {userProps});
-    console.log(userProps)
-  };
-
-  const payment = () => {
-    props.navigation.navigate('Payment', { username });
-  };
 
   const journeys= () => {
     props.navigation.navigate("FindJourneys", { userProps })
-  }
-  
-  const Create_Journey = () => {
-    props.navigation.navigate("JourneyType", { username: username })
   }
 
   const createJourney = () => {
     props.navigation.navigate('JourneyType', { userProps });
   };
 
-  const moreOptions = () => {
-    props.navigation.navigate('MoreOptions', { username }); 
-  };
 
   const myProfile = () => {
     props.navigation.navigate("MyProfile", { passengerData: passengerData,data : data, userProps: userProps, creatorData: creatorData, isCreator: isCreator  })
   }
 
-  const journeyInProgress = () => {
-    props.navigation.navigate('JourneyInProgress', { userProps });
-  };
   return (
     <ScrollView style={styles.scrollBackground}>
     <View style={styles.container}>

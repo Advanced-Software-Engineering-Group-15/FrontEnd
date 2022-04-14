@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { View, Text, ScrollView, StyleSheet, TextInput, TouchableOpacity, Button } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import NumericInput from "react-native-numeric-input";
 import axios from 'axios';
@@ -7,14 +7,12 @@ import uuid from "react-native-uuid";
 import { IP } from '../constants';
 
 import DateTimePicker from '@react-native-community/datetimepicker';
-
-const journeyTypes = ["Drive", "Cycle", "Walk"]
 const currencyTypes = ["€", "$", "£"]
 
 const localHost = 'http://'+ IP +'/newJourneys'
 
 const App = (props: any) => {
-  //const username = props.navigation.state.params.username
+
   const inputProps = props.navigation.state.params;
   const startLoc = inputProps.origin_location;
   const destLoc = inputProps.destination_location;
@@ -25,7 +23,7 @@ const App = (props: any) => {
   const currentStatus = inputProps.currentStatus;
   console.log(currentStatus)
   console.log(userProps.username, userProps.userID)
-  //const [globalType, setGlobalType] = React.useState ("")
+
   console.log('Journey info obtained', props.navigation.state.params)
   console.log('userID', userProps.userID)
   let journey = {
@@ -65,24 +63,7 @@ const App = (props: any) => {
     setMode(currentMode);
   };
 
-  const showDatepicker = () => {
-    setShow(true);
-    showMode('date');
-  };
-
-  const showTimepicker = () => {
-    setShow(true);
-    showMode('time');
-  };
-
-
-
-  // console.log(date)
-
-
   const createJourney = () => {
-
-    // console.log(journey);
    
     var data = {
       "journeyID": journey.journeyID,
@@ -188,27 +169,11 @@ const App = (props: any) => {
           onChange={onChange}
         />
       </View>
-        {/* <TouchableOpacity style={styles.pressBtnStyle} onPress={showDatepicker}>
-          <Text style={styles.loginText}>
-            SELECT DATE
-          </Text>
-        </TouchableOpacity>
 
-        <TouchableOpacity style={styles.pressBtnStyle} onPress={showTimepicker}>
-            <Text style={styles.loginText}>
-              SELECT TIME
-            </Text>
-        </TouchableOpacity> */}
-      
-      {/* {show && (
-        
-      )} */}
       <Text style={styles.timeTxtStyle}>selected: {date.toLocaleString()}</Text>
 
       <View style={styles.container}>
-      
-      
-    
+       
         <TouchableOpacity style={styles.pressBtnStyle} onPress={createJourney}>
           <Text 
             style={styles.loginText}
@@ -217,12 +182,9 @@ const App = (props: any) => {
         </TouchableOpacity>
       </View>
       
-      
     </ScrollView>
-
-  
+ 
   );
-
 
 }
 const styles = StyleSheet.create({

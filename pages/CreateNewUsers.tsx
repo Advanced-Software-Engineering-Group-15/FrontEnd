@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import axios from 'axios';
 import { IP } from '../constants';
@@ -19,7 +19,6 @@ const CreateNewUserPage = (props: any) => {
   const [warning, setWarning] = useState(0);
   const [warning_msg, setWarning_msg] = useState('');
   
-
   const SendNewUser = () => {
     let localHost = 'http://' + IP + '/new-user'
     var json_data = {
@@ -54,7 +53,6 @@ const CreateNewUserPage = (props: any) => {
         .then(function (response) {
           if (response) {
             console.log(response);
-            // Check for login status
             
             props.navigation.navigate("Login", {
               username: newUser_json.userName,

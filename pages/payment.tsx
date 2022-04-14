@@ -14,7 +14,6 @@ const Payment = () => {
         Stripe Payment of $
         {totalPrice}
       </Text>
-      {/* <StripeCheckoutButton price={totalPrice} /> */}
       <CardField
         style={styles.cardField}
         cardStyle={{

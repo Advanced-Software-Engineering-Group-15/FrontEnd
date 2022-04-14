@@ -14,9 +14,6 @@ function JourneyInProgress(props: any) {
   const { creatorID } = props.navigation.state.params;
   const [currentStatus, setCurrentStatus] = useState("")
 
-  const endJourney = () => {
-    props.navigation.navigate('EndJourney', { userProps });
-  };
   const setToStarted = () => {
     var data = {
       "journeyID": props.navigation.state.params.journeyID,
@@ -27,16 +24,8 @@ function JourneyInProgress(props: any) {
       body: JSON.stringify(data)
     })
     goBack()
-    // .then(function (response) {
-    //   console.log(response);
-    //   props.navigation.navigate("Home", { status: 'True'})
-    // })
-    // .catch(function (error) {
-    //   console.log(error);
-    //   props.navigation.navigate("Home", { status: 'False' })
-    // });
-
   }
+
   const cancelJourney = () => {
     var data = {
       "journeyID": props.navigation.state.params.journeyID,
@@ -47,15 +36,8 @@ function JourneyInProgress(props: any) {
       body: JSON.stringify(data)
     })
     goBack()
-    // .then(function (response) {
-    //   console.log(response);
-    //   props.navigation.navigate("Home", { status: 'True'})
-    // })
-    // .catch(function (error) {
-    //   console.log(error);
-    //   props.navigation.navigate("Home", { status: 'False' })
-    // });
   }
+
   const setToEnded = () => {
     var data = {
       "journeyID": props.navigation.state.params.journeyID,
@@ -65,14 +47,6 @@ function JourneyInProgress(props: any) {
     axios.post(localHost, {
       body: JSON.stringify(data)
     })
-    // .then(function (response) {
-    //   console.log(response);
-    //   props.navigation.navigate("Home", { status: 'True'})
-    // })
-    // .catch(function (error) {
-    //   console.log(error);
-    //   props.navigation.navigate("Home", { status: 'False' })
-    // });
     goBack()
   }
   const goBack = () => {
@@ -83,27 +57,6 @@ function JourneyInProgress(props: any) {
   const checkStatus = () => {
     console.log("Status: ",currentStatus)
   }
-  const updateJourneyStatus = () => {
-
-    // console.log(journey);
-   
-    var data = {
-      "journeyID": props.navigation.state.params.journeyID,
-      "Status": currentStatus
-    }
-
-    axios.post(localHost, {
-      body: JSON.stringify(data)
-    })
-    .then(function (response) {
-      console.log(response);
-      props.navigation.navigate("Home", { status: 'True'})
-    })
-    .catch(function (error) {
-      console.log(error);
-      props.navigation.navigate("Home", { status: 'False' })
-    });
-  };
 
   const ratingPage = () => {
     props.navigation.navigate('Ratings', {userProps: userProps, creatorID: creatorID});
@@ -138,9 +91,6 @@ function JourneyInProgress(props: any) {
       <Text >Review Journey</Text>
     </TouchableOpacity>
       }
-      {/* <TouchableOpacity style={styles.MapsPageBtn}>
-        <Text onPress={endJourney}>END JOURNEY</Text>
-      </TouchableOpacity> */}
       <TouchableOpacity style={styles.MapsPageBtn}onPress={goBack}>
         <Text >Back to Homepage</Text>
       </TouchableOpacity>
