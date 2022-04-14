@@ -1,74 +1,68 @@
 // import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import {
-  StyleSheet, Text, View, TouchableOpacity, ScrollView
+  StyleSheet, Text, View, ScrollView,
 } from 'react-native';
-import PassengerJourneysCard from '../components/PassengerJourneysCard';
+import PassengerJourneysCard from '../components/PassengerJourneysCard.tsx';
 
-function ViewCreatedJourneys(props: any) {
-  const [journeys_filter_final, setFinalList] = useState([]);  
-  const creatorData = props.navigation.state.params.creatorData
-  const data = props.navigation.state.params.data
-  const [matchedJourneys, setMatchedJourneys] = useState([])
-  const userProps  = props.navigation.state.params.userProps;
+const ViewCreatedJourneys = (props: any) => {
+  const [journeysFilterFinal, setFinalList] = useState([]);
+  const creatorData = props.navigation.state.params.creatorData;
+  const data = props.navigation.state.params.data;
+  const [matchedJourneys, setMatchedJourneys] = useState([]);
 
   useEffect(() => {
-    matchJourneys()
-    
+    matchJourneys();
   }, [data]);
 
   const matchJourneys = async () => {
-    var matchingJourneys = [];
-    var journeys_filter_final_temp = []
-    for(var i=0; i < data.length; i++){
-        console.log('Journey ID: ', data[i]["journeyID"])
-        for(var j=0; j < creatorData.length; j++){
-            console.log('passenger Journey ID: ', creatorData[j]["journeyID"])
-            if(creatorData[j]["journeyID"] == data[i]["journeyID"]){
-                console.log("Status of journey", data[i]["Status"])
-                matchingJourneys.push(data[i])
-                console.log('matched')
-              }
-        else {console.log('not matched')}
-        }
+    const matchingJourneys = [];
+    const journeysFilterFinalTemp = [];
+    for (let i = 0; i < data.length; i += 1) {
+      console.log('Journey ID: ', data[i].journeyID);
+      for (let j = 0; j < creatorData.length; j += 1) {
+        console.log('passenger Journey ID: ', creatorData[j].journeyID);
+        if (creatorData[j].journeyID === data[i].journeyID) {
+          console.log('Status of journey', data[i].Status);
+          matchingJourneys.push(data[i]);
+          console.log('matched');
+        } else { console.log('not matched'); }
+      }
     }
-    setMatchedJourneys(matchingJourneys)
-    if(matchingJourneys.length != 0){
-        for (let i = 0; i < matchingJourneys.length; i++){
-          journeys_filter_final_temp.push(
-            <View key={matchingJourneys[i]["journeyID"]+(i.toString())}>
-              <PassengerJourneysCard data={matchingJourneys[i]} navigation={props.navigation}/>
-            </View>
-          );
-        }
+    setMatchedJourneys(matchingJourneys);
+    if (matchingJourneys.length !== 0) {
+      for (let i = 0; i < matchingJourneys.length; i += 1) {
+        journeysFilterFinalTemp.push(
+          <View key={matchingJourneys[i].journeyID + (i.toString())}>
+            <PassengerJourneysCard data={matchingJourneys[i]} navigation={props.navigation} />
+          </View>,
+        );
       }
-      else {
-        journeys_filter_final_temp.push(
-          <View style={styles.container}> 
-            <Text  style={styles.titleText}>No Journeys</Text> 
-          </View>
-        )
-      }
-    setFinalList(journeys_filter_final_temp);  
-    console.log('matching journeys array: ', matchingJourneys)
-  }
+    } else {
+      journeysFilterFinalTemp.push(
+        <View style={styles.container}>
+          <Text style={styles.titleText}>No Journeys</Text>
+        </View>,
+      );
+    }
+    setFinalList(journeysFilterFinalTemp);
+    console.log('matching journeys array: ', matchingJourneys);
+  };
 
-  console.log('data in matchedJourneys: ', matchedJourneys.length)
-
-
+  console.log('data in matchedJourneys: ', matchedJourneys.length);
 
   return (
-    
+
     <View style={styles.container}>
-        <ScrollView >
+      <ScrollView>
         <View style={styles.items}>
-          {journeys_filter_final}
-        </View> 
-      </ScrollView>  
+          {journeysFilterFinal}
+        </View>
+      </ScrollView>
     </View>
-    
+
   );
-}
+};
 
 // styling
 const styles = StyleSheet.create({

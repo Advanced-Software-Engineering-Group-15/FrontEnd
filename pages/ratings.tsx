@@ -1,39 +1,41 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import {
+  StyleSheet, Text, View, TouchableOpacity, ScrollView,
+} from 'react-native';
 import { Rating } from 'react-native-elements';
 import axios from 'axios';
 import { IP } from '../constants.tsx';
 
-let url = 'http://' + IP + '/rating'
+const url = `http://${IP}/rating`;
 
 type RatingsComponentProps = {};
 
 const Ratings: React.FunctionComponent<RatingsComponentProps> = (props: any) => {
   const [rate, setRating] = useState(0);
-  const userProps = props.navigation.state.params.userProps
-  const creatorID = props.navigation.state.params.creatorID
+  const userProps = props.navigation.state.params.userProps;
+  const creatorID = props.navigation.state.params.creatorID;
 
   const goBack = () => {
     props.navigation.navigate('Home', { userProps });
   };
 
   const confirmRating = () => {
-    console.log('Coinfirmed Rating is: ', rate)
+    console.log('Coinfirmed Rating is: ', rate);
     axios.post(url, {
       body: JSON.stringify({
-        "userID": creatorID,
-        "rating": rate.toString()
-      })
+        userID: creatorID,
+        rating: rate.toString(),
+      }),
     })
-    .then(function (response) {
-      console.log('RESPONSE', response.data) 
-    })
-    goBack()
-  }
+      .then((response) => {
+        console.log('RESPONSE', response.data);
+      });
+    goBack();
+  };
 
   const changeRating = (rating: number) => {
-    setRating(rating)
-    console.log('Rating is: ', rating)
+    setRating(rating);
+    console.log('Rating is: ', rating);
   };
 
   return (
@@ -54,11 +56,12 @@ const Ratings: React.FunctionComponent<RatingsComponentProps> = (props: any) => 
             style={{ paddingVertical: 10 }}
           />
           <TouchableOpacity style={styles.confirmBtn} onPress={confirmRating}>
-          <Text 
-          style={styles.confirmText}
-          
-          >Confirm</Text>
-        </TouchableOpacity>
+            <Text
+              style={styles.confirmText}
+            >
+              Confirm
+            </Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </View>

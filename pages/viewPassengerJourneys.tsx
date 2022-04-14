@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import
 {
-  StyleSheet, Text, View, TouchableOpacity, ScrollView,
+  StyleSheet, Text, View, ScrollView,
 } from 'react-native';
 import PassengerJourneysCard from '../components/PassengerJourneysCard.tsx';
 
@@ -10,8 +10,6 @@ const ViewJourneys = (props: any) => {
   const [journeysFilterFinal, setFinalList] = useState([]);
   const passengerData = props.navigation.state.params.passengerData;
   const data = props.navigation.state.params.data;
-  const isCreator = props.navigation.state.params.isCreator;
-
   useEffect(() => {
     matchJourneys();
   }, []);
@@ -43,7 +41,6 @@ const ViewJourneys = (props: any) => {
     }
     setFinalList(journeysFilterFinalTemp);
   };
-
 
   return (
     <View style={styles.container}>
