@@ -1,26 +1,16 @@
 // import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet, Text, View, TouchableOpacity, ScrollView
 } from 'react-native';
-import { IP } from '../constants';
 import PassengerJourneysCard from '../components/PassengerJourneysCard';
-
-const localHost = 'http://' + IP + '/passengers'
-const journeysURL = 'http://' + IP + '/journeys'
 
 function ViewCreatedJourneys(props: any) {
   const [journeys_filter_final, setFinalList] = useState([]);  
   const creatorData = props.navigation.state.params.creatorData
   const data = props.navigation.state.params.data
   const [matchedJourneys, setMatchedJourneys] = useState([])
-  const [isLoading, setLoading] = useState(true);
-//   const username  = props.navigation.state.params.userProps.name;
   const userProps  = props.navigation.state.params.userProps;
-//   console.log('username is: ', username)
-//   console.log('userProps is: ', userProps)
-//   console.log('passengerData: ', passengerData)  
-//   console.log('Data: ', data.length)  
 
   useEffect(() => {
     matchJourneys()
@@ -63,8 +53,6 @@ function ViewCreatedJourneys(props: any) {
     console.log('matching journeys array: ', matchingJourneys)
   }
 
-//   console.log('passenger data out of function: ', passengerData)
-//   console.log('journey data out of function: ', data)
   console.log('data in matchedJourneys: ', matchedJourneys.length)
 
 

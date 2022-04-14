@@ -1,14 +1,9 @@
 import React, {useState} from 'react';
-import { View, Text, ScrollView, StyleSheet, TextInput, TouchableOpacity, Button } from 'react-native';
+import { View,  ScrollView, StyleSheet, Button } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
-import NumericInput from "react-native-numeric-input";
-import axios from 'axios';
-import uuid from "react-native-uuid";
-import { IP } from '../constants';
-const journeyTypes = ["DRIVING", "BICYCLING", "WALKING"]
-const currencyTypes = ["€", "$", "£"]
 
-// const localHost = 'http://'+ IP +'/newJourneys'
+import uuid from "react-native-uuid";
+const journeyTypes = ["DRIVING", "BICYCLING", "WALKING"]
 
 const JourneyType = (props: any) => {
     const {username} = props.navigation.state.params
@@ -16,7 +11,7 @@ const JourneyType = (props: any) => {
     const [journeyStatus, setJourneyStatus] = useState('Pending')
     const [journeyType, setJourneyType] = useState('')
     console.log(userProps, userProps.userID, userProps.username)
-//   console.log('Journey info obtained', props.navigation.state.params)
+    
   let journey = {
     journeyID: uuid.v1(),
     journeyType: '',
