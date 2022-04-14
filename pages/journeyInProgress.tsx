@@ -1,67 +1,60 @@
 // import { StatusBar } from 'expo-status-bar';
-import React, {useState} from 'react';
+import React from 'react';
 import {
   StyleSheet, Text, View, TouchableOpacity,
 } from 'react-native';
 import axios from 'axios';
-import { IP } from '../constants';
+import { IP } from '../constants.tsx';
 
-const localHost = 'http://'+ IP +'/journeyStatus'
+const localHost = `http://${IP}/journeyStatus`;
 
-function JourneyInProgress(props: any) {
-  const Status = props.navigation.state.params.status
-  const isCreator = props.navigation.state.params.isCreator
-  console.log('\n\n\nhere', props.navigation.state.params)
+const JourneyInProgress = (props: any) => {
+  const Status = props.navigation.state.params.status;
+  const isCreator = props.navigation.state.params.isCreator;
   const { userProps } = props.navigation.state.params;
   const { creatorID } = props.navigation.state.params;
-  const [currentStatus, setCurrentStatus] = useState("")
 
   const setToStarted = () => {
-    var data = {
-      "journeyID": props.navigation.state.params.journeyID,
-      "Status": "Started"
-    }
+    const data = {
+      journeyID: props.navigation.state.params.journeyID,
+      Status: 'Started',
+    };
 
     axios.post(localHost, {
-      body: JSON.stringify(data)
-    })
-    goBack()
-  }
+      body: JSON.stringify(data),
+    });
+    goBack();
+  };
 
   const cancelJourney = () => {
-    var data = {
-      "journeyID": props.navigation.state.params.journeyID,
-      "Status": "Cancelled"
-    }
+    const data = {
+      journeyID: props.navigation.state.params.journeyID,
+      Status: 'Cancelled',
+    };
 
     axios.post(localHost, {
-      body: JSON.stringify(data)
-    })
-    goBack()
-  }
+      body: JSON.stringify(data),
+    });
+    goBack();
+  };
 
   const setToEnded = () => {
-    var data = {
-      "journeyID": props.navigation.state.params.journeyID,
-      "Status": "Ended"
-    }
+    const data = {
+      journeyID: props.navigation.state.params.journeyID,
+      Status: 'Ended',
+    };
 
     axios.post(localHost, {
-      body: JSON.stringify(data)
-    })
-    goBack()
-  }
-  const goBack = () => {
-    console.log("Status: ", currentStatus)
-    props.navigation.navigate('Home', { userProps, signIn: false });
-    checkStatus()
+      body: JSON.stringify(data),
+    });
+    goBack();
   };
-  const checkStatus = () => {
-    console.log("Status: ",currentStatus)
-  }
+  const goBack = () => {
+    props.navigation.navigate('Home', { userProps, signIn: false });
+  };
 
   const ratingPage = () => {
-    props.navigation.navigate('Ratings', {userProps: userProps, creatorID: creatorID});
+    props.navigation.navigate('Ratings', { userProps, creatorID });
   };
 
   return (
@@ -71,37 +64,41 @@ function JourneyInProgress(props: any) {
         {userProps.username}
         !
       </Text>
-      <Text style={styles.welcomeText}>Your Journey is {Status}! 🚗</Text>
-     { isCreator != "false" &&
-     <View style={styles.containerButton}> 
-      {Status == "Pending" &&
-      <TouchableOpacity style={styles.MapsPageBtn}onPress={setToStarted}>
-      <Text >START JOURNEY</Text>
-      </TouchableOpacity>
-      }
-      {Status == "Pending" &&
-      <TouchableOpacity style={styles.MapsPageBtn}onPress={cancelJourney}>
-      <Text >CANCEL</Text>
-      </TouchableOpacity>
-      }
-      {Status == "Started" &&
-      <TouchableOpacity style={styles.MapsPageBtn}onPress={setToEnded}>
-      <Text >END JOURNEY</Text>
-    </TouchableOpacity>
-     } 
-   </View>
-    }
-      {Status == "Ended" &&
+      <Text style={styles.welcomeText}>
+        Your Journey is
+        {Status}
+        ! 🚗
+      </Text>
+      { isCreator !== 'false' && (
+      <View style={styles.containerButton}>
+        {Status === 'Pending' && (
+        <TouchableOpacity style={styles.MapsPageBtn} onPress={setToStarted}>
+          <Text>START JOURNEY</Text>
+        </TouchableOpacity>
+        )}
+        {Status === 'Pending' && (
+        <TouchableOpacity style={styles.MapsPageBtn} onPress={cancelJourney}>
+          <Text>CANCEL</Text>
+        </TouchableOpacity>
+        )}
+        {Status === 'Started' && (
+        <TouchableOpacity style={styles.MapsPageBtn} onPress={setToEnded}>
+          <Text>END JOURNEY</Text>
+        </TouchableOpacity>
+        )}
+      </View>
+      )}
+      {Status === 'Ended' && (
       <TouchableOpacity style={styles.MapsPageBtn} onPress={ratingPage}>
-      <Text >Review Journey</Text>
-    </TouchableOpacity>
-      }
-      <TouchableOpacity style={styles.MapsPageBtn}onPress={goBack}>
-        <Text >Back to Homepage</Text>
+        <Text>Review Journey</Text>
+      </TouchableOpacity>
+      )}
+      <TouchableOpacity style={styles.MapsPageBtn} onPress={goBack}>
+        <Text>Back to Homepage</Text>
       </TouchableOpacity>
     </View>
   );
-}
+};
 
 // styling
 const styles = StyleSheet.create({

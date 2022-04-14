@@ -13,7 +13,7 @@ import JourneyInProgress from './pages/journeyInProgress.tsx';
 import EndJourney from './pages/endJourney.tsx';
 import Journeys from './pages/journeys.tsx';
 import CreateNewUserPage from './pages/CreateNewUsers.tsx';
-import Confirm_Journey from './pages/confirmJourney.tsx';
+import ConfirmJourney from './pages/confirmJourney.tsx';
 import Payment from './pages/payment.tsx';
 import MoreOptions from './pages/moreOptions.tsx';
 import MyProfile from './pages/myProfile.tsx';
@@ -40,7 +40,7 @@ const AppNavigator = createStackNavigator(
     Payment,
     MoreOptions,
     MyProfile,
-    Confirm_Journey,
+    ConfirmJourney,
     JourneyType,
     FindJourneys,
     ViewJourneys,

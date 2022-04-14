@@ -1,127 +1,93 @@
 // import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import MapView, { Marker } from 'react-native-maps';
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
+import {
+  StyleSheet, Text, View, TouchableOpacity, Dimensions, ScrollView,
+} from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import { GOOGLE_MAPS_APIKEY } from '../constants';
+import { GOOGLE_MAPS_APIKEY } from '../constants.tsx';
 
 const OriginIn = (props: any) => {
-
-  const journeyType = props.navigation.state.params.journeyType
-  const currentStatus  = props.navigation.state.params.currentStatus
-  console.log(currentStatus)
-  const userProps = props.navigation.state.params.userProps
-  console.log('origin userProps', userProps.userID, userProps.username)
-  const initialRegion =  {
-    latitude: Number(53.338165314), 
+  const journeyType = props.navigation.state.params.journeyType;
+  const currentStatus = props.navigation.state.params.currentStatus;
+  const userProps = props.navigation.state.params.userProps;
+  const initialRegion = {
+    latitude: Number(53.338165314),
     longitude: Number(-6.256165642),
     latitudeDelta: 0.000281,
-    longitudeDelta: 0.002661
-  }    
-  var region = initialRegion;
-  
-  const [sendinfo, originInfo] = React.useState ({})
+    longitudeDelta: 0.002661,
+  };
+  const region = initialRegion;
 
-  const [pin, setPin] = React.useState ({
-    latitude: Number(53.338165314), 
+  const [sendinfo, originInfo] = React.useState({});
+
+  const [pin, setPin] = React.useState({
+    latitude: Number(53.338165314),
     longitude: Number(-6.256165642),
     latitudeDelta: 0.000281,
-    longitudeDelta: 0.002661
-  })
+    longitudeDelta: 0.002661,
+  });
 
   const destinationPage = () => {
-    console.log('sending journey type: ',journeyType)
-    props.navigation.navigate("DestinationIn", {
+    props.navigation.navigate('DestinationIn', {
       origin: sendinfo,
       location: pin,
-      journeyType: journeyType,
-      userProps: userProps,
-      currentStatus: currentStatus
-    })
-  }
+      journeyType,
+      userProps,
+      currentStatus,
+    });
+  };
 
-  return (    
+  return (
 
     <View>
-    <ScrollView keyboardShouldPersistTaps="handled">
+      <ScrollView keyboardShouldPersistTaps="handled">
 
-      <GooglePlacesAutocomplete
-        placeholder='Enter your origin'
-        GooglePlacesDetailsQuery={{ fields: "geometry" }}
-        fetchDetails={true} // you need this to fetch the details object onPress
-        onPress={(data, details = null) => {
-          console.log(details);
-          //console.log(data, details)
-          //console.log(JSON.stringify(details?.geometry?.location));
-          region.latitude = Number(JSON.stringify(details?.geometry?.location.lat))
-          region.longitude = Number(JSON.stringify(details?.geometry?.location.lng))
-          setPin(region);
-          console.log('region is: ', region)
-          originInfo({data});
-        }}
-        query={{
-          key: GOOGLE_MAPS_APIKEY,
-          language: 'en',
-          components: "country:ie",
-        }}
-        currentLocation={true}
-        currentLocationLabel='Current location'
-      />
+        <GooglePlacesAutocomplete
+          placeholder="Enter your origin"
+          GooglePlacesDetailsQuery={{ fields: 'geometry' }}
+          fetchDetails // you need this to fetch the details object onPress
+          onPress={(data, details = null) => {
+            // console.log(data, details)
+            // console.log(JSON.stringify(details?.geometry?.location));
+            region.latitude = Number(JSON.stringify(details?.geometry?.location.lat));
+            region.longitude = Number(JSON.stringify(details?.geometry?.location.lng));
+            setPin(region);
+            originInfo({ data });
+          }}
+          query={{
+            key: GOOGLE_MAPS_APIKEY,
+            language: 'en',
+            components: 'country:ie',
+          }}
+          currentLocation
+          currentLocationLabel="Current location"
+        />
 
-      <MapView 
-      style={styles.map} 
-      initialRegion={pin}
-      region={pin}
-      showsUserLocation>
-        <Marker
-        coordinate={pin}
-        pinColor="green"
-      />
-    </MapView>
-    <View style={styles.container}>
-    <TouchableOpacity style={styles.ViewJourneyBtn} onPress={destinationPage}>
-          <Text style={styles.homePageBtnText} >Confirm origin</Text>
-    </TouchableOpacity>
-    </View> 
-    </ScrollView>
+        <MapView
+          style={styles.map}
+          initialRegion={pin}
+          region={pin}
+          showsUserLocation
+        >
+          <Marker
+            coordinate={pin}
+            pinColor="green"
+          />
+        </MapView>
+        <View style={styles.container}>
+          <TouchableOpacity style={styles.ViewJourneyBtn} onPress={destinationPage}>
+            <Text style={styles.homePageBtnText}>Confirm origin</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
 
-    </View> 
+    </View>
 
   );
-}
+};
 
-//styling
-
-const searchInputStyle={
-  container: {
-      backgroundColor: '#fff',
-      width: Dimensions.get('window').width,
-      marginLeft: 20,
-      marginRight: 20,
-      marginTop: 20,
-      marginBottom: 0,
-      opacity: 0.9,
-      borderRadius: 8
-  },
-  description: {
-      fontWeight: 'bold',
-      color: "#007",
-      borderTopWidth: 0,
-      borderBottomWidth: 0,
-      opacity: 0.9,
-  },
-  predefinedPlacesDescription: {
-      color: '#355',
-  },
-  textInputContainer: {
-      height: 50,
-
-  },
-      textInput: {
-      height: 33,
-      fontSize: 16
-  }
-}
+// styling
 
 const styles = StyleSheet.create({
 
@@ -131,18 +97,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  welcomeText:{
-    height:50,
-    color:"white",
-    fontSize:25
+  welcomeText: {
+    height: 50,
+    color: 'white',
+    fontSize: 25,
   },
   map: {
     width: (Dimensions.get('window').width),
-    height: (Dimensions.get('window').height-200),
+    height: (Dimensions.get('window').height - 200),
   },
   searchBox: {
     top: 0,
-    position: "absolute",
+    position: 'absolute',
     flex: 1,
     justifyContent: 'center',
   },
@@ -189,28 +155,26 @@ const styles = StyleSheet.create({
     fontSize: 18,
     height: 30,
   },
-  MapsPageBtn:{
-    width: "40%",
-    backgroundColor: "#fb5b5a",
+  MapsPageBtn: {
+    width: '40%',
+    backgroundColor: '#fb5b5a',
     borderRadius: 25,
     height: 50,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 20,
-    marginBottom: 10
+    marginBottom: 10,
   },
-  ViewJourneyBtn:{
-    width: "40%",
-    backgroundColor: "#33FF99",
+  ViewJourneyBtn: {
+    width: '40%',
+    backgroundColor: '#33FF99',
     borderRadius: 25,
     height: 50,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 20,
-    marginBottom: 10
-  }
+    marginBottom: 10,
+  },
 });
 
 export default OriginIn;
-
-

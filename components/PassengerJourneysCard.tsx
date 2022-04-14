@@ -24,7 +24,7 @@ const AvailableJourneyCard = (props: any) => {
         longitude: props.data.endLong,
       },
       userProps,
-      isCreator: isCreator
+      isCreator: isCreator,
     });
   };
 

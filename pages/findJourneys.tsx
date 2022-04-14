@@ -1,122 +1,81 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
+import {
+  StyleSheet, Text, View, TouchableOpacity, Dimensions, ScrollView,
+} from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import { GOOGLE_MAPS_APIKEY } from '../constants';
+import { GOOGLE_MAPS_APIKEY } from '../constants.tsx';
 
-let region = {
-    longitude: 0,
-    latitude: 0      
-}
+const region = {
+  longitude: 0,
+  latitude: 0,
+};
 
 const FindJourneys = (props: any) => {
-  
-  const userProps = props.navigation.state.params.userProps
-  console.log('origin username', userProps.username)
+  const userProps = props.navigation.state.params.userProps;
 
-  const [Origin, setOrigin] = React.useState ({})
-  const [Dest, setDest] = React.useState ({})
+  const [Origin, setOrigin] = React.useState({});
+  const [Dest, setDest] = React.useState({});
 
   const journeysPage = () => {
-  
-    props.navigation.navigate("Journeys", {
+    props.navigation.navigate('Journeys', {
       origin: Origin,
       dest: Dest,
-      userProps: userProps
-    })
-  }
+      userProps,
+    });
+  };
 
-  return (    
+  return (
 
     <View>
-    <ScrollView keyboardShouldPersistTaps="handled">
+      <ScrollView keyboardShouldPersistTaps="handled">
 
-      <GooglePlacesAutocomplete
-        placeholder='Where are you?'
-        GooglePlacesDetailsQuery={{ fields: "geometry" }}
-        fetchDetails={true} // you need this to fetch the details object onPress
-        onPress={(data, details = null) => {
-          console.log(details);
-
-          region.latitude = Number(JSON.stringify(details?.geometry?.location.lat))
-          region.longitude = Number(JSON.stringify(details?.geometry?.location.lng))
-          setOrigin(region);
-          console.log('region is: ', region)
-        }}
-        query={{
-          key: GOOGLE_MAPS_APIKEY,
-          language: 'en',
-          components: "country:ie",
-        }}
-      />
-
-      <GooglePlacesAutocomplete
-        placeholder='Where are you going?'
-        GooglePlacesDetailsQuery={{ fields: "geometry" }}
-        fetchDetails={true} // you need this to fetch the details object onPress
-        onPress={(data, details = null) => {
-          console.log(details);
-          region.latitude = Number(JSON.stringify(details?.geometry?.location.lat))
-          region.longitude = Number(JSON.stringify(details?.geometry?.location.lng))
-          setDest(region);
-          console.log('destination is: ', region)
-        }}
-        query={{
-          key: GOOGLE_MAPS_APIKEY,
-          language: 'en',
-          components: "country:ie",
-        }}
-      />
-
-
-    </ScrollView>
-    <View  style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginBottom: 30,
+        <GooglePlacesAutocomplete
+          placeholder="Where are you?"
+          GooglePlacesDetailsQuery={{ fields: 'geometry' }}
+          fetchDetails // you need this to fetch the details object onPress
+          onPress={(data, details = null) => {
+            region.latitude = Number(JSON.stringify(details?.geometry?.location.lat));
+            region.longitude = Number(JSON.stringify(details?.geometry?.location.lng));
+            setOrigin(region);
           }}
-        >
-    <TouchableOpacity style={styles.confirmBtn} onPress={journeysPage}>
-          <Text style={styles.confirmText} >Confirm selection</Text>
-    </TouchableOpacity>
-    </View> 
+          query={{
+            key: GOOGLE_MAPS_APIKEY,
+            language: 'en',
+            components: 'country:ie',
+          }}
+        />
+
+        <GooglePlacesAutocomplete
+          placeholder="Where are you going?"
+          GooglePlacesDetailsQuery={{ fields: 'geometry' }}
+          fetchDetails // you need this to fetch the details object onPress
+          onPress={(data, details = null) => {
+            region.latitude = Number(JSON.stringify(details?.geometry?.location.lat));
+            region.longitude = Number(JSON.stringify(details?.geometry?.location.lng));
+            setDest(region);
+          }}
+          query={{
+            key: GOOGLE_MAPS_APIKEY,
+            language: 'en',
+            components: 'country:ie',
+          }}
+        />
+
+      </ScrollView>
+      <View style={{
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 30,
+      }}
+      >
+        <TouchableOpacity style={styles.confirmBtn} onPress={journeysPage}>
+          <Text style={styles.confirmText}>Confirm selection</Text>
+        </TouchableOpacity>
+      </View>
     </View>
 
   );
-}
-
-//styling
-
-const searchInputStyle={
-  container: {
-      backgroundColor: '#fff',
-      width: Dimensions.get('window').width,
-      marginLeft: 20,
-      marginRight: 20,
-      marginTop: 20,
-      marginBottom: 0,
-      opacity: 0.9,
-      borderRadius: 8
-  },
-
-  description: {
-      fontWeight: 'bold',
-      color: "#007",
-      borderTopWidth: 0,
-      borderBottomWidth: 0,
-      opacity: 0.9,
-  },
-  predefinedPlacesDescription: {
-      color: '#355',
-  },
-  textInputContainer: {
-      height: 50,
-
-  },
-      textInput: {
-      height: 33,
-      fontSize: 16
-  }
-}
+};
 
 const styles = StyleSheet.create({
 
@@ -126,21 +85,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  welcomeText:{
-    height:50,
-    color:"white",
-    fontSize:25
+  welcomeText: {
+    height: 50,
+    color: 'white',
+    fontSize: 25,
   },
-  confirmText:{
-    color:"white"
+  confirmText: {
+    color: 'white',
   },
   map: {
     width: (Dimensions.get('window').width),
-    height: (Dimensions.get('window').height-200),
+    height: (Dimensions.get('window').height - 200),
   },
   searchBox: {
     top: 0,
-    position: "absolute",
+    position: 'absolute',
     flex: 1,
     justifyContent: 'center',
   },
@@ -187,38 +146,36 @@ const styles = StyleSheet.create({
     fontSize: 18,
     height: 30,
   },
-  MapsPageBtn:{
-    width: "40%",
-    backgroundColor: "#fb5b5a",
+  MapsPageBtn: {
+    width: '40%',
+    backgroundColor: '#fb5b5a',
     borderRadius: 25,
     height: 50,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 20,
-    marginBottom: 10
+    marginBottom: 10,
   },
-  ViewJourneyBtn:{
-    width: "40%",
-    backgroundColor: "#33FF99",
+  ViewJourneyBtn: {
+    width: '40%',
+    backgroundColor: '#33FF99',
     borderRadius: 25,
     height: 50,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 20,
-    marginBottom: 10
+    marginBottom: 10,
   },
-  confirmBtn:{
-    width:"60%",
-    backgroundColor:"#fb5b5a",
-    borderRadius:25,
-    height:50,
-    alignItems:"center",
-    justifyContent:"center",
-    marginTop:40,
-    marginBottom:10
+  confirmBtn: {
+    width: '60%',
+    backgroundColor: '#fb5b5a',
+    borderRadius: 25,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 40,
+    marginBottom: 10,
   },
 });
 
 export default FindJourneys;
-
-

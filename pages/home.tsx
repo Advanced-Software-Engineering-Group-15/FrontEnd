@@ -1,195 +1,159 @@
 // import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  StyleSheet, Text, View, TouchableOpacity
+  StyleSheet, Text, View, TouchableOpacity,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { IP } from '../constants';
+import { IP } from '../constants.tsx';
 
-const localHost = 'http://' + IP + '/passengers'
-const journeysURL = 'http://' + IP + '/journeys'
+const localHost = `http://${IP}/passengers`;
+const journeysURL = `http://${IP}/journeys`;
 
-
-function Home(props: any) {
+const Home = (props: any) => {
   const [passengerData, setPassengerData] = useState([]);
   const [data, setData] = useState([]);
   const [creatorData, setCreatorData] = useState([]);
-  const [isLoading, setLoading] = useState(true);
-  const username  = props.navigation.state.params.userProps.name;
-  const userProps  = props.navigation.state.params.userProps;
+  const username = props.navigation.state.params.userProps.name;
+  const userProps = props.navigation.state.params.userProps;
   const signIn = props.navigation.state.params.signIn;
-  console.log('username is: ', username)
-  console.log('userProps is: ', userProps)
   const isCreator = userProps.isCreator;
-  console.log(isCreator)
-  
 
   useEffect(() => {
-    console.log("Running useEffect")
-    getData()
-    getPassengerData() 
-    getCreatorData() 
-    
+    getData();
+    getPassengerData();
+    getCreatorData();
   }, [signIn]);
-  console.log('passenger data out of function: ', passengerData)
-  console.log('creator data out of function: ', creatorData.length)
-  //console.log('journey data out of function: ', data)
-  const refresh = () => {
-    getData()
-    getPassengerData() 
-    getCreatorData()
-  }
   const getPassengerData = async () => {
     try {
       const response = await fetch(localHost);
       const json = await response.json();
       await new Promise((resolve) => {
-        console.log('json file content: ', json.exPassengers)
-        setPassengerData(json.exPassengers)
-        return resolve(json.exPassengers)
-      }).then(msg => {
+        setPassengerData(json.exPassengers);
+        return resolve(json.exPassengers);
+      }).then((msg) => {
         initialPassengerData(msg);
-      })
-    } 
-    catch (error) { 
+      });
+    } catch (error) {
       console.log(error);
     } finally {
-      setLoading(false)
+      console.log('ERROR: Did not catch an error, but no journey is caught.');
     }
-  }
+  };
 
   const getData = async () => {
     try {
       const response = await fetch(journeysURL);
       const json = await response.json();
-      console.log("json",json)
-      console.log("json.exJourneys",json.exJourneys)
       await new Promise((resolve) => {
-      console.log("json2",json)
-      console.log("json.exJourneys2",json.exJourneys)
-        setData(json.exJourneys)
-        return resolve(json.exJourneys)
-      }).then(msg => {
+        setData(json.exJourneys);
+        return resolve(json.exJourneys);
+      }).then((msg) => {
         initialData(msg);
-      })
-    } catch (error) { 
+      });
+    } catch (error) {
       console.log(error);
     } finally {
-      setLoading(false)
+      console.log('ERROR: Did not catch an error, but no journey is caught.');
     }
-  }
+  };
 
   const getCreatorData = async () => {
     try {
       const response = await fetch(journeysURL);
       const json = await response.json();
       await new Promise((resolve) => {
-       // console.log('json file content: ', json.exPassengers)
-        setCreatorData(json.exJourneys)
-        return resolve(json.exJourneys)
-      }).then(msg => {
+        // console.log('json file content: ', json.exPassengers)
+        setCreatorData(json.exJourneys);
+        return resolve(json.exJourneys);
+      }).then((msg) => {
         initialCreatorData(msg);
-      })
-    } 
-    catch (error) { 
+      });
+    } catch (error) {
       console.log(error);
     } finally {
-      setLoading(false)
+      console.log('ERROR: Did not catch an error, but no journey is caught.');
     }
-  }
-  
+  };
+
   const initialPassengerData = async (msg) => {
-    var matchingJourneys = [];
-    for( var i = 0; i < msg.length; i++){ 
-      if(userProps.userID == msg[i]["userID"]){
-            matchingJourneys.push(msg[i])
-          }
-        }
-    if(matchingJourneys.length != 0){
-      console.log('matchingJourneys',matchingJourneys)
-      setPassengerData(matchingJourneys)
+    const matchingJourneys = [];
+    for (let i = 0; i < msg.length; i += 1) {
+      if (userProps.userID === msg[i].userID) {
+        matchingJourneys.push(msg[i]);
+      }
     }
-    else {
-     console.log('no matching journeys')
-     setPassengerData([])
+    if (matchingJourneys.length !== 0) {
+      setPassengerData(matchingJourneys);
+    } else {
+      setPassengerData([]);
     }
-  }
+  };
 
   const initialData = async (msg) => {
-    var matchingJourneys = [];
-    for( var i = 0; i < msg.length; i++){
-      for (var j = 0; j < passengerData.length; j++) {
-      if(passengerData[j]["journeyID"] == msg[i]["journeyID"]){
-            matchingJourneys.push(msg[i])
-          }
-         else {
-        } 
+    const matchingJourneys = [];
+    for (let i = 0; i < msg.length; i += 1) {
+      for (let j = 0; j < passengerData.length; j += 1) {
+        if (passengerData[j].journeyID === msg[i].journeyID) {
+          matchingJourneys.push(msg[i]);
         }
+      }
     }
-    if(matchingJourneys.length != 0){
-    }
-    else {
-      console.log('no matching journeys')
-    }
-  }
+  };
 
   const initialCreatorData = async (msg) => {
-    var matchingJourneys = [];
-    for( var i = 0; i < msg.length; i++){ 
-      if(userProps.userID == msg[i]["creatorID"]){
-            matchingJourneys.push(msg[i])
-          }
-        }
-    if(matchingJourneys.length != 0){
-      setCreatorData(matchingJourneys)
+    const matchingJourneys = [];
+    for (let i = 0; i < msg.length; i += 1) {
+      if (userProps.userID === msg[i].creatorID) {
+        matchingJourneys.push(msg[i]);
+      }
     }
-    else {
-      setCreatorData([])
+    if (matchingJourneys.length !== 0) {
+      setCreatorData(matchingJourneys);
+    } else {
+      setCreatorData([]);
     }
-  }
-
-  if (!signIn){
-    console.log("navigated from page other than signin")
-
-  }
-
-  const journeys= () => {
-    props.navigation.navigate("FindJourneys", { userProps })
-  }
+  };
+  const journeys = () => {
+    props.navigation.navigate('FindJourneys', { userProps });
+  };
 
   const createJourney = () => {
     props.navigation.navigate('JourneyType', { userProps });
   };
 
-
   const myProfile = () => {
-    props.navigation.navigate("MyProfile", { passengerData: passengerData,data : data, userProps: userProps, creatorData: creatorData, isCreator: isCreator  })
-  }
+    props.navigation.navigate('MyProfile', {
+      passengerData, data, userProps, creatorData, isCreator,
+    });
+  };
 
   return (
     <ScrollView style={styles.scrollBackground}>
-    <View style={styles.container}>
-      <Text style={styles.welcomeText}>
-        {'\n'}Welcome back {'\n'}
-        {username}!
-      </Text>
-      <TouchableOpacity style={styles.ViewJourneyBtn} onPress={journeys}>
-        <Text style={styles.homePageBtnText} >Search Journeys</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.ViewJourneyBtn} onPress={myProfile}>
-        <Text style={styles.homePageBtnText} >My Profile</Text>
-      </TouchableOpacity>
-
-      { isCreator == "true" &&
-        <TouchableOpacity style={styles.ViewJourneyBtn} onPress={createJourney}>
-          <Text style={styles.homePageBtnText} >Create Journey</Text>
+      <View style={styles.container}>
+        <Text style={styles.welcomeText}>
+          {'\n'}
+          Welcome back
+          {'\n'}
+          {username}
+          !
+        </Text>
+        <TouchableOpacity style={styles.ViewJourneyBtn} onPress={journeys}>
+          <Text style={styles.homePageBtnText}>Search Journeys</Text>
         </TouchableOpacity>
-        }
+        <TouchableOpacity style={styles.ViewJourneyBtn} onPress={myProfile}>
+          <Text style={styles.homePageBtnText}>My Profile</Text>
+        </TouchableOpacity>
 
-    </View>
+        { isCreator === 'true' && (
+          <TouchableOpacity style={styles.ViewJourneyBtn} onPress={createJourney}>
+            <Text style={styles.homePageBtnText}>Create Journey</Text>
+          </TouchableOpacity>
+        )}
+
+      </View>
     </ScrollView>
   );
-}
+};
 
 // styling
 const styles = StyleSheet.create({
@@ -199,7 +163,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#003f5c',
     alignItems: 'center',
     justifyContent: 'center',
-    height: '100%'
+    height: '100%',
   },
   scrollBackground: {
     backgroundColor: '#003f5c',
@@ -209,7 +173,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     marginTop: 50,
     marginBottom: 50,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   homePageBtnText: {
     color: '#000000',
@@ -234,7 +198,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 15,
-    //marginLeft: '27%',
+    // marginLeft: '27%',
   },
   row: {
     backgroundColor: '#FFFFFF',

@@ -243,8 +243,6 @@ const styles = StyleSheet.create({
     marginTop:50,
     marginBottom:10
   },
-
-
 });
-  
-export default CreateNewUserPage
+
+export default CreateNewUserPage;

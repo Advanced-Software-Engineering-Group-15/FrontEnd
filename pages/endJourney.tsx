@@ -3,7 +3,7 @@ import {
   StyleSheet, Text, View, TouchableOpacity,
 } from 'react-native';
 
-function EndJourney(props: any) {
+const EndJourney = (props: any) => {
   const { userProps } = props.navigation.state.params;
 
   const goToRating = () => {
@@ -25,7 +25,7 @@ function EndJourney(props: any) {
       </TouchableOpacity>
     </View>
   );
-}
+};
 
 // styling
 const styles = StyleSheet.create({
