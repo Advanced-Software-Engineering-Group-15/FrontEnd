@@ -71,9 +71,9 @@ function JourneyInProgress(props: any) {
         {userProps.username}
         !
       </Text>
-      <Text style={styles.welcomeText}>Your Journey is in progress! 🚗</Text>
+      <Text style={styles.welcomeText}>Your Journey is {Status}! 🚗</Text>
      { isCreator != "false" &&
-     <View> 
+     <View style={styles.containerButton}> 
       {Status == "Pending" &&
       <TouchableOpacity style={styles.MapsPageBtn}onPress={setToStarted}>
       <Text >START JOURNEY</Text>
@@ -107,6 +107,13 @@ function JourneyInProgress(props: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#003f5c',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  containerButton: {
+    flex: 1,
+    width: '100%',
     backgroundColor: '#003f5c',
     alignItems: 'center',
     justifyContent: 'center',
