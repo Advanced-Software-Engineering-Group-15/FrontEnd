@@ -284,7 +284,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 15,
-    marginLeft: '27%',
+    //marginLeft: '27%',
   },
   row: {
     backgroundColor: '#FFFFFF',
