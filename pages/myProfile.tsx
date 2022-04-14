@@ -12,7 +12,6 @@ const MyProfile = (props: any) => {
     const passengerData = props.navigation.state.params.passengerData;
     const creatorData = props.navigation.state.params.creatorData;
     const isCreator = props.navigation.state.params.isCreator;
-    //console.log("Props: ", props);
     const viewJourneysPage = () => {
         props.navigation.navigate('ViewJourneys', {passengerData: passengerData,data : data, userProps: userProps});
       }

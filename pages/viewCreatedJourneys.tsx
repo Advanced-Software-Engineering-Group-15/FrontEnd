@@ -55,11 +55,6 @@ function ViewCreatedJourneys(props: any) {
 
   console.log('data in matchedJourneys: ', matchedJourneys.length)
 
-
-  const viewJourneys = () => {
-    props.navigation.navigate('ViewJourneys', {creatorData, data, userProps});
-  }
-
   const RatingPage = () => {
     props.navigation.navigate('Ratings');
   };
