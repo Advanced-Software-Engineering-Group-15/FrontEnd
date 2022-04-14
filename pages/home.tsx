@@ -33,7 +33,7 @@ function Home(props: any) {
   }, [signIn]);
   console.log('passenger data out of function: ', passengerData)
   console.log('creator data out of function: ', creatorData.length)
-  console.log('journey data out of function: ', data)
+  //console.log('journey data out of function: ', data)
   const refresh = () => {
     getData()
     getPassengerData() 
@@ -106,10 +106,12 @@ function Home(props: any) {
           }
         }
     if(matchingJourneys.length != 0){
+      console.log('matchingJourneys',matchingJourneys)
       setPassengerData(matchingJourneys)
     }
     else {
      console.log('no matching journeys')
+     setPassengerData([])
     }
   }
 
