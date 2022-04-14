@@ -320,8 +320,8 @@ const Journeys = (props: any) => {
       </View>
       
       
-      <TouchableOpacity style={styles.applyButt}>
-        <Text style={styles.applyButtTxt} onPress={filterData}>Apply</Text>
+      <TouchableOpacity style={styles.applyButt} onPress={filterData}>
+        <Text style={styles.applyButtTxt} >Apply</Text>
       </TouchableOpacity>
 
       
