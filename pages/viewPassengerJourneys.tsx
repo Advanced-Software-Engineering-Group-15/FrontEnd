@@ -10,6 +10,7 @@ const ViewJourneys = (props: any) => {
   const [journeysFilterFinal, setFinalList] = useState([]);
   const passengerData = props.navigation.state.params.passengerData;
   const data = props.navigation.state.params.data;
+  const isCreator = props.navigation.state.params.isCreator;
 
   useEffect(() => {
     matchJourneys();

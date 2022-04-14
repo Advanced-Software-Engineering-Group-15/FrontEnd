@@ -10,6 +10,7 @@ const localHost = 'http://'+ IP +'/journeyStatus'
 
 function JourneyInProgress(props: any) {
   const Status = props.navigation.state.params.status
+  const isCreator = props.navigation.state.params.isCreator
   console.log('\n\n\nhere', props.navigation.state.params)
   const { userProps } = props.navigation.state.params;
   const { creatorID } = props.navigation.state.params;
@@ -71,7 +72,8 @@ function JourneyInProgress(props: any) {
         !
       </Text>
       <Text style={styles.welcomeText}>Your Journey is in progress! 🚗</Text>
-      
+     { isCreator != "false" &&
+     <View> 
       {Status == "Pending" &&
       <TouchableOpacity style={styles.MapsPageBtn}onPress={setToStarted}>
       <Text >START JOURNEY</Text>
@@ -86,7 +88,9 @@ function JourneyInProgress(props: any) {
       <TouchableOpacity style={styles.MapsPageBtn}onPress={setToEnded}>
       <Text >END JOURNEY</Text>
     </TouchableOpacity>
-      }
+     } 
+   </View>
+    }
       {Status == "Ended" &&
       <TouchableOpacity style={styles.MapsPageBtn} onPress={ratingPage}>
       <Text >Review Journey</Text>

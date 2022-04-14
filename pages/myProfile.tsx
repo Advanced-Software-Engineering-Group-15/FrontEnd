@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   StyleSheet, Text, View, Image, TouchableOpacity
 } from 'react-native';
@@ -13,7 +13,7 @@ const MyProfile = (props: any) => {
     const creatorData = props.navigation.state.params.creatorData;
     const isCreator = props.navigation.state.params.isCreator;
     const viewJourneysPage = () => {
-        props.navigation.navigate('ViewJourneys', {passengerData: passengerData,data : data, userProps: userProps});
+        props.navigation.navigate('ViewJourneys', {passengerData: passengerData,data : data, userProps: userProps, isCreator: isCreator});
       }
     
       const viewCreatedJourneysPage = () => {
@@ -30,13 +30,13 @@ const MyProfile = (props: any) => {
                </View>
                { isCreator &&
                <View style={styles.containerCentre}>
-                   <Text style={styles.HeadingName}>Email Address</Text>
-                   <Text style={styles.Number}>{userProps.email}</Text>
+                   <Text style={styles.Number}>{creatorData.length}</Text>
+                   <Text style={styles.HeadingName}>Trips Created</Text>
                </View>
                 }
                <View style={styles.containerCentre}>
-               <Text style={styles.HeadingName}>Rating</Text>
-                   <Text style={styles.Number}>{userProps.rating}</Text>
+                   <Text style={styles.Number}>{passengerData.length}</Text>
+                   <Text style={styles.HeadingName}>Trips Joined</Text>
                </View>
                
            </View>

@@ -6,6 +6,7 @@ import {
 
 const AvailableJourneyCard = (props: any) => {
   const userProps = props.navigation.state.params.userProps;
+  const isCreator = props.navigation.state.params.isCreator;
 
   const openInMap = () => {
     props.navigation.navigate('JourneyInProgress', {
@@ -23,6 +24,7 @@ const AvailableJourneyCard = (props: any) => {
         longitude: props.data.endLong,
       },
       userProps,
+      isCreator: isCreator
     });
   };
 
