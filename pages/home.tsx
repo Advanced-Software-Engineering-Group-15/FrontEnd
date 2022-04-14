@@ -223,16 +223,16 @@ function Home(props: any) {
         {'\n'}Welcome back {'\n'}
         {username}!
       </Text>
-      <TouchableOpacity style={styles.ViewJourneyBtn}>
-        <Text style={styles.homePageBtnText} onPress={journeys}>Search Journeys</Text>
+      <TouchableOpacity style={styles.ViewJourneyBtn} onPress={journeys}>
+        <Text style={styles.homePageBtnText} >Search Journeys</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.ViewJourneyBtn}>
-        <Text style={styles.homePageBtnText} onPress={myProfile}>My Profile</Text>
+      <TouchableOpacity style={styles.ViewJourneyBtn} onPress={myProfile}>
+        <Text style={styles.homePageBtnText} >My Profile</Text>
       </TouchableOpacity>
 
       { isCreator == "true" &&
-        <TouchableOpacity style={styles.ViewJourneyBtn}>
-          <Text style={styles.homePageBtnText} onPress={createJourney}>Create Journey</Text>
+        <TouchableOpacity style={styles.ViewJourneyBtn} onPress={createJourney}>
+          <Text style={styles.homePageBtnText} >Create Journey</Text>
         </TouchableOpacity>
         }
 

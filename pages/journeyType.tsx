@@ -41,6 +41,9 @@ const JourneyType = (props: any) => {
   const isDaily = () => {
     setJourneyStatus('Daily')
   }
+  const isPending = () => {
+    setJourneyStatus('Pending')
+  }
   const createJourney = () => {
       
       if(journeyType != '') {
@@ -74,19 +77,17 @@ const JourneyType = (props: any) => {
           }}
         />
 
-      <Button
-          onPress={isDaily}
-          title="Set as Daily Trip"
-          color="#841584"
-          //accessibilityLabel="Submit your journey to be created"
-        />
-
-        <Button
-          onPress={createJourney}
-          title="Submit Journey"
-          color="#841584"
-          accessibilityLabel="Submit your journey to be created"
-        />
+      <View style={styles.dropdownsRow}>
+      <TouchableOpacity style={styles.dailyButt} onPress={isPending}>
+        <Text style={styles.applyButtTxt} >One Off Trips</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.dailyButt} onPress={isDaily}>
+        <Text style={styles.applyButtTxt} >Set as Daily</Text>
+      </TouchableOpacity>
+      </View>
+      <TouchableOpacity style={styles.ViewJourneyBtn} onPress={createJourney}>
+        <Text style={styles.homePageBtnText} >Submit Information</Text>
+      </TouchableOpacity>
       </View>
 
     </ScrollView>
@@ -109,6 +110,45 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     borderColor: 'gray',
+  },
+  ViewJourneyBtn: {
+    width: '45%',
+    backgroundColor: '#33FF99',
+    borderRadius: 25,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 15,
+    //marginLeft: '27%',
+  },
+  homePageBtnText: {
+    color: '#000000',
+    fontSize: 18,
+    height: 30,
+  },
+  dropdownsRow: {
+    flexDirection: "row",
+    width: "100%",
+    paddingHorizontal: "5%",
+  },
+  dailyButt:{
+    width: "40%",
+    maxHeight: 50,
+    backgroundColor: "cyan",
+    borderRadius: 10,
+    borderColor: "#cccccc",
+    borderWidth: 1,
+    height: 30,
+    alignItems: 'center',
+    justifyContent: "center",
+    marginTop: 15,
+    marginBottom: 10,
+    marginRight: '20%',
+  },
+  applyButtTxt:{
+    color: "#111111",
+    textAlign: "center",
+    fontWeight: "bold",
   },
   loginBtn:{
     width:"80%",
