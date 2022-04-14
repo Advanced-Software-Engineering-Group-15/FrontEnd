@@ -185,7 +185,7 @@ function Home(props: any) {
   // }
 
   const RatingPage = () => {
-    //props.navigation.navigate('Ratings');
+    props.navigation.navigate('Ratings', {userProps});
     console.log(userProps)
   };
 
@@ -217,15 +217,15 @@ function Home(props: any) {
     props.navigation.navigate('JourneyInProgress', { userProps });
   };
   return (
-    <ScrollView>
+    <ScrollView style={styles.scrollBackground}>
     <View style={styles.container}>
       <Text style={styles.welcomeText}>
         Welcome back {'\n'}
         {username}!
       </Text>
-      <TouchableOpacity style={styles.ViewJourneyBtn}>
+      {/* <TouchableOpacity style={styles.ViewJourneyBtn}>
         <Text style={styles.homePageBtnText} onPress={RatingPage}>Rating Page</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       {/* <TouchableOpacity style={styles.ViewJourneyBtn} onPress={viewJourneysPage}>
         <Text style={styles.homePageBtnText} >Journeys</Text>
       </TouchableOpacity>
@@ -235,9 +235,9 @@ function Home(props: any) {
       <TouchableOpacity style={styles.ViewJourneyBtn}>
         <Text style={styles.homePageBtnText} onPress={journeys}>Search Journeys</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.ViewJourneyBtn}>
+      {/* <TouchableOpacity style={styles.ViewJourneyBtn}>
         <Text style={styles.homePageBtnText} onPress={refresh}>Refresh</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       {/* <TouchableOpacity style={styles.ViewJourneyBtn}>
         <Text style={styles.homePageBtnText} onPress={payment}>Payment Page</Text>
       </TouchableOpacity> */}
@@ -264,6 +264,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#003f5c',
     alignItems: 'center',
     justifyContent: 'center',
+    height: '100%'
+  },
+  scrollBackground: {
+    backgroundColor: '#003f5c',
   },
   welcomeText: {
     height: 200,

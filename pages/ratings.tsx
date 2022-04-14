@@ -2,93 +2,58 @@ import React, { useEffect, useState, useRef } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions, ScrollView, Button, Alert } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { Rating, RatingProps } from 'react-native-elements';
+import axios from 'axios';
+import { IP } from '../constants.tsx';
 
+let url = 'http://' + IP + '/rating'
 
 
 type RatingsComponentProps = {};
 
 const Ratings: React.FunctionComponent<RatingsComponentProps> = (props: any) => {
-  const [showBox, setShowBox] = useState(true);
-  const [rate, setRating] = useState({rate: 0});
-  // const ratingConfirm = (rating: number) => {
-  //   console.log('Rating is: ' + rating);
-  //   return Alert.alert(
-  //     "Are your sure?",
-  //     "Confirm Journey Rating",
-  //     [
-  //       // The "Yes" button
-  //       {
-  //         text: "Yes",
-  //         onPress: () => {
-  //           setShowBox(false);
-  //           console.log('Rating is:' + (rating-1) );
-  //         },
-  //       },
-  //       // The "No" button
-  //       // Does nothing but dismiss the dialog when tapped
-  //       {
-  //         text: "No",
-  //       },
-  //     ]
-  //   );
-  //   console.log('hello');
-  // };
+  const [rate, setRating] = useState(0);
+  // console.log('\n\n\nRating props:', props.navigation.state.params.userProps.userID)
+  const userID = props.navigation.state.params.userProps.userID
+  const userProps = props.navigation.state.params.userProps
+  const creatorID = props.navigation.state.params.creatorID
 
-  const ratingConfirm = (rating: number) => {
-    setRating({rate: rating})
-    return Alert.alert(
-      "Are your sure?",
-      "Confirm Journey Rating of: " + rating + " stars",
-      [
-        // The "Yes" button
-        {
-          text: "Yes",
-          onPress: () => {
-            setShowBox(false);
-            console.log('Rating is: ' + (rating));
-            props.navigation.navigate("Home")
-          },
-        },
-        // The "No" button
-        // Does nothing but dismiss the dialog when tapped
-        {
-          text: "No",
-          onPress: () => {
-            console.log('Rating was: ' + (rating));
-          }
-        },
-      ]
-    );
-    console.log('hello');
+  const goBack = () => {
+    props.navigation.navigate('Home', { userProps });
   };
 
-  const alertTest = (rate) => {
-    console.log('Testing Alert');
-    return Alert.alert(
-      "Are your sure?",
-      "Confirm Journey Rating of :"+ rate + "stars",
-      [
-        // The "Yes" button
-        {
-          text: "Yes",
-          onPress: () => {
-            setShowBox(false);
-            console.log('Rating is: '+ (rate-1));
-          },
-        },
-        // The "No" button
-        // Does nothing but dismiss the dialog when tapped
-        {
-          text: "No",
-        },
-      ]
-    );
-    console.log('hello');
+  const confirmRating = () => {
+    console.log('Coinfirmed Rating is: ', rate)
+    axios.post(url, {
+      body: JSON.stringify({
+        "userID": creatorID,
+        "rating": rate.toString()
+      })
+    })
+    .then(function (response) {
+      console.log('RESPONSE', response.data) 
+    })
+    goBack()
+  }
+
+  const changeRating = (rating: number) => {
+    setRating(rating)
+    console.log('Rating is: ', rating)
   };
 
- 
+  const alertTest = () => Alert.alert(
+    'Are your sure?',
+    `Confirm Journey Rating of :${rate}stars`,
+    [
+      // The "Yes" button
+      {
+        text: 'Yes',
+      },
+      {
+        text: 'No',
+      },
+    ],
+  );
 
-  const ratingProps = {};
   return (
     <View style={styles.container}>
       <ScrollView style={styles.viewContainer}>
@@ -102,14 +67,14 @@ const Ratings: React.FunctionComponent<RatingsComponentProps> = (props: any) => 
           <Rating
             showRating
             imageSize={40}
-            onFinishRating={ratingConfirm}
+            onFinishRating={changeRating}
             startingValue="{0}"
             style={{ paddingVertical: 10 }}
           />
-          <TouchableOpacity style={styles.confirmBtn}>
+          <TouchableOpacity style={styles.confirmBtn} onPress={confirmRating}>
           <Text 
           style={styles.confirmText}
-          onPress={alertTest}
+          
           >Confirm</Text>
         </TouchableOpacity>
           {/* <Rating
@@ -173,19 +138,19 @@ const styles = StyleSheet.create({
   rating: {
     paddingVertical: 10,
   },
-  confirmBtn:{
-    width:"60%",
-    backgroundColor:"#fb5b5a",
-    borderRadius:25,
-    height:50,
-    alignItems:"center",
-    justifyContent:"center",
-    marginTop:40,
-    marginBottom:10
+  confirmBtn: {
+    width: '60%',
+    backgroundColor: '#fb5b5a',
+    borderRadius: 25,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 40,
+    marginBottom: 10,
   },
-  confirmText:{
-    color:"white"
-  }
+  confirmText: {
+    color: 'white',
+  },
 });
 
 export default Ratings;

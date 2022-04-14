@@ -11,6 +11,7 @@ const localHost = 'http://'+ IP +'/journeyStatus'
 function JourneyInProgress(props: any) {
   const Status = props.navigation.state.params.Status
   const { userProps } = props.navigation.state.params;
+  const { creatorID } = props.navigation.state.params;
   const [currentStatus, setCurrentStatus] = useState("")
 
   const endJourney = () => {
@@ -105,7 +106,7 @@ function JourneyInProgress(props: any) {
   };
 
   const ratingPage = () => {
-    props.navigation.navigate('Ratings', userProps);
+    props.navigation.navigate('Ratings', {userProps: userProps, creatorID: creatorID});
   };
 
   return (
@@ -118,30 +119,30 @@ function JourneyInProgress(props: any) {
       <Text style={styles.welcomeText}>Your Journey is in progress! 🚗</Text>
       
       {Status == "Pending" &&
-      <TouchableOpacity style={styles.MapsPageBtn}>
-      <Text onPress={setToStarted}>START JOURNEY</Text>
+      <TouchableOpacity style={styles.MapsPageBtn}onPress={setToStarted}>
+      <Text >START JOURNEY</Text>
       </TouchableOpacity>
       }
       {Status == "Pending" &&
-      <TouchableOpacity style={styles.MapsPageBtn}>
-      <Text onPress={cancelJourney}>CANCEL</Text>
+      <TouchableOpacity style={styles.MapsPageBtn}onPress={cancelJourney}>
+      <Text >CANCEL</Text>
       </TouchableOpacity>
       }
       {Status == "Started" &&
-      <TouchableOpacity style={styles.MapsPageBtn}>
-      <Text onPress={setToEnded}>END JOURNEY</Text>
+      <TouchableOpacity style={styles.MapsPageBtn}onPress={setToEnded}>
+      <Text >END JOURNEY</Text>
     </TouchableOpacity>
       }
       {Status == "Ended" &&
-      <TouchableOpacity style={styles.MapsPageBtn}>
-      <Text onPress={ratingPage}>Review Journey</Text>
+      <TouchableOpacity style={styles.MapsPageBtn} onPress={ratingPage}>
+      <Text >Review Journey</Text>
     </TouchableOpacity>
       }
       {/* <TouchableOpacity style={styles.MapsPageBtn}>
         <Text onPress={endJourney}>END JOURNEY</Text>
       </TouchableOpacity> */}
-      <TouchableOpacity style={styles.MapsPageBtn}>
-        <Text onPress={goBack}>Back to Homepage</Text>
+      <TouchableOpacity style={styles.MapsPageBtn}onPress={goBack}>
+        <Text >Back to Homepage</Text>
       </TouchableOpacity>
     </View>
   );
