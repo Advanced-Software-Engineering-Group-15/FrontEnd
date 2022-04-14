@@ -9,7 +9,8 @@ import { IP } from '../constants';
 const localHost = 'http://'+ IP +'/journeyStatus'
 
 function JourneyInProgress(props: any) {
-  const Status = props.navigation.state.params.Status
+  const Status = props.navigation.state.params.status
+  console.log('\n\n\nhere', props.navigation.state.params)
   const { userProps } = props.navigation.state.params;
   const { creatorID } = props.navigation.state.params;
   const [currentStatus, setCurrentStatus] = useState("")

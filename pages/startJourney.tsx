@@ -22,10 +22,10 @@ const StartJourney = (props: any) => {
         !
       </Text>
       <TouchableOpacity style={styles.MapsPageBtn}>
-        <Text onPress={journeyInProgress}>LETS GET THIS SHABANGABANG ON THE ROAD</Text>
+        <Text onPress={journeyInProgress}>Lets start the journey</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.MapsPageBtn}>
-        <Text onPress={goBack}>BACK TO HOME</Text>
+        <Text onPress={goBack}>Home</Text>
       </TouchableOpacity>
     </View>
   );

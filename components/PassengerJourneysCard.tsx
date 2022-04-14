@@ -11,6 +11,7 @@ const AvailableJourneyCard = (props: any) => {
     props.navigation.navigate('JourneyInProgress', {
       journeyID: props.data.journeyID,
       creatorID: props.data.creatorID,
+      status: props.data.Status,
       start: {
         name: props.data.startName,
         latitude: props.data.startLat,

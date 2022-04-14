@@ -31,13 +31,11 @@ const FindJourneys = (props: any) => {
     <ScrollView keyboardShouldPersistTaps="handled">
 
       <GooglePlacesAutocomplete
-        placeholder='Where are ye'
+        placeholder='Where are you?'
         GooglePlacesDetailsQuery={{ fields: "geometry" }}
         fetchDetails={true} // you need this to fetch the details object onPress
         onPress={(data, details = null) => {
           console.log(details);
-          //console.log(data, details)
-          //console.log(JSON.stringify(details?.geometry?.location));
 
           region.latitude = Number(JSON.stringify(details?.geometry?.location.lat))
           region.longitude = Number(JSON.stringify(details?.geometry?.location.lng))
@@ -52,14 +50,11 @@ const FindJourneys = (props: any) => {
       />
 
       <GooglePlacesAutocomplete
-        placeholder='Where are ye wantin to be'
+        placeholder='Where are you going?'
         GooglePlacesDetailsQuery={{ fields: "geometry" }}
         fetchDetails={true} // you need this to fetch the details object onPress
         onPress={(data, details = null) => {
           console.log(details);
-          //console.log(data, details)
-          //console.log(JSON.stringify(details?.geometry?.location));
-
           region.latitude = Number(JSON.stringify(details?.geometry?.location.lat))
           region.longitude = Number(JSON.stringify(details?.geometry?.location.lng))
           setDest(region);

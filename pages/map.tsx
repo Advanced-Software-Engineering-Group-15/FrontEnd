@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {
-  StyleSheet, Text, Dimensions, View, TouchableOpacity,
+  StyleSheet, Text, Dimensions, View, TouchableOpacity, ScrollView  
 } from 'react-native';
 import axios from 'axios';
 import MapView, { Callout, Marker } from 'react-native-maps';
@@ -59,6 +59,7 @@ const Map = (props: any) => {
   const [pin, setPin] = React.useState(origin); // Initial location
 
   return (
+    <ScrollView keyboardShouldPersistTaps="handled">
     <View>
       <MapView
         style={styles.map}
@@ -120,11 +121,12 @@ const Map = (props: any) => {
 
       </MapView>
       <View style={styles.container}>
-        <TouchableOpacity style={styles.ViewJourneyBtn}>
-          <Text style={styles.homePageBtnText} onPress={joinJourney}>Join Journey</Text>
+        <TouchableOpacity style={styles.ViewJourneyBtn} onPress={joinJourney}>
+          <Text style={styles.homePageBtnText}>Join Journey</Text>
         </TouchableOpacity>
       </View>
     </View>
+    </ScrollView>
 
   );
 };
