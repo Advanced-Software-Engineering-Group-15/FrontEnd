@@ -30,13 +30,13 @@ const MyProfile = (props: any) => {
                </View>
                { isCreator &&
                <View style={styles.containerCentre}>
-                   <Text style={styles.Number}>{creatorData.length}</Text>
-                   <Text style={styles.HeadingName}>Trips Created</Text>
+                   <Text style={styles.HeadingName}>Email Address</Text>
+                   <Text style={styles.Number}>{userProps.email}</Text>
                </View>
                 }
                <View style={styles.containerCentre}>
-                   <Text style={styles.Number}>{passengerData.length}</Text>
-                   <Text style={styles.HeadingName}>Trips Joined</Text>
+               <Text style={styles.HeadingName}>Rating</Text>
+                   <Text style={styles.Number}>{userProps.rating}</Text>
                </View>
                
            </View>
